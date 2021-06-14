@@ -9,7 +9,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. .",
-    "deploy": "svelte-kit build && gh-pages -d build"
+    "deploy": "svelte-kit build && node ./deploy.js"
   },
   "devDependencies": {
     "@sveltejs/kit": "next",
