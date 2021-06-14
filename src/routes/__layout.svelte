@@ -1,3 +1,9 @@
+<header>
+  <a href="/"><h1>Simon would have said</h1></a>
+</header>
+<div class="body">
+  <slot />
+</div>
 
 <style>
   header {
@@ -14,10 +20,3 @@
     margin: 0 auto;
   }
 </style>
-
-<header>
-  <a href="/"><h1>Simon would have said</h1></a>
-</header>
-<div class="body">
-  <slot></slot>
-</div>

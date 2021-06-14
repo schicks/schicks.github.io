@@ -8,42 +8,51 @@ blurb: Custom derive macros are used in a number of rust libraries to make it ea
 Custom derive macros are used in a variety of rust libraries ([serde](https://serde.rs/), [argh](https://github.com/google/argh), and of course [sedk](https://github.com/schicks/sedk)) to make it easy and obvious to implement some trait for structs and/or enums as long as all of the fields in that struct or enum implement the trait. Built in derives also tend to follow this pattern. We know that there is an obvious definition of `PartialEq` for a struct as long as there is a definition of `PartialEq` for each field; two structs are equal all of their fields are equal.
 
 There is a more general pattern here. given any product type (struct) and a trait that can be implemented with a single function, we can come up with an easy implementation of a trait as long as:
+
 - All fields in the type implement the trait
 - the return type of the trait function has monoidal structure
 
 ## Monoidal Structure?
+
 A monoid is a certain sort of structure that a type can have. We can sketch it with a trait.
+
 ```rust
 trait Monoid {
   fn empty() -> Self
-  
+
   fn append(&self, &Self) -> Self
 }
 ```
-However, to truly be a monoid, implementing types would have to satisfy a few more restructions. 
+
+However, to truly be a monoid, implementing types would have to satisfy a few more restructions.
+
 ```rust
 fn T_is_a_monoid(example: T) {
   assert_eq!(example.append(T::empty()), example);
   assert_eq!(T::empty().append(example), example);
 }
 ```
+
 If we could run this test on every possible instance of the type `T`, and it passed for all of them, we would have proven that `T` is a monoid.
 
 Monoids are neat and come up frequently. Addition and multiplication are both monoids over numbers, with `0` and `1` as the return values of `empty` respectively. String concatenation is a monoid, with the empty string as the `empty` value. Booleans have two monoids; `and` is a monoid with an empty value of `true`, and `or` is a monoid with an empty value of `false`.
 
-We need a monoid so that we can combine together the result of applying the trait function to each individual field into a single value for the whole struct. In the context of `PartialEq`, our derived implementation uses `and` as it's monoid; that is, the `eq` function returns true if the `eq` comparison applied to _every_ field returns true. 
+We need a monoid so that we can combine together the result of applying the trait function to each individual field into a single value for the whole struct. In the context of `PartialEq`, our derived implementation uses `and` as it's monoid; that is, the `eq` function returns true if the `eq` comparison applied to _every_ field returns true.
 
 _For a more in depth explanation of what a monoid is, read [Bartosz Milewski's](https://bartoszmilewski.com/2015/07/21/free-monoids/) excellent series on category theory for programmers._
 
 ## Derivation for Structs
+
 _If you haven't worked with derive macros before, I highly recommend [this blog post](https://blog.turbo.fish/proc-macro-simple-derive/) for a quick explanation and [this repo](https://github.com/dtolnay/proc-macro-workshop) for a more in depth walkthrough. The [syn documentation](https://docs.rs/syn/0.15.26/syn/) is also quite useful._
 
 Lets say I have some trait.
+
 ```rust
 trait MyTrait {
   my_trait_func(&self) -> ReturnType
 }
 ```
+
 There are implementations of `MyTrait` for a variety of different things that we'll call "primitives" in the sense that they implement `MyTrait` by hand. What we want is to come up with some obvious implementation of `MyTrait` for any struct or enum made up of `impl MyTrait` fields.
 
 Structs are easy. We've said that all of our fields must implement the trait. Then we just need to apply our monoidal function to the result, and a single object of type `ReturnType` falls out. voila, we have our implementation.
@@ -64,7 +73,7 @@ fn impl_struct( // arguments correspond to our assumptions.
     _ => panic!("not a struct")
   };
   let empty_value = quote!{ #return_type::empty() };
-  
+
   let trait_func_impl = fields
   .into_iter()
   .map(|field| { // for each field
@@ -73,7 +82,7 @@ fn impl_struct( // arguments correspond to our assumptions.
   }).fold(empty_value, |accumulated_code, field_result| { // then combine the results
     quote!{#return_type::append(#accumulated_code, #field_result)} // using the binary function from the monoid over #return_type
   });
-  
+
   return quote!{
     #[automatically_derived]
     impl #trait_name for #struct_name {
@@ -84,17 +93,21 @@ fn impl_struct( // arguments correspond to our assumptions.
   }
 }
 ```
-_Notice that when we run a fold in the macro, the produced code will simply nest this statement repeatedly; `monoid(monoid(monoid(empty, a), b), c)`.  We use the empty value so we don't have to worry about whether the struct actually has fields; an empty struct would just return `#return_type::empty()`._
+
+_Notice that when we run a fold in the macro, the produced code will simply nest this statement repeatedly; `monoid(monoid(monoid(empty, a), b), c)`. We use the empty value so we don't have to worry about whether the struct actually has fields; an empty struct would just return `#return_type::empty()`._
 
 This will give us a working implementation of our trait. It might not be the implementation we want; maybe we don't care about every field, or need to consider fields in different ways. In fact, given this monoidal structure, there is a much simpler implementation that always works for any type; simply returning `#return_type::empty()`.
 
-This implementation seems nicer than that to me, because it considers each field in a uniform way, and because it nicely captures the core of what things like serde and argh are doing with their derive macros. In fact, if we generalize this to support helper attributes which could replace `#trait_func_name` with some arbitrary other function on `#field_name` that could produce a `#return_type`, this becomes much more flexible and could be useful in a variety of settings. 
+This implementation seems nicer than that to me, because it considers each field in a uniform way, and because it nicely captures the core of what things like serde and argh are doing with their derive macros. In fact, if we generalize this to support helper attributes which could replace `#trait_func_name` with some arbitrary other function on `#field_name` that could produce a `#return_type`, this becomes much more flexible and could be useful in a variety of settings.
 
 ## What if `#return_type` is `Self`?
+
 This doesn't work as well, because `Self` means different things for each field and for the struct as a whole. However, if we look at the places where derive macros are common, they don't tend to have polymorphic return types. Instead they go to some consistent type with monoidal structure.
 
 ## What about enums?
+
 In the enum case, we can do the same thing for each branch independently. As long as each variant could be derived in a way similar to above, we can derive the implementation for the enum to be
+
 - a pattern match against the enum
 - a natural implementation for the context of each branch
 

@@ -11,7 +11,7 @@ Python fanatics tell me over and over that you can't prototype that way. Unfortu
 
 ## Prototyping
 
-Sometimes it is much easier to get to a useful product if you accept that you don't understand how it works in an edge case. I wanted a compiler that could say "I can work with this,  but you should clean it up later". I didn't found one.
+Sometimes it is much easier to get to a useful product if you accept that you don't understand how it works in an edge case. I wanted a compiler that could say "I can work with this, but you should clean it up later". I didn't found one.
 
 ## Postgres
 
@@ -25,7 +25,7 @@ This has become somewhat less important now that the frame of reference for a lo
 
 Sometimes you have someone on your team who has the same love of mutable state that I have of static types and function composition. I wanted a compiler that could let them have their fun, but create clean, tight barriers around mutations so that I could see from the type whether or not I had to deal with that nonsense. I didn't find one.
 
-I did not expect these problems to have the same solution. I thought these were unrelated flaws of the languages I loved, and that the only solution was to work in multiparadigm languages and be *very very careful* because I could never quite trust the types. I figured that if the problem were solvable, someone would have solved it in the last 47 years of research.
+I did not expect these problems to have the same solution. I thought these were unrelated flaws of the languages I loved, and that the only solution was to work in multiparadigm languages and be _very very careful_ because I could never quite trust the types. I figured that if the problem were solvable, someone would have solved it in the last 47 years of research.
 
 Then a friend showed me Koka.
 
@@ -42,11 +42,11 @@ fun first(l: list<a>) {
 
 ```
 
-This code takes a list and gives back its first element. There are cleaner ways to do this, but for illustration I wanted to write it out fully. 
+This code takes a list and gives back its first element. There are cleaner ways to do this, but for illustration I wanted to write it out fully.
 
-In most functional languages, this wouldn't compile. "That pattern matching isn't complete", they would say. "What if you got an empty list?" they would say. So programmers, not able to explain to the compiler that they are *absolutely certain* that won't happen, switch away from such languages to something a little more practical (typescript) and just let the code throw. 
+In most functional languages, this wouldn't compile. "That pattern matching isn't complete", they would say. "What if you got an empty list?" they would say. So programmers, not able to explain to the compiler that they are _absolutely certain_ that won't happen, switch away from such languages to something a little more practical (typescript) and just let the code throw.
 
-Everybody lives happily ever after, until this prototyping code is embedded in the core of a Very Important Model being used in production, and it actually does get an empty list because the code has been rewritten half a dozen times since the programmer was *absolutely certain* that couldn't happen. But in Koka, unlike in typescript, the return type of this function *remembers* that there can be an exception. The return type here is inferred as `exn a` rather than just `a`. Any function calling this also gets that `exn` effect added to its type, until the programmer goes back and deals with that effect and removes it everywhere or catches it with an effect handler.
+Everybody lives happily ever after, until this prototyping code is embedded in the core of a Very Important Model being used in production, and it actually does get an empty list because the code has been rewritten half a dozen times since the programmer was _absolutely certain_ that couldn't happen. But in Koka, unlike in typescript, the return type of this function _remembers_ that there can be an exception. The return type here is inferred as `exn a` rather than just `a`. Any function calling this also gets that `exn` effect added to its type, until the programmer goes back and deals with that effect and removes it everywhere or catches it with an effect handler.
 
 ```ts
 fun dumb(): either<string, nirvana> {
@@ -59,7 +59,7 @@ Now anything calling `dumb` can be certain that the exception was handled, and d
 
 ## Effect Types for Postgres
 
-I was sold. You could write exceptional code and prototype away, and clean up after yourself later. I figured that was it, that was the clever trick for this language, but effect types are *so much better than that*. Effects aren't limited to those defined in the language, you can make up your own in user land. This means that I can write an effect like this;
+I was sold. You could write exceptional code and prototype away, and clean up after yourself later. I figured that was it, that was the clever trick for this language, but effect types are _so much better than that_. Effects aren't limited to those defined in the language, you can make up your own in user land. This means that I can write an effect like this;
 
 ```ts
 effect val postgres : dbConnection
@@ -85,7 +85,7 @@ This is dependency injection, but without any of the horrible nonsense of passin
 
 Alright, that's it then. Effect types solve the prototyping problem, and give a beautiful new pattern for dependency injection. What more can we ask for?
 
-One of the biggest barriers that functional languages face is just about what people already know. Programmers want to write loops because they are used to loops, and it doesn't matter if there is an equivalent functional program; if they aren't used to it it will be harder to debug and not worth their time. But Koka *has* while loops. And they are functions, defined in user land.
+One of the biggest barriers that functional languages face is just about what people already know. Programmers want to write loops because they are used to loops, and it doesn't matter if there is an equivalent functional program; if they aren't used to it it will be harder to debug and not worth their time. But Koka _has_ while loops. And they are functions, defined in user land.
 
 ```ts
 fun while( predicate : () -> <div|e> bool, action : () -> <div|e> () ) : <div|e> ()
@@ -101,7 +101,7 @@ while {condition == true} {
 }
 ```
 
-`while` here is just a function, with Koka providing a bunch of syntactic sugar to make the way you call it more familiar to those comfortable in imperative languages. The fact that it's still a function means that all of the composable semantics that we get out of effect types and function composition still apply to code using loops of this form, even though the code looks dirty and imperative. Even the infinite loop here is captured by the type system. Koka infers that anything using this function has the `div` effect, meaning it might run forever without producing a value. This is the same effect it would infer for a recursive function, because `while` *is* a recursive function.
+`while` here is just a function, with Koka providing a bunch of syntactic sugar to make the way you call it more familiar to those comfortable in imperative languages. The fact that it's still a function means that all of the composable semantics that we get out of effect types and function composition still apply to code using loops of this form, even though the code looks dirty and imperative. Even the infinite loop here is captured by the type system. Koka infers that anything using this function has the `div` effect, meaning it might run forever without producing a value. This is the same effect it would infer for a recursive function, because `while` _is_ a recursive function.
 
 This effort to preserve the intuition of developers coming from imperative languages extends way beyond fake looping constructs. It should say something that while I couldn't find a syntax highlighter for koka to use on these code blocks, the javascript syntax highlighting looks pretty much fine. The language as a whole is designed to feel familiar to people used to C family syntax, but give superpowers that nothing in that family has.
 
@@ -117,4 +117,4 @@ Koka does transform those mutable variables into a state effect to make sure to 
 
 This unfinished research language can outperform C++. Benchmarks should always be taken with an ocean of salt, and these problems certainly weren't chosen at random, but the firm foundation of Perceus gives me hope that these results are real and will be borne out in practice.
 
-It is early days for Koka. It isn't ready for production, and new languages usually aren't adopted, but there is *so* much in Koka that is fundamentally better than existing languages that I would be heartbroken if these things didn't catch on. Maybe it is a stepping stone, and something else will productionalize these ideas, but it is hard to imagine changing very much. Koka improves on the state of the art in so many places that it feels to me like making it productional is the path forward, rather than adopting these ideas into other languages.
+It is early days for Koka. It isn't ready for production, and new languages usually aren't adopted, but there is _so_ much in Koka that is fundamentally better than existing languages that I would be heartbroken if these things didn't catch on. Maybe it is a stepping stone, and something else will productionalize these ideas, but it is hard to imagine changing very much. Koka improves on the state of the art in so many places that it feels to me like making it productional is the path forward, rather than adopting these ideas into other languages.

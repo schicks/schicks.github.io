@@ -5,34 +5,37 @@ status: published
 blurb: Search params in the URL are an underrated way to store state, but synchronizing access to them from multiple components can be tricky to type well.
 ---
 
-Search params in the URL are an underrated way to store state in react applications. While they can be somewhat less ergonomic than state from `useReducer`, they have the major advantage of being more directly accessible to the user. This enables things like allowing the user to share links to their particular state, or allowing bookmarks to "remember" state which would be forgotten on page reloads if it were stored within react. However, it is important to understand the various bumps and ugliness that come along with search params. 
+Search params in the URL are an underrated way to store state in react applications. While they can be somewhat less ergonomic than state from `useReducer`, they have the major advantage of being more directly accessible to the user. This enables things like allowing the user to share links to their particular state, or allowing bookmarks to "remember" state which would be forgotten on page reloads if it were stored within react. However, it is important to understand the various bumps and ugliness that come along with search params.
 
 Because the user has direct access to them, it's hard to make strong type guarantees about what you will find when decoding a URL, and so it is important to [parse values](https://www.pluralsight.com/tech-blog/taming-dynamic-data-in-typescript/) whenever you pull them out of the URL.
 
 Also, when multiple components in your application want to use search params you can run into race conditions that can be infuriating to debug. However, just because we can't make type level guarantees about the _values_ in the URL doesn't mean we can't make type level guarantees about the _keys_. What's important here is to think carefully about what we want the type system to validate for us.
 When multiple components use the URL search params:
+
 1. No two components should use the same keys (to avoid race conditions)
 2. Each component should explicitly state which keys it uses (to make 1 possible)
 
 A word of caution; this involves a _lot_ of fancy types; in fact, it's very close to using every typescript language feature that I'm aware of, and several obscure patterns that aren't baked into the language. The great and powerful Dan Vanderkam is [absolutely right](https://effectivetypescript.com/2021/02/03/pet-peeves/) that fancy types should be used sparingly, and can end up making things more complicated than they need to be. However, they can also allow you to make really specific guarantees with the type system that go way beyond simple type errors and start to make the type system feel like a real extension of your test suite. Also, they make you feel like a sorcerer.
 
 ## Run time
+
 Since most of the work here is about getting the type system to verify these properties for us, the runtime side of this is fairly simple. We want to create a new hook `useUrlParams` which will centralize interacting with the URL. This will deserialize the URL into an object and expose a wrapped version of the react router `push` function that will take an object and only update those keys in the URL. `null` will be interpreted as removing a value. Centralizing access to the URL in this way helps us make sure that we are interacting with that state in a consistent way, and would be good practice even if we didn't want the type guarantees. It gives us a single component which is responsible for mediating access to the state in the URL, so we don't have to implement things like the wrapped push function in every single component.
 
 ## Type time
+
 This is the fun part. There's a lot of fancy types involved, so first we're going to present the whole thing together to see what the point is, and then we're going to dig into some of the more complicated signatures. If there's a signature you don't understand, stick with me and I'll try to name it and explain it a little further down.
 
 ```typescript
 export type Value<Brand extends string> = (string & {_brand: Brand}
-| null 
+| null
 | undefined
 
 export type StateForKeys<UrlKeys extends string, Brand extends string> = {
   [key in UrlKeys]: Value<Brand>
 }
-  
 
-// give me all of the keys of an object type O 
+
+// give me all of the keys of an object type O
 // which have values that extend some type V
 export type KeysByValue<O extends {}, V> = {
   [key in keyof O]: O[key] extends V ? key : never
@@ -43,8 +46,9 @@ export type PickByValue<O extends {}, V> = Pick<O, KeysByValue<O, V>>
 ```
 
 Within a `types` file for each component that wants to consume the URL, create a state type.
+
 ```typescript
-import {StateForKeys} from 'components/useUrlParams/types'
+import { StateForKeys } from 'components/useUrlParams/types'
 
 // Any string unique to each component
 export type Brand = 'componentBrand'
@@ -69,8 +73,8 @@ type UrlState = AUrlState & BUrlState & CUrlState
 // Type of the state accessible by a particular brand
 type StateFor<Brand extends string> = PickByValue<UrlState, Value<Brand>>
 
-// only keys which are assigned to multiple brands will extend null | undefined. 
-// Therefore this function has return type never 
+// only keys which are assigned to multiple brands will extend null | undefined.
+// Therefore this function has return type never
 // as long as no key is assigned to multiple brands.
 const _brands_dont_overlap = (
   keys_assigned_to_multiple_brands: KeysByValue<UrlState, null | undefined>,
@@ -78,10 +82,10 @@ const _brands_dont_overlap = (
 
 const _url_state_conforms = (
   state: UrlState
-): {[Key in string]: Value<Brands>}  => state 
+): {[Key in string]: Value<Brands>}  => state
 
 export const useUrlParams = <Brand extends string>(): [
-  StateFor<Brand>, 
+  StateFor<Brand>,
   (entries: Partial<StateFor<Brand>>) => void
 ] => {
   ...
@@ -104,60 +108,67 @@ const ComponentA = () => {
 That's all that needs to go into each component file. The rest will be inferred by typescript.
 
 ## Fancy types
+
 This is all very nice, but I'm using a lot of generic types, mapped types, conditional types, and type level proofs. These things don't come up very often in day to day code, and plenty of people use typescript to great effect without understanding them or even recognizing them. A lot of them are documented elsewhere, so mostly I'm going to give quick overviews here for how I've used them and give you the names you need to dig in further if you're interested.
 
 ### Mapped types
+
 Mapped types let us derive new object types from old ones. For instance, when talking about the part of the URL that a single component needs we have a type that represents the union of keys the component is interested in. We want to get a type that is an object which maps those keys to values that could come out of the URL.
 
 ```typescript
 type Keys = 'a' | 'b' | 'c' // keys of interest
 
-type UrlState = {[Key in Keys]: string | null | undefined}
+type UrlState = { [Key in Keys]: string | null | undefined }
 ```
 
 This syntax says that `UrlState` is an object type which has a key for each possible value of the `Keys` type, and that all of it's keys are mapped to `string | null | undefined`. Then in runtime code we could use that type to know what we will be able to access;
 
 ```typescript
 // return type will be inferred as string | null | undefined
-const getA = (state: UrlState) => state.a 
+const getA = (state: UrlState) => state.a
 
 // this will cause a type error since nonsense can't satisfy the `Keys` type
-const getNonsense = (state: UrlState) state.nonsense 
+const getNonsense = (state: UrlState) state.nonsense
 ```
 
 Mapped types can reference the type of their keys as values. This is useful but hard to explain without some more fancy types, so just keep it in mind for now.
+
 ```typescript
 type Keys = 'a' | 'b' | 'c'
 
 // resolves to {a: 'a', b: 'b', c: 'c'}
-type Identity = {[Key in Keys]: Key} 
+type Identity = { [Key in Keys]: Key }
 ```
 
 ### Type indexing
+
 When you have a type which has keys and values (like mapped types), you can 'index' into that type just like you would at runtime, to get the type under a particular key.
+
 ```typescript
 type IdMapping = {
-  a: 'id_a',
-  b: 'id_b',
+  a: 'id_a'
+  b: 'id_b'
   c: 'id_c'
 }
 
 // 'id_a'
-type IdA = IdMapping['a'] 
+type IdA = IdMapping['a']
 
 // 'id_a' | 'id_b' | 'id_c'
-type Ids = IdMapping[keyof IdMapping] 
+type Ids = IdMapping[keyof IdMapping]
 ```
+
 This makes it much easier to work with mapped types to do a variety of flexible things.
 
 ### Intersection types
+
 Intersection types are a way to talk about values which satisfy both of two distinct types.
 
 ```typescript
-type A = {a: number}
-type B = {b: string}
+type A = { a: number }
+type B = { b: string }
 
-const both: A & B = {a: 4, b: 'hello!'}
+const both: A & B = { a: 4, b: 'hello!' }
 ```
 
 `A` describes things which map a key `a` to a number, and `B` describes things which map a key `b` to a string. Of course, it's not hard to imagine a value that does both of these things, and the intersection operator `&` lets us construct the type of such things.
@@ -171,7 +182,9 @@ type UrlState = AUrlState & BUrlState & CUrlState
 We did this so that we could define each of the component states in their own file, somewhere close to the component, and defer combining them together until we were writing the central `useUrlParams` component.
 
 ### Generic types
+
 Generic types let us talk about whole sets of types that have the same structure. For instance, we want to be able to talk about something like `UrlState` for each component that needs to access the URL. We can do this with a generic type.
+
 ```typescript
 type StateForKeys<Keys extends string> = {
   [Key in Keys]: string | null | undefined
@@ -185,7 +198,7 @@ type MyKeys = 'a' | 'b' | 'c'
 type UrlState = StateForKeys<MyKeys>
 ```
 
-`UrlState` defined this way will be exactly the same as `UrlState` above, but just like functions allow us to reuse code, generics allow us to reuse types. 
+`UrlState` defined this way will be exactly the same as `UrlState` above, but just like functions allow us to reuse code, generics allow us to reuse types.
 
 Type parameters can also have restrictions on them to specify that they can't be any type, but have to satisfy some particular bound. In our example above, `<Keys extends string>` says that any parameter provided for `Keys` must only have values which are also values of the `string` type.
 
@@ -193,15 +206,19 @@ Type parameters can also have restrictions on them to specify that they can't be
 type BadKeys = 'a' | 'b' | 4
 type AlsoBad = true | 'c'
 ```
+
 Both of these types have some values which are not strings, and so trying to use them as a parameter to `StateForKeys` would result in a type error. In that sense, these restrictions are like type signatures on normal runtime functions.
 
 Combining this with type indexing, we could create a generic type which gives us the values of any object.
+
 ```typescript
 type Values<Object extends {}> = Object[keyof Object]
 ```
+
 This says that given any type `Object` which can have keys and values, we want the result of indexing into `Object` with any of its keys. In other words, the union of all its values.
 
 ### Conditional types
+
 Conditional types let us check something about a type and result in a different type depending on that check, just like ternaries do at runtime. For instance, in the full code above we have a `KeysByValue` type which we use to get all of the keys of an object type which are mapped to certain sorts of values.
 
 ```typescript
@@ -212,7 +229,7 @@ type KeysByValue<Object extends {}, Value> = {
 
 This builds on both of the thigns we discussed above and introduces some new ones, so lets break it down. `KeysByValue` is a generic type, because it has type parameters; `<Object extends {}, Value>`. This means that on the other side of the equals sign we will be able to reference `Object`, which we know `extends {}`. That means it can be anything at all as long as that thing can have keys and values. We will also be able to reference `Value`, which has no restrictions at all.
 
-On the other side of the equals sign we define `KeysByValue` as a mapped type. Before the colon we have `[Key in keyof Object]`. `keyof Object` means that the keys of this type will be the same as the keys of whatever we supply as the `Object` type. 
+On the other side of the equals sign we define `KeysByValue` as a mapped type. Before the colon we have `[Key in keyof Object]`. `keyof Object` means that the keys of this type will be the same as the keys of whatever we supply as the `Object` type.
 
 After the colon we have our conditional type, `Object[Key] extends Value ? Key : never`. This looks a lot like a ternary, and can be interpreted in a very similar way. First, we have our condition; `Object[Key] extends Value`. In english, this will be true if the value of the type `Object` indexed by something of the type `Key` satisfies the type `Value`.
 
@@ -223,22 +240,23 @@ type Mapping = {
 }
 
 // resolves to 'no'
-type Conditional = Mapping['a'] extends string ? 'yes' : 'no' 
+type Conditional = Mapping['a'] extends string ? 'yes' : 'no'
 
 // resolves to 1 | 2 | 3
-type OtherConditional = mapping['b'] extends number ? mapping['b'] : 0 
+type OtherConditional = mapping['b'] extends number ? mapping['b'] : 0
 ```
 
 In our `KeysByValue` type, we check whether the value of `Object` at `Key` extends `Value`, and if it does we give back the type `Key`. If it doesn't we give back `never`. `never` is a special type which has no values. That is, there is no thing at runtime that can be typed as `never`. The reason that is useful is that anything unioned with `never` is just itself; `number | never` is `number`, `string | never` is `string`, etc.
-That is useful here because the last thing we do is index into the whole mapped type by `keyof Object` to get the union of all of the mapped values. Any of the values which get mapped to `never` just disappear, so what we're left with is a union of the _subset_ of keys which have values that extend `Value`. 
+That is useful here because the last thing we do is index into the whole mapped type by `keyof Object` to get the union of all of the mapped values. Any of the values which get mapped to `never` just disappear, so what we're left with is a union of the _subset_ of keys which have values that extend `Value`.
 
 So in english, `KeysByValue` says that for any `Object` type and `Value` type, it gives back the union of all keys which are mapped to something that `extends Value`. Conditional types are harder to grasp than a lot of the other fancy types, because they are _extremely_ situational, so think about what this does for us in the URL example. We use this to tell apart the keys used by various different components based on their brand. But what's a brand?
 
 ### Branded types
+
 All of our fancy types so far have been language features of typescript. Branded types are a little different. Branding is a pattern used to prevent typescript from recognizing two types as the same.
 
 ```typescript
-type TempC = number & {_brand: 'degrees-celcius'}
+type TempC = number & { _brand: 'degrees-celcius' }
 ```
 
 `TempC` is the _intersection_ of `number` and `{_brand: 'degrees-celcius'}`. Intersection types are interpreted as being _both_ of the things on either side of the `&`. So `TempC` can be used whenever a number could be used, and also whenever `{_brand: 'degrees-celcius'}` could be used. However, at runtime this is a pretty challenging thing to create, and involves casting a number into the branded type.
@@ -250,8 +268,8 @@ const freezing = 0 as TempC
 Branding is often used to [restrict the usage of a value](https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/) to the context where it makes sense. We use them a little differently in the URL example. Instead, we're leaning on the fact that branded types don't extend each other.
 
 ```typescript
-type TempC = number & {_brand: 'degrees-c'}
-type TempF = number & {_brand: 'degrees-f'}
+type TempC = number & { _brand: 'degrees-c' }
+type TempF = number & { _brand: 'degrees-f' }
 
 type TempCExtendsNumber = TempC extends number ? true : false //true
 type TempFExtendsNumber = TempF extends number ? true : false //true
@@ -262,19 +280,21 @@ Branded types extend their underlying type, but they don't extend each other. Th
 
 ```typescript
 type ThermometerUnits = {
-  'home': TempC
-  'car': TempC
-  'school': TempF
+  home: TempC
+  car: TempC
+  school: TempF
 }
 
 // 'home' | 'school'
-type CelsiusThermometers = KeysByValue<ThermometerUnits, TempC> 
+type CelsiusThermometers = KeysByValue<ThermometerUnits, TempC>
 ```
 
 In our URL use case we use brands to identify all of the keys that come from a particular component. In fact, we define a `Value` type for what values can be retrieved from a URL that has to carry a brand.
+
 ```typescript
-type Value<Brand extends string> = (string & {_brand: Brand}) | null | undefined
+type Value<Brand extends string> = (string & { _brand: Brand }) | null | undefined
 ```
+
 This says that given some branding string, values in the URL are either a branded string (`string & {_brand: Brand}`) or they are null or undefined. This is a little quirky, but the structure there is necessary becase null and undefined _cannot_ be branded.
 
 We then use this branding of values to define a type which gives us the slice of the state accessible to a given component, which is what powers the signature of `useUrlParams`.
@@ -287,32 +307,32 @@ type StateFor<Brand extends Brands> = PickByValue<UrlState, Value<Brand>>
 This has real value, in that it makes sure that a component only accesses the keys that it claims it will access. But that's not all I claimed that this URL code could do; I also said that if two components both tried to claim the same key, that would cause a type error. To get that guarantee we need _one_ more fancy type.
 
 ### Type level proofs
-One way to think about typescript is that it is a system that lets you specify additional information about your javascript code to identify (in the form of type errors) when that code does something that you think should be illegal. Usually this is things like adding a number to an object, or trying to access a key that doesn't exist. However, sometimes we want to be able to specify other sorts of restrictions that are not traditionally thought of as type errors. 
 
-For instance, the way this code is set up each individual component makes up a state type that gets intersectioned in to the overall URL state. We assume that this is done correctly, and that each component provides a state type that maps string keys to branded values. But what if we wanted to make it so that there would be a type error if we had done this wrong? What we want is something that will cause a type error if (and only if) the URL state doesn't extend `{[Key in string]: Value<Brands>}`.  It turns out, what we want is a function.
+One way to think about typescript is that it is a system that lets you specify additional information about your javascript code to identify (in the form of type errors) when that code does something that you think should be illegal. Usually this is things like adding a number to an object, or trying to access a key that doesn't exist. However, sometimes we want to be able to specify other sorts of restrictions that are not traditionally thought of as type errors.
+
+For instance, the way this code is set up each individual component makes up a state type that gets intersectioned in to the overall URL state. We assume that this is done correctly, and that each component provides a state type that maps string keys to branded values. But what if we wanted to make it so that there would be a type error if we had done this wrong? What we want is something that will cause a type error if (and only if) the URL state doesn't extend `{[Key in string]: Value<Brands>}`. It turns out, what we want is a function.
 
 ```typescript
-const _url_state_conforms = (
-  state: UrlState
-): {[Key in string]: Value<Brands>}  => state 
+const _url_state_conforms = (state: UrlState): { [Key in string]: Value<Brands> } => state
 ```
 
-This function says that given any argument of type `UrlState`, it will return the type we want, and is implemented as the identity function; that is, it just returns its argument without modification. What that must mean is that any object which is of type `UrlState` is also of type `{[Key in string]: Value<Brands>}`, because if that weren't true we would get a type error showing us where this might fail. 
+This function says that given any argument of type `UrlState`, it will return the type we want, and is implemented as the identity function; that is, it just returns its argument without modification. What that must mean is that any object which is of type `UrlState` is also of type `{[Key in string]: Value<Brands>}`, because if that weren't true we would get a type error showing us where this might fail.
 
 I call functions of this form "type level proofs", because of some very [esoteric](https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence) mathematics, but another way to think about them is type level _tests_. Just like tests, these are functions which are not used in production code, and only exist to verify that the code we have written satisfies some constraint. The main difference is that rather than the constraint being a runtime assertion, it happens at type time and can prove that something is true for _any possible argument_, rather than just the examples we happen to test.
 
 Now, to sum it all up, we want to guarantee that there are no keys which are used by multiple different components.
+
 ```typescript
-// only keys which are assigned to multiple brands will extend null | undefined. 
-// Therefore this function has return type never 
+// only keys which are assigned to multiple brands will extend null | undefined.
+// Therefore this function has return type never
 // as long as no key is assigned to multiple brands.
 const _brands_dont_overlap = (
-  keys_assigned_to_multiple_brands: KeysByValue<UrlState, null | undefined>,
+  keys_assigned_to_multiple_brands: KeysByValue<UrlState, null | undefined>
 ): never => keys_assigned_to_multiple_brands
 ```
 
 Same basic thing; an identity function with some input type and some output type. Here, we are using the function to check that anything of type `KeysByValue<UrlState, null | undefined>` (keys of `UrlState` which are mapped to `null | undefined` rather than being mapped to `Value<Brand>`) is of type `never`.
 
-That's a little strange, since `never` is defined as a type which has no values. Then another way to interpret this function is that it is claiming that there are _no values_ which satisfy `KeysByValue<UrlState, null | undefined>`. Since a key would satisfy that type if and only if it had been assigned to multiple brands, this will cause a type error if there is any key with multiple brands because the return type will be the union of such keys rather than `never`. 
+That's a little strange, since `never` is defined as a type which has no values. Then another way to interpret this function is that it is claiming that there are _no values_ which satisfy `KeysByValue<UrlState, null | undefined>`. Since a key would satisfy that type if and only if it had been assigned to multiple brands, this will cause a type error if there is any key with multiple brands because the return type will be the union of such keys rather than `never`.
 
 That's it! those are all of the tools we use to get our guarantees. We use a type level proof to show that no two components register the same keys, and we use branding to guarantee that each component only accesses the keys that it registered. Now that you've seen all of the fanciness, it's worth going back through the code at the top and seeing if the complex signatures make more sense now. I've also set up a [playground](https://www.typescriptlang.org/play?ts=4.3.2#code/PTAEFUBcEsBtsgT1EgDgUwM4FgBQ6APVAewCdIVENQA1AQ1gFd0AeAIVLoDsATUQyOl6ZQmSKWhcA5gD5QAXlAAKMROmgAZKADeAfQBGnXgC5QHbjwC+ASlAAfUF0axY90I17oAZpPQ88eIQk5JTUAMqQdIIAYmQA0uiImCzgpLAJSfwEgsKi4pJSADRmRnwCQjwiqgVyitp4oKAA2gDWiaCSEGkZmAC6pvRMrOa8MniWDaABuCCgUtAAbuigALbLDK7EXigAFsttmVug3KDE+gBW6ADGFGjLAPKgAO470Fc7oDt0S6ALDMwiSBfCjlXiiYhrULLGiBIhkW5UZY9NiIQbMFiPUGVHSWYo0Wo6VrtToHI73fqge5ExC9LI5bE0UAAflAB1Api46CWpEs1LJvWms3mP0hQOWZ0uN1AXjIaz4R0wjHerMSOHwcJCd1AAAU3i0UWjWJjshURNpcbQCbqri0McVkaj-ka8TIxrhpngQFcISROVxIABBYB3TAAOkgathwQR1BGPADClAAHJvStfUJA0nplqegnFEmZcQk24k-o6KRiw5S3QAF5Z93q6NQrqwCJRdB50BtmLxVUsXPFOMBt2e4Cp9P+tjBxFhiPTILw5txtiJlM+4h+yBset4HOqlf5tiFyvJthlisls+1neNxda1KtyKCA9dp-oWKkHr9-eD0psEczGO66bgAwtOGCzpGt6aoiJQWCBq7jhuGYgTee5JAh+YgceJYgeeJ5Jnh17zhqMbLA+3boJhr7th+X49CBv7wQBHqAYwmDoA+2rlnQKxQfeaSUYmFFvgmWgie2K7iYJb4gdmsFxiIigSYIfLbCp6C0liZoGKUpiSF46CkHBvCWG4TguG4Hg8N4vh8Cycbso4XJGYKYBiqAqDlhQRweeAABKAAyeTtrsUSgPo6CwBuUiAsQ4KQoYFhRnesGUR+7ClHSpomZUVp6gaTopDJ7Z4kVcauqxswbrAyAHCIdCYJg0BSJyfCQPFKzODAqCwMsSW5E8cCuFijjOK4DjWbZbWhqAAAqrwiNADXNn1SyuKgpDEL5wK7EZ6ykMsXDxYqyr1aGeDelwYigLpFiYLoPAbpAujENysB0KgiZKJMjT1bojXNa1fi6B1uhdbAPV9XdwimA6hrFY+pVjZZk2eD4bUyMUeDWByLnGfIcj-YDLVtaDxDg910C9egMOVCRTZXTd7GcWk3GcHxiaZRY2W5IpMhKLjzTpWQ3OjMUSgZhIWCmOzMAMCwIukGLPCurYhO-MQ0A8LSGv1LgjQgAtyzQGmfVrP6UTQBupzbB5OzbS0HQiMdty7ZIgiHWIBTFDzACSoBPVwSYUC0x1PJ8xARx1gfxYddBSkCBRLVwxyeR9iBSFt1kXQboCHZAjCkKnFmuI1xxcIg4x4EAA) where you can play around with a minimal version of the complete product, to see where type errors would appear if you break those guarantees and to see if you can get this to be any less eldritch nonsense than my version.

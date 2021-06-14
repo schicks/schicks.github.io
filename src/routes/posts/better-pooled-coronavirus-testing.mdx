@@ -4,13 +4,13 @@ date: 2020-08-26
 status: published
 blurb: We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by pooling tests.
 ---
+
 <script>
-  import VegaLite from '../../components/VegaLite.svelte';
-  // https://github.com/pngwn/MDsveX/issues/76
-  // problems in mdsvex make katex processing a bear.
-  // defining n avoids a parse error, but n is never used.
-  const n = null;
+  import VegaLite from '../../components/VegaLite.svelte'; //
+  https://github.com/pngwn/MDsveX/issues/76 // problems in mdsvex make katex processing a bear. //
+  defining n avoids a parse error, but n is never used. const n = null;
 </script>
+
 <style>
   div.centered {
     display: flex;
@@ -35,7 +35,7 @@ When too many people in an area are sick, pooled tests come back positive so fre
   <VegaLite
     spec={{
       description:
-        "When more people in the population are sick, pooled tests come back positive far too frequently.",
+        'When more people in the population are sick, pooled tests come back positive far too frequently.',
       width: 400,
       height: 200,
       data: {
@@ -43,41 +43,40 @@ When too many people in an area are sick, pooled tests come back positive so fre
           start: 0,
           stop: 16.1,
           step: 0.1,
-          as: "percent",
-        },
+          as: 'percent'
+        }
       },
       transform: [
         {
-          calculate: "[5,10,25]",
-          as: "pool_size",
+          calculate: '[5,10,25]',
+          as: 'pool_size'
         },
         {
-          flatten: ["pool_size"],
+          flatten: ['pool_size']
         },
         {
-          calculate:
-            "100-pow((100-datum.percent)/100, datum.pool_size-1) * 100",
-          as: "ppr",
-        },
+          calculate: '100-pow((100-datum.percent)/100, datum.pool_size-1) * 100',
+          as: 'ppr'
+        }
       ],
-      mark: "line",
+      mark: 'line',
       encoding: {
         x: {
-          field: "percent",
-          type: "quantitative",
-          title: "Percentage of the Population with COVID",
+          field: 'percent',
+          type: 'quantitative',
+          title: 'Percentage of the Population with COVID'
         },
         y: {
-          title: "False Positive Rate",
-          field: "ppr",
-          type: "quantitative",
+          title: 'False Positive Rate',
+          field: 'ppr',
+          type: 'quantitative'
         },
         color: {
-          title: "Pool Size",
-          field: "pool_size",
-          type: "nominal",
-        },
-      },
+          title: 'Pool Size',
+          field: 'pool_size',
+          type: 'nominal'
+        }
+      }
     }}
   />
 </div>
@@ -115,67 +114,66 @@ The probability of a false positive under the new method ($\Rho(A)$) is the prob
 <div class="centered">
   <VegaLite
     spec={{
-  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-  "description":
-    "The false positive rate of the improved testing is significantly lower than with simply pooled tests.",
-  "data": {
-    "sequence": { "start": 0, "stop": 16.1, "step": 0.1, "as": "percent" }
-  },
-  "transform": [
-    { "calculate": "[5,10,25]", "as": "pool_size" },
-    { "flatten": ["pool_size"] },
-    { "calculate": "3", "as": "array_size" },
-    {
-      "calculate":
-        "100-pow((100-datum.percent)/100, datum.pool_size - 1) * 100",
-      "as": "P(T)"
-    },
-    {
-      "calculate": "(pow(datum['P(T)'] / 100, datum.array_size))*100",
-      "as": "P(A)"
-    }
-  ],
-  "hconcat": [
-    {
-      "mark": "line",
-      "encoding": {
-        "x": {
-          "field": "percent",
-          "type": "quantitative",
-          "title": "Percentage of the Population with COVID"
+      $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
+      description:
+        'The false positive rate of the improved testing is significantly lower than with simply pooled tests.',
+      data: {
+        sequence: { start: 0, stop: 16.1, step: 0.1, as: 'percent' }
+      },
+      transform: [
+        { calculate: '[5,10,25]', as: 'pool_size' },
+        { flatten: ['pool_size'] },
+        { calculate: '3', as: 'array_size' },
+        {
+          calculate: '100-pow((100-datum.percent)/100, datum.pool_size - 1) * 100',
+          as: 'P(T)'
         },
-        "y": {
-          "field": "P(T)",
-          "type": "quantitative"
-        },
-        "color": {
-          "field": "pool_size",
-          "title": "Pool Size",
-          "type": "nominal"
+        {
+          calculate: "(pow(datum['P(T)'] / 100, datum.array_size))*100",
+          as: 'P(A)'
         }
-      }
-    },
-    {
-      "mark": "line",
-      "encoding": {
-        "x": {
-          "field": "percent",
-          "type": "quantitative",
-          "title": "Percentage of the Population with COVID"
+      ],
+      hconcat: [
+        {
+          mark: 'line',
+          encoding: {
+            x: {
+              field: 'percent',
+              type: 'quantitative',
+              title: 'Percentage of the Population with COVID'
+            },
+            y: {
+              field: 'P(T)',
+              type: 'quantitative'
+            },
+            color: {
+              field: 'pool_size',
+              title: 'Pool Size',
+              type: 'nominal'
+            }
+          }
         },
-        "y": {
-          "field": "P(A)",
-          "type": "quantitative"
-        },
-        "color": {
-          "field": "pool_size",
-          "title": "Pool Size",
-          "type": "nominal"
+        {
+          mark: 'line',
+          encoding: {
+            x: {
+              field: 'percent',
+              type: 'quantitative',
+              title: 'Percentage of the Population with COVID'
+            },
+            y: {
+              field: 'P(A)',
+              type: 'quantitative'
+            },
+            color: {
+              field: 'pool_size',
+              title: 'Pool Size',
+              type: 'nominal'
+            }
+          }
         }
-      }
-    }
-  ]
-}}
+      ]
+    }}
   />
 </div>
 
