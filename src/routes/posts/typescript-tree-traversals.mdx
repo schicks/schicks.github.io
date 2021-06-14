@@ -1,0 +1,184 @@
+---
+title: Tree Traversals in Typescript
+date: 2021-04-20
+status: published
+blurb: In a search engine, we might want to be able to slice and dice the search results that came back by three different facets; by content type, by content level, and by timeframe. 
+---
+In a search engine, we might want to be able to slice and dice the search results that came back by three different facets; by content type, by content level, and by timeframe. 
+
+```ts
+// what is a facet?
+type ContentType = "videoCourse" | "interactiveCourse" | "project"
+type Level = "beginner" | "intermediate" | "advanced"
+type TimeFrame = "lastSixMonths" | "lastYear" | "older"
+```
+
+When we apply a filter using one of these facets we want it to affect the counts when we are breaking down along some other facet, but not when we are looking for the counts on that facet. For example, when filtering to intermediate courses, we don't want that filter to appear to be applied when trying to find out how many beginner courses there were, or we would just always get zero.
+
+```ts
+// what does an aggregation look like?
+type EsAggregation = { aggregations: { 
+	contentType: {
+		key: ContentType
+		levels: {
+			buckets: {
+				key: Level
+				timeFrame: {
+					buckets: {
+						key: TimeFrame,
+						doc_count: number
+					}[]
+				}
+			}[]
+		}
+	}
+}}
+```
+
+We know that down at the leaf nodes of this tree we have all of the information we need to give any of the counts we are interested in. Particularly, leaf nodes (after processing) might look something like this.
+
+```ts
+// an aspirational type. All the context we could have down at the bottom of the tree.
+type Leaf = {
+  contentType: ContentType,
+  level: Level,
+  timeFrame: TimeFrame
+  count: number
+}
+```
+
+If we can convert the elasticsearch aggregations to a flat list of leaf nodes in this form, it becomes much easier to ask questions about counts broken down by any given facet.
+
+```ts
+const flatten = (
+	{aggregations: {contentType: {buckets: ctBuckets}}}: EsAggregation
+): Leaf[] => ctBuckets.reduce<Leaf[]>((
+	ctLeafs, 
+	{key: contentType, levels: {buckets: levelBuckets}}
+) => levelBuckets.reduce((
+	levelLeafs,
+	{key: level, timeFrame: {buckets: timeBuckets}}
+) => timeBuckets.reduce((
+    timeLeafs,
+    {key: timeFrame, doc_count: count}
+) => [
+    ...timeLeafs,
+    {contentType, level, timeFrame, count}
+], levelLeafs)
+, ctLeafs)
+, [])
+
+```
+
+The idea here is that at each step down the tree, we can get the information we want from that level in context and it will be available when we get to the leaf level through closure. When we get to the leaf level, we reach up to the `timeBucket` in context for a `TimeFrame` and a `count`, the `levelBucket` in context for a `Level`, and the `ctBucket` in context for a `contentType`. 
+
+This process could also be seen as "denormalizing" the tree. We are taking information that is held in common by the interior nodes of the tree, and duplicating it down to every leaf node. The result is a flat structure that is much easier to iterate over, but that contains duplicate information. What if we just wanted to describe how to iterate over the structure without explicitly flattening it?
+
+```ts
+// What context do we want from a leaf?
+type Reducer<T> = (
+	state: T, 
+	leaf: Leaf
+) => T
+
+// How do we put the reducer in that context?
+const reduce = <T,>(
+	{aggregations: {contentType: {buckets: ctBuckets}}}: EsAggregation,
+	reducer: Reducer<T>,
+	initialState: T
+): T => ctBuckets.reduce<T>((
+	ctState, 
+	{key: contentType, levels: {buckets: levelBuckets}}
+) => levelBuckets.reduce((
+	levelState,
+	{key: level, timeFrame: {buckets: timeBuckets}}
+) => timeBuckets.reduce((
+    timeState,
+    {key: timeFrame, doc_count: count}
+) => reducer(timeState, {timeFrame, level, contentType, count})
+, levelState)
+, ctState)
+, initialState)
+```
+
+This is structurally the same, but now generic over which reducing operation. The type parameter here lets us tie together the initial state type, the output type, and the signature of the reducer. In fact, we can get back flatten by providing an appropriate reducer.
+
+```ts
+const flatten = (agg: EsAggregation): Leaf[] => reduce<Leaf[]>(
+	agg,
+	(leafs, leaf) => [
+		...leafs,
+		leaf
+	],
+	[]
+)
+```
+
+What the reduce function is allowing us to do here is separate the complex logic of *how* we iterate over this structure from the comparatively simple logic of what we want to do with the result of that iteration. We have created a context in which we have all of the information we need, and the reduce function allows us to run arbitrary code within that context. Now it becomes easy to get the counts broken down by any given facet.
+
+```ts
+// counts broken down by a facet
+type CountsBy<T extends string> = {[key in T]: number}
+
+const countsByTime = (agg: EsAggregation): CountsBy<TimeFrame> => reduce(
+	agg,
+	(countsSoFar, {timeFrame, count}) => ({
+		...countsSoFar,
+		[timeFrame]: countsSoFar[timeFrame] + count
+	}),
+	{lastSixMonths: 0, lastYear: 0, older: 0}
+)
+```
+
+The related functions for other facets are a little trickier because our time bins overlap, which needs to be accounted for by our reducer.
+
+```tsx
+const countsByLevel = (agg: EsAggregation): CountsBy<Level> => reduce(
+	agg,
+	(countsSoFar, {level, timeFrame, count}) => (timeFrame === 'older' 
+		? {
+			...countsSoFar,
+			[level]: countsSoFar[level] + count
+		} 
+		: countsSoFar),
+	{beginner: 0, intermediate: 0, advanced: 0}
+)
+```
+
+How do we ask about the count given some set of filters? simple, we just add that filtering logic to our reducing function.
+
+```ts
+type Filter = {
+	contentType: ContentType[]
+	level: Level[]
+	timeFrame: TimeFrame[]
+}
+const inFilter = (
+	{contentType, level, timeFrame}: Leaf, 
+	filter: Filter
+): boolean => (
+	(filter.contentType.length === 0 || filter.contentType.includes(contentType)) &&
+	(filter.level.length === 0 || filter.level.includes(level)) &&
+	(filter.timeFrame.length === 0 || filter.timeFrame.includes(timeFrame))
+)
+
+const filteredCountsByLevel = (
+	agg: EsAggregation, 
+	filter: Filter
+): CountsBy<Level> => reduce(
+	agg,
+	(countsSoFar, leaf) => (
+		inFilter(leaf, {...filter, level: []})
+		? {
+			...countsSoFar,
+			[leaf.level]: countsSoFar[leaf.level] + leaf.count
+		}
+		: countsSoFar
+	),
+	{beginner: 0, intermediate: 0, advanced: 0}
+)
+```
+
+Again, we separate our concerns. One function for the logic of deciding whether a leaf satisfies a filter, one function for counting up over leaves, and one function for finding the leaves we want to traverse over. Each individual function is easy to describe and therefore easy to test. Even better, they give us a vocabulary that makes their composition easy to describe; "count the items under each leaf in the tree that satisfies the filter". Initially, setting the level in the filter to be the empty array might seem like a wart (and maybe it is, you can have your own aesthetic preferences). But it also has a nice clean interpretation; "when breaking down by level, pretend like there isn't a level filter."
+
+[Typechecked playground demonstrating the code in this article](https://www.typescriptlang.org/play?ssl=133&ssc=2&pln=105&pc=1#code/PTAEHcAsEMBdQJYGdTVAM2gYwKawPwBQsAngA46gDCA9gHaw4MAq5lAvKAEQBuCAJjhq0ArgCckOLqAA+3BAxxjssBDxyiJU2dzJiaAKxxZYXYm1AAZHOoA2oTlwBGOAOYK6S6XK4LGYgFscfgQ4bR9ofh5oOlx+M1IKUGYEIIAxZSCHbltoJFgAZQQADwBZelhIJG8cvNgATRxoMRquGltBFsJzJIBRJABBV1cxNzgEemyAb1Rh0ddx+iQALlAZwgBILAqmWFYKVanCUBPTk6cRLABrPBW147PHk5uSVdpFFjYHp7PbGxxbHcjj8QaALtdbodvqCQS9VtY7NCYU9VOlMjgocisWDLjdYECkdiYXDkqkcBloEEADSEokg-g0LAAfW2IgYqzoIgCLjEtLpJwAvgBtAC6fKxAvFP2FYolfJl0MlAslPUo1mg6GmD22Hz2bDeO0+FBpJz+dnh-1sJtAqPJ6NWKTRlJw2pobNgHK5PMIKp1+QwuVgjDo2QAFJsptA5mNVEtDjrg3qDmtwXi7iYAEK427KgWrfpDEYxiZ0QgASgtGtFDgAfKBM9n8QA6Ub8S44AA86vQoprofDW1g3aQVNAEZJCd2+xwo7NAKBqchoDntizEPxyvLteXlrXaZbwXb-c2K+HNI2UxJK9HtopQUOi-xq1te5zkrL25fjaQB7buGPZy2me0KXjgrw2mSd4zqADLMqy7L1m6DDvtuQrQk2GFAU06AjiBk5GtB14QU61KIe6koirOlrDmWhCjiYNF0aAoq0aqoAAEqHrgYgdswdacAO+RhA6o4nthlboFu7B1sw3QgKAAASNDgDBNAQJQZAiPAlSUK27ZiIgIaVHAiGKMUBCEH68B6bg2S8VSfYRlGRYLLGdBAvhSYYim36rA265ILm+aDNGrklueNlKKsnF-kovE1ueCgIKo0C2AUsDCck5YOtu-n7pF8XHoO6VhKJF4ToaXlUXYC6+TudivhuKHSfVAKNT+kVFSuJWMOeoHgURt72j5AXPmS7Wbh+LVfgFv5HuGgFkj1M4gSSQ3OqOsEskhHpkchUl1pFYihray2jlM62kURnnTvRO0CmW1UAsttH0YUGWMK9hnJaEaUfTgrFWQGcDBkM0AKGGznBYW8yLHQFZWNh1YtQV3a9gOznnqGfwaiOO4alNdZoRsGwYU2OM4eeGwU5slGbKK5bdIklCiAwSAZiQvGgDg5lMPwKD5GICiuPxaxCi8hnJCKnrckoKqWUs8DwfiHOOhwoChlDoAFqFcMI6zKuc2rUH8YdXE4BjwxY8rSAFDQaTNOdl3QcrD3bqGRwk2TNt2w7YhU0KzvS3t+K+80geQeiIqgAA1CHmwPX1uT5EUZQVFUqwAAyznUjTNFno7tJ0Wfvt0QM2xzCIApDwzQ7rbn6zt7Oc1Xtim6AnWbJjmyhj79uO2sg2RxtIduy1J3D1k7DT6AADkRdKLPY4k-g9wk6TGF937VMbEKK7B1v4f77H8ckwKy8bH5Tdh2Ij0Ri47h0J4YgF4Z-hBCEmXZ6gUQxHEJeMzYmkBAth-Bai2JVacBpdTTgZtTS0Fo7BwOdg6SeOAGaSiBgoYBoClBhgjDdNgT0rTETtM6PMiMNRlXQCA-wqwcH+GymCGg7QmghnHj3GhuCxBNkIRQcmTBXCVAcDPTOsg5BcP8LwyBbAmwKCwLYEQggkC9xkRQMsH4ABkmjOG0KUAIuwAi6BCMgCIzgYiZASL0TwlccjYiKOUdjS0GjQDaN0dwpszsjEmLMaACxViPFePkQ4nAKjnYaMAUDSRShggG2bq3fBGwtY6xcnDah1j6HWKYXEjmXZLTt07kkq2PdD7+3xugQmGtNgbGwdYpxVC1hk2iWUlcqxRQPWqavT2XtN7X37v7apu8KYGIBAfPpfs97YRGbYaOcdhnK2qZKEmV93S236ZsO+F4H4eCin40cfglAf1CIwV+kRoixGCAAssQA)
