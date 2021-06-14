@@ -9,17 +9,17 @@
 
 		
 
-		<link rel="modulepreload" href="/./_app/start-ad316d14.js">
-		<link rel="modulepreload" href="/./_app/chunks/vendor-24f10c49.js">
-		<link rel="modulepreload" href="/./_app/pages/__layout.svelte-49974530.js">
-		<link rel="modulepreload" href="/./_app/pages/posts/type-safe-url-wrangling.mdx-21cec324.js">
-		<link rel="modulepreload" href="/./_app/chunks/blog-ede6f8b8.js">
+		<link rel="modulepreload" href="/./_app/start-3ae93c86.js">
+		<link rel="modulepreload" href="/./_app/chunks/vendor-bad38b9f.js">
+		<link rel="modulepreload" href="/./_app/pages/__layout.svelte-952bfac6.js">
+		<link rel="modulepreload" href="/./_app/pages/posts/type-safe-url-wrangling.mdx-847e736e.js">
+		<link rel="modulepreload" href="/./_app/chunks/blog-95a4f8f6.js">
 		<link rel="stylesheet" href="/./_app/assets/start-a8cd1609.css">
-		<link rel="stylesheet" href="/./_app/assets/pages/__layout.svelte-7ad9140d.css">
+		<link rel="stylesheet" href="/./_app/assets/pages/__layout.svelte-6283d278.css">
 		<link rel="stylesheet" href="/./_app/assets/blog-5d13c88b.css">
 
 		<script type="module">
-			import { start } from "/./_app/start-ad316d14.js";
+			import { start } from "/./_app/start-3ae93c86.js";
 			start({
 				target: document.querySelector("#svelte"),
 				paths: {"base":"","assets":"/."},
@@ -32,8 +32,8 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("/./_app/pages/__layout.svelte-49974530.js"),
-						import("/./_app/pages/posts/type-safe-url-wrangling.mdx-21cec324.js")
+						import("/./_app/pages/__layout.svelte-952bfac6.js"),
+						import("/./_app/pages/posts/type-safe-url-wrangling.mdx-847e736e.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
@@ -49,8 +49,9 @@
     <div id="svelte">
 
 
-<header class="svelte-7k3ndy"><a href="/"><h1>Simon would have said</h1></a></header>
-<div class="body svelte-7k3ndy"><article><h2>Type Safe URL Wrangling in React</h2>
+<header class="svelte-1oewi5z"><a href="/"><h1>Simon would have said</h1></a>
+  <div class="links svelte-1oewi5z"><a href="/whos-simon">Who&#39;s Simon?</a></div></header>
+<div class="body svelte-1oewi5z"><article><h2>Type Safe URL Wrangling in React</h2>
   <p>Search params in the URL are an underrated way to store state in react applications. While they can be somewhat less ergonomic than state from <code>useReducer</code>, they have the major advantage of being more directly accessible to the user. This enables things like allowing the user to share links to their particular state, or allowing bookmarks to “remember” state which would be forgotten on page reloads if it were stored within react. However, it is important to understand the various bumps and ugliness that come along with search params.</p>
 <p>Because the user has direct access to them, it’s hard to make strong type guarantees about what you will find when decoding a URL, and so it is important to <a href="https://www.pluralsight.com/tech-blog/taming-dynamic-data-in-typescript/" rel="nofollow">parse values</a> whenever you pull them out of the URL.</p>
 <p>Also, when multiple components in your application want to use search params you can run into race conditions that can be infuriating to debug. However, just because we can’t make type level guarantees about the <em>values</em> in the URL doesn’t mean we can’t make type level guarantees about the <em>keys</em>. What’s important here is to think carefully about what we want the type system to validate for us.
