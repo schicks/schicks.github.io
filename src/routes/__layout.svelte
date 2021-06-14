@@ -1,7 +1,7 @@
 <header>
   <a href="/"><h1>Simon would have said</h1></a>
   <div class="links">
-    <a href="whos-simon">Who's Simon?</a>
+    <a href="/whos-simon">Who's Simon?</a>
   </div>
 </header>
 <div class="body">
