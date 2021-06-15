@@ -5,36 +5,10 @@ status: published
 blurb: We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by pooling tests.
 ---
 
-<script>
-  import VegaLite from '../../components/VegaLite.svelte'
-  //https://github.com/pngwn/MDsveX/issues/76 
-  // problems in mdsvex make katex processing a bear. 
-  // defining n avoids a parse error, but n is never used. 
-  const n = null;
-</script>
-
-<style lang="scss">
-  div.centered {
-    margin: 0 auto;
-    overflow-x: auto;
-  }
-</style>
-
-We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by [pooling tests](https://www.cdc.gov/coronavirus/2019-ncov/lab/pooling-procedures.html). This amounts to pooling samples from a few people together and running one test. This can drastically increase the number of people we can test with the same number of testing kits. However, in areas where the virus is too common it becomes ineffective because almost every pooled test comes back positive. We can improve on this test by utilizing some simple probabalistic techniques. These will allow us to get more information out of a collection of tests than we get out of each test individually.
-
-### The Status Quo
-
-Pooled tests work by combining samples from a small pool of people and running a single test kit against the combined sample. This test kit should come back positive if any of the people in the pool are sick.
-
-- Pooled tests cover more people with the same number of tests
-- When a pooled test is negative, everyone in that pool is presumed negative
-- When a pooled test is positive, each person in the pool needs to be retested.
-
-When too many people in an area are sick, pooled tests come back positive so frequently that it is [no longer worthwhile](https://www.nytimes.com/2020/08/18/health/coronavirus-pool-testing.html), given the cost and risk of reaching out to people to get retested.
-
-<div class="centered">
-  <VegaLite
-    spec={{
+<script context="module">
+  import {loadVegaLiteCharts} from '../../utilities.ts'
+  const charts = {
+    pooledTestFalsePositives: {
       description:
         'When more people in the population are sick, pooled tests come back positive far too frequently.',
       width: 400,
@@ -78,43 +52,8 @@ When too many people in an area are sick, pooled tests come back positive so fre
           type: 'nominal'
         }
       }
-    }}
-  />
-</div>
-
-### Motivation for Improvement
-
-- A **batch** is the whole collection of tests and people we will examine at once.
-- A **pool** is the group of people whose sample was applied to a specific test.
-- A **test array** is the group of tests containing some of a given persons sample. A test array is considered positive if every test in the array is positive.
-
-We can do better than just considering a single pooled test. To start, imagine that one person out of a thousand were sick. We would do this by getting a sample from each person, and labelling them with a number written out in [binary](https://en.wikipedia.org/wiki/Binary_number#Counting_in_binary):
-
-1. $0000000001$
-2. $0000000010$
-3. $0000000011$
-4. $0000000100$
-5. $0000000101$
-
-And so on. The sample numbered 1000 would be written in binary as $1111101000$, taking up ten digits. We would line up the ten test kits so that they matched up with digits of the sample labels. Then we would go through all of the samples, and add a given sample to the pool for a test if the digit of the label for that position was 1. The sick person will have their entire test array come back positive.
-
-There is some weirdness here. For instance, a healthy person could have all of the tests containing their sample come back positive. The sample labeled $1$ would only be in one test because it would only have one digit which was $1$. That test would come back positive about half the time (whenever the sick person had an odd numbered label). This problem gets softened out if we use enough tests that we can make sure everyones test array is the same size. But as long as each test array is a _distinct collection_ of tests, we can gain information about each individual person even though each test we ran were on pools of people.
-
-This means that what we care about is the number of _distinct collections_, rather than the number of tests. That is great, because the number of distinct collections which are subsets of some set goes up way faster than the size of the set. Imagine a card game where you draw a hand of 5 cards. Even though there are only $52$ cards there are $2,598,960$ distinct hands that you might draw.
-
-### A Concrete Example
-
-To show how much we can get out of collections of tests rather than individual tests, lets assume each test array will contain 3 tests. I don't know for sure how many tests we can get out of a single sample, but probably not a whole lot.
-
-We assume that if someone is sick they will have a positive test array. What we want to know is how likely it is that someone who is not sick will have a positive test array.
-
-The probability that one test is positive ($\Rho(T)$) is the probability that some other person in that test pool was positive. This is $\Rho(T) = 1 - (1 - b) ^ {n - 1}$, where $b$ is the baseline population rate of COVID and $n$ is the number of people in a pool. This is also the probability of a false positive under the original pooling method.
-
-The probability of a false positive under the new method ($\Rho(A)$) is the probability that all of the tests in an array are positive. $\Rho(A) = \Rho(T)^m$, where $m$ is the number of tests in an array; in our case 3.
-
-<div class="centered">
-  <VegaLite
-    spec={{
+    },
+    improvedTestComparison: {
       $schema: 'https://vega.github.io/schema/vega-lite/v4.json',
       description:
         'The false positive rate of the improved testing is significantly lower than with simply pooled tests.',
@@ -174,9 +113,85 @@ The probability of a false positive under the new method ($\Rho(A)$) is the prob
           }
         }
       ]
-    }}
-  />
-</div>
+    }
+  }
+  export const load = loadVegaLiteCharts(charts)
+</script>
+<script>
+  export let pooledTestFalsePositives;
+  export let improvedTestComparison;
+
+  //https://github.com/pngwn/MDsveX/issues/76 
+  // problems in mdsvex make katex processing a bear. 
+  // defining n avoids a parse error, but n is never used. 
+  const n = null;
+</script>
+
+<style lang="scss">
+  .centered {
+    @media(min-width: 800px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    overflow-x: auto;
+    figcaption {
+      font-style: italic;
+    }
+  }
+</style>
+
+We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by [pooling tests](https://www.cdc.gov/coronavirus/2019-ncov/lab/pooling-procedures.html). This amounts to pooling samples from a few people together and running one test. This can drastically increase the number of people we can test with the same number of testing kits. However, in areas where the virus is too common it becomes ineffective because almost every pooled test comes back positive. We can improve on this test by utilizing some simple probabalistic techniques. These will allow us to get more information out of a collection of tests than we get out of each test individually.
+
+### The Status Quo
+
+Pooled tests work by combining samples from a small pool of people and running a single test kit against the combined sample. This test kit should come back positive if any of the people in the pool are sick.
+
+- Pooled tests cover more people with the same number of tests
+- When a pooled test is negative, everyone in that pool is presumed negative
+- When a pooled test is positive, each person in the pool needs to be retested.
+
+When too many people in an area are sick, pooled tests come back positive so frequently that it is [no longer worthwhile](https://www.nytimes.com/2020/08/18/health/coronavirus-pool-testing.html), given the cost and risk of reaching out to people to get retested.
+
+<figure class="centered">
+  {@html pooledTestFalsePositives}
+  <figcaption>{charts.pooledTestFalsePositives.description}</figcaption>
+</figure>
+
+### Motivation for Improvement
+
+- A **batch** is the whole collection of tests and people we will examine at once.
+- A **pool** is the group of people whose sample was applied to a specific test.
+- A **test array** is the group of tests containing some of a given persons sample. A test array is considered positive if every test in the array is positive.
+
+We can do better than just considering a single pooled test. To start, imagine that one person out of a thousand were sick. We would do this by getting a sample from each person, and labelling them with a number written out in [binary](https://en.wikipedia.org/wiki/Binary_number#Counting_in_binary):
+
+1. $0000000001$
+2. $0000000010$
+3. $0000000011$
+4. $0000000100$
+5. $0000000101$
+
+And so on. The sample numbered 1000 would be written in binary as $1111101000$, taking up ten digits. We would line up the ten test kits so that they matched up with digits of the sample labels. Then we would go through all of the samples, and add a given sample to the pool for a test if the digit of the label for that position was 1. The sick person will have their entire test array come back positive.
+
+There is some weirdness here. For instance, a healthy person could have all of the tests containing their sample come back positive. The sample labeled $1$ would only be in one test because it would only have one digit which was $1$. That test would come back positive about half the time (whenever the sick person had an odd numbered label). This problem gets softened out if we use enough tests that we can make sure everyones test array is the same size. But as long as each test array is a _distinct collection_ of tests, we can gain information about each individual person even though each test we ran were on pools of people.
+
+This means that what we care about is the number of _distinct collections_, rather than the number of tests. That is great, because the number of distinct collections which are subsets of some set goes up way faster than the size of the set. Imagine a card game where you draw a hand of 5 cards. Even though there are only $52$ cards there are $2,598,960$ distinct hands that you might draw.
+
+### A Concrete Example
+
+To show how much we can get out of collections of tests rather than individual tests, lets assume each test array will contain 3 tests. I don't know for sure how many tests we can get out of a single sample, but probably not a whole lot.
+
+We assume that if someone is sick they will have a positive test array. What we want to know is how likely it is that someone who is not sick will have a positive test array.
+
+The probability that one test is positive ($\Rho(T)$) is the probability that some other person in that test pool was positive. This is $\Rho(T) = 1 - (1 - b) ^ {n - 1}$, where $b$ is the baseline population rate of COVID and $n$ is the number of people in a pool. This is also the probability of a false positive under the original pooling method.
+
+The probability of a false positive under the new method ($\Rho(A)$) is the probability that all of the tests in an array are positive. $\Rho(A) = \Rho(T)^m$, where $m$ is the number of tests in an array; in our case 3.
+
+<figure class="centered">
+  {@html improvedTestComparison}
+  <figcaption>{charts.improvedTestComparison.description}</figcaption>
+</figure>
 
 The probability of a false positive in a simple pooled test is $\Rho(T) = 1 - (1-x)^{n-1}$. In this modified procedure the probability of a false positive is $\Rho(A) = \Rho(T)^m$.
 

@@ -1,0 +1,37 @@
+---
+title: Static rendering in Sveltekit
+date: 2021-06-15 10:44:30
+status: published
+---
+
+<script context="module">
+  import {loadVegaLiteCharts} from '../../utilities'
+  const chart = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Google's stock price over time.",
+    "data": {"url": "https://raw.githubusercontent.com/vega/vega/master/docs/data/stocks.csv"},
+    "transform": [{"filter": "datum.symbol==='GOOG'"}],
+    "mark": "line",
+    "encoding": {
+      "x": {"field": "date", "type": "temporal"},
+      "y": {"field": "price", "type": "quantitative"}
+    }
+  }
+  export const load = loadVegaLiteCharts({chart})
+</script>
+<script>
+  export let chart;
+</script>
+
+[Sveltekit](https://kit.svelte.dev/doc) is pretty neat. I just rewrote [this blog](https://github.com/schicks/schicks.github.io) in it, mostly for fun but also because I was getting tired of how absurdly slow Gatsby was. One of the coolest things about it is how easy it was to set up in a way that would work even if the end user didn't have javascript. Mostly, this was trivial, but getting [Vega graphs](https://vega.github.io/vega/usage/) to render at compile time was a little tricky.
+
+Vega works by taking a JSON specification of a visualization and converting it into HTML. In general, this can't be done statically, because the visualizations can involve interactivity or simulation, but in most cases that I've run into the graph I was trying to produce was in fact static. Creating a [component](https://github.com/schicks/schicks.github.io/blob/main/src/components/VegaLite.svelte) that would render such vega charts with javascript was simple, but when javascript was unavailable all it would ever show was the fallback text. In keeping with the framework-as-a-compiler mindset of Svelte, it seemed like we should be able to do better.
+
+[Sveltekit endpoints](https://kit.svelte.dev/docs#routing) represent code that will run on the "server" and return some data. When using Sveltekit to produce a static site, this means that they run at build time and produce some static result. By setting up an endpoint which returns an image URL of our vega charts, we can get the charts to be rendered to a static image at compile time and embedded in that form into the blog.
+
+{@html chart}
+_This chart is statically rendered! if you disable javascript you'll still be able to see it._
+
+There are real costs to this approach from an ergonomics perspective however. Rather than being able to put the vega specifications inline where the chart will be rendered, they instead need to be specified in a [module level script](https://github.com/schicks/schicks.github.io/blob/main/src/routes/posts/static-rendering-in-sveltekit.mdx), and then pulled in as props in an instance level script. The inline part then becomes an `@html` directive, which still gives me scary `dangerouslySetInnerHTML` feelings.
+
+The [utility](https://github.com/schicks/schicks.github.io/blob/main/src/utilities.ts) for fetching the rendered charts is also significantly harder to read than the original [Svelte component](https://github.com/schicks/schicks.github.io/blob/main/src/components/VegaLite.svelte). In a personal learning project, this complexity is something I'm willing to accept, but in a production space I'd want real evidence that javascript free pages were of value before implementing something like this.
