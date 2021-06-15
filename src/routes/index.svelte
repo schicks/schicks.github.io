@@ -1,9 +1,4 @@
 <script context="module" lang="ts">
-  type Posts = {
-    title: string
-    slug: string
-    blurb: string
-  }[]
   export async function load({ session }: { session: { posts: Posts } }) {
     return {
       props: {
@@ -14,7 +9,8 @@
 </script>
 
 <script lang="ts">
-  export let posts: Posts
+  import type {Post} from '$lib/getPosts'
+  export let posts: Post[]
 </script>
 
 <ul>
