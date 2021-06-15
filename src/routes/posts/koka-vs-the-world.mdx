@@ -113,7 +113,11 @@ Just kidding. They become stupid fast in-place updates with no need for a garbag
 
 Koka does transform those mutable variables into a state effect to make sure to have all of the wonderful functional semantics that help us keep code composable, but it also uses the [Perceus](https://www.microsoft.com/en-us/research/uploads/prod/2020/11/perceus-tr-v1.pdf) compiler to transform that state effect into in-place updates wherever possible. Reuse analysis is even more powerful, taking clean functional expressions like list maps or tree traversals and transforming them into in-place mutations whenever possible, gracefully degrading back to shared memory persistent representations when not. The [Koka book](https://koka-lang.github.io/koka/doc/book.html#sec-fbip) explains this much better than I can, but it is worth glancing at the benchmarks they've done so far.
 
-![benchmark comparing koka to other languages](https://raw.githubusercontent.com/koka-lang/koka/master/doc/bench-amd3600-nov-2020.png)
+
+<img 
+  src="https://raw.githubusercontent.com/koka-lang/koka/master/doc/bench-amd3600-nov-2020.png"
+  style="max-width: 800px;"
+  alt="benchmark comparing koka to other languages">
 
 This unfinished research language can outperform C++. Benchmarks should always be taken with an ocean of salt, and these problems certainly weren't chosen at random, but the firm foundation of Perceus gives me hope that these results are real and will be borne out in practice.
 
