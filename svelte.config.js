@@ -22,6 +22,7 @@ const config = {
     // hydrate the <div id="svelte"> element in src/app.html
     target: '#svelte',
     adapter: adapter(),
+    router: false,
     vite: {
       build: {
         minify: 'esbuild'
