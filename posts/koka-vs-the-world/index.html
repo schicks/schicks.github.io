@@ -17,17 +17,17 @@
 
 		
 
-		<link rel="modulepreload" href="/./_app/start-56fd64fe.js">
+		<link rel="modulepreload" href="/./_app/start-2c97dc3d.js">
 		<link rel="modulepreload" href="/./_app/chunks/vendor-72f1870b.js">
 		<link rel="modulepreload" href="/./_app/pages/__layout.svelte-2c13e277.js">
-		<link rel="modulepreload" href="/./_app/pages/posts/koka-vs-the-world.mdx-bd23f16b.js">
+		<link rel="modulepreload" href="/./_app/pages/posts/koka-vs-the-world.mdx-75848045.js">
 		<link rel="modulepreload" href="/./_app/chunks/blog-4435faab.js">
 		<link rel="stylesheet" href="/./_app/assets/start-a8cd1609.css">
 		<link rel="stylesheet" href="/./_app/assets/pages/__layout.svelte-8eea57c9.css">
 		<link rel="stylesheet" href="/./_app/assets/blog-5d13c88b.css">
 
 		<script type="module">
-			import { start } from "/./_app/start-56fd64fe.js";
+			import { start } from "/./_app/start-2c97dc3d.js";
 			start({
 				target: document.querySelector("#svelte"),
 				paths: {"base":"","assets":"/."},
@@ -41,7 +41,7 @@
 					error: null,
 					nodes: [
 						import("/./_app/pages/__layout.svelte-2c13e277.js"),
-						import("/./_app/pages/posts/koka-vs-the-world.mdx-bd23f16b.js")
+						import("/./_app/pages/posts/koka-vs-the-world.mdx-75848045.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
@@ -126,7 +126,7 @@ fun <span class="token function">test</span><span class="token punctuation">(</s
 <p>Usually, having discovered something beautiful and powerful that checks so many boxes, the cost is performance. Asking computers to do something so completely unrelated to their memory model is expensive, and so such languages usually come with bloated, slow runtimes that do the translation at the last possible minute. Sometimes, very clever compilers do things like tail call optimization to take common functional patterns and statically transform them into loops, but that can only go so far. While the nice tricks Koka is playing to give us mutable variables look like they do in-place updates, they still desugar to slow, piggy functions.</p>
 <p>Just kidding. They become stupid fast in-place updates with no need for a garbage collector.</p>
 <p>Koka does transform those mutable variables into a state effect to make sure to have all of the wonderful functional semantics that help us keep code composable, but it also uses the <a href="https://www.microsoft.com/en-us/research/uploads/prod/2020/11/perceus-tr-v1.pdf" rel="nofollow">Perceus</a> compiler to transform that state effect into in-place updates wherever possible. Reuse analysis is even more powerful, taking clean functional expressions like list maps or tree traversals and transforming them into in-place mutations whenever possible, gracefully degrading back to shared memory persistent representations when not. The <a href="https://koka-lang.github.io/koka/doc/book.html#sec-fbip" rel="nofollow">Koka book</a> explains this much better than I can, but it is worth glancing at the benchmarks they’ve done so far.</p>
-<p><img src="https://raw.githubusercontent.com/koka-lang/koka/master/doc/bench-amd3600-nov-2020.png" alt="benchmark comparing koka to other languages"></p>
+<img src="https://raw.githubusercontent.com/koka-lang/koka/master/doc/bench-amd3600-nov-2020.png" style="max-width: 800px;" alt="benchmark comparing koka to other languages">
 <p>This unfinished research language can outperform C++. Benchmarks should always be taken with an ocean of salt, and these problems certainly weren’t chosen at random, but the firm foundation of Perceus gives me hope that these results are real and will be borne out in practice.</p>
 <p>It is early days for Koka. It isn’t ready for production, and new languages usually aren’t adopted, but there is <em>so</em> much in Koka that is fundamentally better than existing languages that I would be heartbroken if these things didn’t catch on. Maybe it is a stepping stone, and something else will productionalize these ideas, but it is hard to imagine changing very much. Koka improves on the state of the art in so many places that it feels to me like making it productional is the path forward, rather than adopting these ideas into other languages.</p></article>
 </div>
