@@ -1,5 +1,8 @@
 <script context="module" lang="ts">
-  export async function load({ session }: { session: { posts: Posts } }) {
+  import type {Post} from '$lib/getPosts'
+  export async function load(
+    { session }: { session: { posts: Post[] } }
+  ) {
     return {
       props: {
         posts: session.posts
@@ -9,7 +12,6 @@
 </script>
 
 <script lang="ts">
-  import type {Post} from '$lib/getPosts'
   export let posts: Post[]
 </script>
 
@@ -30,7 +32,7 @@
   }
   li {
     padding-left: 0;
-    a:hover {
+    a {
       text-decoration: none;
     }
     :hover h2 {

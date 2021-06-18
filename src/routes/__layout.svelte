@@ -46,6 +46,9 @@
     padding: 0 1.45rem;
     min-height: 90px;
     margin-bottom: 1.45rem;
+    a {
+      text-decoration: none;
+    }
     .links {
       font-size: 20px;
       font-weight: 600;
@@ -58,7 +61,6 @@
         padding : 0 5px 5px 0;
         border-right: 2px solid black;
         margin: 0;
-        text-decoration: none;
         &:hover {
           border-bottom: 2px solid black;
         }

@@ -26,3 +26,14 @@ export const loadVegaLiteCharts = <T extends {[name: string]: TopLevelSpec}>(
   ))
   return {props}
 }
+
+export const debounce = <Args extends unknown[]>(
+  cb: (...args: Args) => void, 
+  cooldown: number
+): ((...args: Args) => void) =>  {
+  let debounceTimer: number | undefined = undefined
+  return (...args: Args): void => {
+    window.clearTimeout(debounceTimer)
+    debounceTimer = window.setTimeout(() => cb(...args), cooldown)
+  }
+}

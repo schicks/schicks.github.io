@@ -1,0 +1,90 @@
+---
+title: Visualizing voting systems with Yee Diagrams
+date: 2021-06-16 09:45:32
+status: draft
+---
+
+<script>
+  import YeeDiagram from '$lib/YeeDiagram/index.svelte'
+  import IntersectionObserver from '$lib/IntersectionObserver.svelte'
+  import {debounce} from '$lib/utilities'
+
+  let approvalRadius = 40
+
+  const updateRadius = debounce(e => {
+    approvalRadius = e.target.value
+  }, 200)
+</script>
+<style>
+  label {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 20px auto;
+  }
+</style>
+
+How democratic is a voting system? Voting often gets talked about as the _definition_ of democracy, but there are lots of different ways we can vote. 
+
+In most US elections, we vote by selecting one candidate from a list, and whichever candidate gets the most votes wins. This is called [plurality voting](https://en.wikipedia.org/wiki/Plurality_voting) because whichever candidate has a plurality of votes (more than any other candidate) wins.
+
+<YeeDiagram 
+  candidates={[
+    [50,60],
+    [50,40]
+  ]} 
+  label="You can drag the candidates around to see how the result would change."
+/>
+
+This visualization is called a [Yee diagram](https://electowiki.org/wiki/Yee_diagram). It imagines a two dimensional political spectrum, where every voter and every candidate can be described by some point in the plane. The colored circles represent candidates in an election, and each point on the plane is colored based on which candidate would win if the average position over all voters was that point. Grey represents a tie.
+
+In two candidate elections, such a diagram looks fairly predicatable. Each point in the plane is colored based on the candidate it is closest to. Any distortion from a [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram) is just the result of noise introduced from sampling possible elections.
+
+To show how the distribution of voters effects the outcome of the election, we need to simulate a bunch of elections, which requires making some assumptions.
+
+- Voters vote for whichever candidate is closest to them
+- Voters are [normally distributed](https://en.wikipedia.org/wiki/Normal_distribution) around some central point
+- Things don't change very much with the number of voters, so we will only use 50.
+
+Some of these might feel questionable. For instance, ties certainly get less likely with more voters. But we can revisit that later.
+
+<IntersectionObserver initialHeight={300}>
+  <YeeDiagram 
+    candidates={[
+      [50,60],
+      [48,48],
+      [50,40]
+    ]} 
+    label="With three candidates we get some surprising and unfortunate effects."
+  />
+</IntersectionObserver>
+
+With three candidates, plurality voting can produce some very strange results. Here, the central candidate won't win even when they are directly at the center of public opinion. This is effectively what is popularly known as the [spoiler effect](https://electionscience.org/library/the-spoiler-effect/), where a third candidate splits the vote of some group in such a way that changes the result of the election.
+
+Plurality voting is not the only voting method we could use, however. Other methods are in use even within the US. [St. Louis](https://electionscience.org/press-releases/st-louis-voters-use-new-approval-voting-system-in-march-primary-election/) recently restructured their primaries to use [approval voting](https://electionscience.org/approval-voting-101/), and [Maine](https://apnews.com/article/election-2020-referendums-elections-maine-courts-b5ddd0854037e9687e952cd79e1526df) used [ranked choice voting](https://en.wikipedia.org/wiki/Instant-runoff_voting) in the last presidential election. How do these other systems look within a Yee diagram?
+
+Approval voting ballots look very similar to plurality voting ballots, but voting involves selecting as many of the candidates as you would like rather than only your favorite. If plurality voting is asking voters who their favorite candidate is, approval voting is asking who voters would accept as the winner. 
+
+This means that there is another parameter we have to think about in the context of approval voting; how accepting are you? If no one is close enough to you, will you just refuse to vote? Will you vote for everyone other than your least favorite candidate? Will you dismiss the differences between voting systems as idle nonsense that only some nerd would care about, and just vote for your favorite?
+
+This is the question of voter strategy, and because drawing a Yee diagram involves simulating elections we need to make some decision about how we expect voters to behave. For this diagram, I assumed that voters would vote for anyone within a small circle around them.
+<IntersectionObserver initialHeight={300}>
+  <YeeDiagram 
+    candidates={[
+      [50,60],
+      [48,45],
+      [50,40]
+    ]} 
+    method="approval"
+    r={approvalRadius}
+    label="Approval voting can help avoid the spoiler effect."
+  />
+</IntersectionObserver>
+<label>
+  Change the acceptance radius to see how it impacts the results.
+  <input type="range" on:input={updateRadius} min={1} max={80}>
+</label>
+
+To me, this diagram looks a lot more sane. Candidates close to the center of public opinion win, unless the public does not express any preference. While our simplified example has quite a lot of ties, in reality I don't think this is very likely, because what people will accept is a social decision; people are more likely to be accepting if they don't think the candidates close to them are likely to win.
+
+Approval voting has the property of encouraging compromise. Because candidates close to the center of public opinion will get votes from all sides, they are more likely to be elected than fringe candidates. This is very different from plurality voting, where central candidates tend to just throw the election to whichever candidate is further from them.

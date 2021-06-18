@@ -12,7 +12,7 @@ const config = {
     preprocess(),
     mdsvex({
       extensions: ['.mdx'],
-      layout: './src/components/blog.svelte',
+      layout: './src/lib/blog.svelte',
       remarkPlugins: [headings, math],
       rehypePlugins: [katex, { output: 'html' }]
     })
