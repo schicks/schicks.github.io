@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import type {Delaunay, Voronoi, Selection} from 'd3'
+  import type {Voronoi, Selection} from 'd3'
   import type {Point, NamedPoint} from './types'
   import {plurality, approval} from './elections'
   const methods = {
@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts">
-  import * as d3 from 'd3'
+  import {scaleOrdinal, randomNormal, Delaunay, drag, select} from 'd3'
   import { onMount } from 'svelte'
 
   export let label: string | undefined
@@ -22,7 +22,7 @@
 
   let namedCandidates = candidates.map(([x, y], i) => ({x, y, i}))
 
-  const colors = d3.scaleOrdinal(
+  const colors = scaleOrdinal(
     namedCandidates.map(({i}) => i), 
     [
       '#009E73',
@@ -38,7 +38,7 @@
   let height: number
   let width: number
   let regionSelection: Selection<SVGPathElement, [Point, NamedPoint], SVGGElement, unknown> | undefined = undefined
-  const voterDistribution = d3.randomNormal(0, 20)
+  const voterDistribution = randomNormal(0, 20)
   const voters: Point[] = new Array(nVoters)
     .fill(null)
     .map(() => [voterDistribution(), voterDistribution()])
@@ -59,7 +59,7 @@
       }
     }
 
-    voronoi = d3.Delaunay
+    voronoi = Delaunay
       .from(winners, ([[x]]) => x, ([[_, y]]) => y)
       .voronoi([0, 0, width, height])
     regionSelection
@@ -72,16 +72,16 @@
   created += 1
   const id = `yee-diagram-${created}`
 
-  const drag = d3.drag<SVGCircleElement, NamedPoint>()
+  const dragBehavior = drag<SVGCircleElement, NamedPoint>()
     .on('drag', function(event, d: NamedPoint) {
-      d3.select(this)
+      select(this)
         .attr('cx', d.x = event.x)
         .attr('cy', d.y = event.y)
     })
     .on('end.update', () => updateWinners())
 
   onMount(() => {
-    const parent = d3.select<SVGSVGElement, unknown>('#'+id)
+    const parent = select<SVGSVGElement, unknown>('#'+id)
     regionSelection = parent
       .append('g')
       .attr('stroke', 'none')
@@ -101,7 +101,7 @@
       .attr('cy', d => d.y)
       .attr('r', 2)
       .attr('fill', ({i}) => colors(i))
-      .call(drag)
+      .call(dragBehavior)
 
   })
 
