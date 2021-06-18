@@ -17,7 +17,7 @@
   export let candidates: Point[]
   export let nVoters: number = 100
   export let r: number = 20
-  export let fidelity = 100
+  export let fidelity = 20
   export let method: keyof typeof methods = 'plurality'
 
 
@@ -45,11 +45,12 @@
   $: updateWinners = () => {
     if (!regionSelection) return
 
+    const cellSize = 100 / fidelity
     for (let x=0; x < fidelity; x++) {
       const offset = fidelity * x
       const jitter = x % 2 ? 0 : 0.5
       for (let y=0; y < fidelity; y++) {
-        let point: Point = [x * 100 / fidelity, y * 100 / fidelity + jitter]
+        let point: Point = [x * cellSize, (y + jitter) * cellSize]
         winners[offset + y] = [
           point, 
           elect(namedCandidates, voters, point, r)
