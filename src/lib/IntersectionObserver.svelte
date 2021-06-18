@@ -17,7 +17,7 @@
   })
 </script>
 
-<div bind:this={el} style="min-height: {initialHeight}px;">
+<div bind:this={el} style="min-height: {observed ? 0 : initialHeight}px;">
   {#if observed}
     <slot/>
   {/if}
