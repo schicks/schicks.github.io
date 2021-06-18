@@ -1,1 +1,0 @@
-const o=t=>async({fetch:e})=>({props:Object.fromEntries(await Promise.all(Object.entries(t).map(async([a,s])=>{const n=await e("/vegalite.svg",{method:"POST",body:JSON.stringify(s),headers:{"content-type":"application/json"}});return[a,await n.text()]})))});export{o as l};

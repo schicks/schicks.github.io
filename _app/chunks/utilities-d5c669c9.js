@@ -1,0 +1,1 @@
+const r=e=>async({fetch:t})=>({props:Object.fromEntries(await Promise.all(Object.entries(e).map(async([n,s])=>{const a=await t("/vegalite.svg",{method:"POST",body:JSON.stringify(s),headers:{"content-type":"application/json"}});return[n,await a.text()]})))}),i=(e,t)=>{let o;return(...n)=>{window.clearTimeout(o),o=window.setTimeout(()=>e(...n),t)}};export{i as d,r as l};

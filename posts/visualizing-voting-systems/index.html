@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simon would have said</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YS6BJ97BPH');
+    </script>
+    
+
+		
+
+		<link rel="modulepreload" href="/./_app/start-3485b619.js">
+		<link rel="modulepreload" href="/./_app/chunks/vendor-d9e88e23.js">
+		<link rel="modulepreload" href="/./_app/pages/__layout.svelte-c14e271a.js">
+		<link rel="modulepreload" href="/./_app/pages/posts/visualizing-voting-systems.mdx-09038716.js">
+		<link rel="modulepreload" href="/./_app/chunks/blog-76a4d07c.js">
+		<link rel="modulepreload" href="/./_app/chunks/utilities-d5c669c9.js">
+		<link rel="stylesheet" href="/./_app/assets/start-a8cd1609.css">
+		<link rel="stylesheet" href="/./_app/assets/pages/__layout.svelte-61b1aa39.css">
+		<link rel="stylesheet" href="/./_app/assets/pages/posts/visualizing-voting-systems.mdx-276152fe.css">
+		<link rel="stylesheet" href="/./_app/assets/blog-5d13c88b.css">
+
+		<script type="module">
+			import { start } from "/./_app/start-3485b619.js";
+			start({
+				target: document.querySelector("#svelte"),
+				paths: {"base":"","assets":"/."},
+				session: (function(a,b){return {posts:[{title:"Static rendering in Sveltekit",date:1623753870000,status:a,blurb:"Sveltekit endpoints can shift chart rendering from runtime to compile time for more accessible websites.",slug:"static-rendering-in-sveltekit"},{title:"Type Safe URL Wrangling in React",date:1622825119000,status:a,blurb:"Search params in the URL are an underrated way to store state, but synchronizing access to them from multiple components can be tricky to type well.",slug:"type-safe-url-wrangling"},{title:"Deriving Derive Macros with Monoids",date:b,status:a,blurb:"Custom derive macros are used in a number of rust libraries to make it easy and obvious to implement some trait for structs as long as all of its fields also implement that trait.",slug:"deriving-derive-macros"},{title:"Koka vs the World",date:b,status:a,blurb:"I love statically typed functional programming. Building up programs in statically typed functional style feels like a conversation with the compiler about what is possible. Python fanatics tell me over and over that you can't prototype that way. Unfortunately, heartbreakingly, sometimes they're right.",slug:"koka-vs-the-world"},{title:"Tree Traversals in Typescript",date:b,status:a,blurb:"In a search engine, we might want to be able to slice and dice the search results that came back by three different facets; by content type, by content level, and by timeframe.",slug:"typescript-tree-traversals"},{title:"Better Pooled Coronavirus Testing",date:1598400000000,status:a,blurb:"We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by pooling tests.",slug:"better-pooled-coronavirus-testing"}]}}("published",1618876800000)),
+				host: location.host,
+				route: false,
+				spa: false,
+				trailing_slash: "never",
+				hydrate: {
+					status: 200,
+					error: null,
+					nodes: [
+						import("/./_app/pages/__layout.svelte-c14e271a.js"),
+						import("/./_app/pages/posts/visualizing-voting-systems.mdx-09038716.js")
+					],
+					page: {
+						host: location.host, // TODO this is redundant
+						path: "/posts/visualizing-voting-systems",
+						query: new URLSearchParams(""),
+						params: {}
+					}
+				}
+			});
+		</script>
+  </head>
+  <body>
+    <div id="svelte">
+
+
+<header class="svelte-1kswfwv"><a href="/" class="big svelte-1kswfwv"><h1>Simon would have said</h1></a>
+  <div class="links svelte-1kswfwv"><a href="/whos-simon" class="big svelte-1kswfwv">Who&#39;s Simon?
+    </a>
+    <a href="/" class="small svelte-1kswfwv"><img src="/_app/assets/cottage.a5c14d1f.svg" alt="Back to index" class="svelte-1kswfwv"></a>
+    <a href="https://github.com/schicks" class="svelte-1kswfwv"><img src="/_app/assets/github.6a9577cd.svg" alt="Github" style="height: 24px" class="svelte-1kswfwv"></a>
+    <a href="https://www.linkedin.com/in/sam-schick-868ab8ab/" class="svelte-1kswfwv"><img src="/_app/assets/linkedin.9636faf9.svg" alt="Linkedin" style="height: 24px" class="svelte-1kswfwv"></a>
+    <a href="/feed.xml" class="svelte-1kswfwv"><img src="/_app/assets/rss.5e9f88af.svg" alt="rss feed" class="svelte-1kswfwv"></a></div></header>
+<div class="body svelte-1kswfwv"><article><h2>Visualizing voting systems with Yee Diagrams</h2>
+  <p>How democratic is a voting system? Voting often gets talked about as the <em>definition</em> of democracy, but there are lots of different ways we can vote. </p>
+<p>In most US elections, we vote by selecting one candidate from a list, and whichever candidate gets the most votes wins. This is called <a href="https://en.wikipedia.org/wiki/Plurality_voting" rel="nofollow">plurality voting</a> because whichever candidate has a plurality of votes (more than any other candidate) wins.</p>
+<figure class="svelte-3hwt0a"><svg id="yee-diagram-11" viewBox="0 0 100 100" class="svelte-3hwt0a"></svg>
+  <figcaption class="svelte-3hwt0a">You can drag the candidates around to see how the result would change.</figcaption>
+</figure>
+<p>This visualization is called a <a href="https://electowiki.org/wiki/Yee_diagram" rel="nofollow">Yee diagram</a>. It imagines a two dimensional political spectrum, where every voter and every candidate can be described by some point in the plane. The colored circles represent candidates in an election, and each point on the plane is colored based on which candidate would win if the average position over all voters was that point. Grey represents a tie.</p>
+<p>In two candidate elections, such a diagram looks fairly predicatable. Each point in the plane is colored based on the candidate it is closest to. Any distortion from a <a href="https://en.wikipedia.org/wiki/Voronoi_diagram" rel="nofollow">Voronoi diagram</a> is just the result of noise introduced from sampling possible elections.</p>
+<p>To show how the distribution of voters effects the outcome of the election, we need to simulate a bunch of elections, which requires making some assumptions.</p>
+<ul><li>Voters vote for whichever candidate is closest to them</li>
+<li>Voters are <a href="https://en.wikipedia.org/wiki/Normal_distribution" rel="nofollow">normally distributed</a> around some central point</li>
+<li>Things don’t change very much with the number of voters, so we will only use 50.</li></ul>
+<p>Some of these might feel questionable. For instance, ties certainly get less likely with more voters. But we can revisit that later.</p>
+<div style="min-height: 300px;"></div>
+<p>With three candidates, plurality voting can produce some very strange results. Here, the central candidate won’t win even when they are directly at the center of public opinion. This is effectively what is popularly known as the <a href="https://electionscience.org/library/the-spoiler-effect/" rel="nofollow">spoiler effect</a>, where a third candidate splits the vote of some group in such a way that changes the result of the election.</p>
+<p>Plurality voting is not the only voting method we could use, however. Other methods are in use even within the US. <a href="https://electionscience.org/press-releases/st-louis-voters-use-new-approval-voting-system-in-march-primary-election/" rel="nofollow">St. Louis</a> recently restructured their primaries to use <a href="https://electionscience.org/approval-voting-101/" rel="nofollow">approval voting</a>, and <a href="https://apnews.com/article/election-2020-referendums-elections-maine-courts-b5ddd0854037e9687e952cd79e1526df" rel="nofollow">Maine</a> used <a href="https://en.wikipedia.org/wiki/Instant-runoff_voting" rel="nofollow">ranked choice voting</a> in the last presidential election. How do these other systems look within a Yee diagram?</p>
+<p>Approval voting ballots look very similar to plurality voting ballots, but voting involves selecting as many of the candidates as you would like rather than only your favorite. If plurality voting is asking voters who their favorite candidate is, approval voting is asking who voters would accept as the winner. </p>
+<p>This means that there is another parameter we have to think about in the context of approval voting; how accepting are you? If no one is close enough to you, will you just refuse to vote? Will you vote for everyone other than your least favorite candidate? Will you dismiss the differences between voting systems as idle nonsense that only some nerd would care about, and just vote for your favorite?</p>
+<p>This is the question of voter strategy, and because drawing a Yee diagram involves simulating elections we need to make some decision about how we expect voters to behave. For this diagram, I assumed that voters would vote for anyone within a small circle around them.</p>
+<div style="min-height: 300px;"></div>
+<label class="svelte-vn8hs2">Change the acceptance radius to see how it impacts the results.
+  <input type="range" min="1" max="80"></label>
+<p>To me, this diagram looks a lot more sane. Candidates close to the center of public opinion win, unless the public does not express any preference. While our simplified example has quite a lot of ties, in reality I don’t think this is very likely, because what people will accept is a social decision; people are more likely to be accepting if they don’t think the candidates close to them are likely to win.</p>
+<p>Approval voting has the property of encouraging compromise. Because candidates close to the center of public opinion will get votes from all sides, they are more likely to be elected than fringe candidates. This is very different from plurality voting, where central candidates tend to just throw the election to whichever candidate is further from them.</p></article>
+</div>
+
+
+
+	
+</div>
+  </body>
+</html>
