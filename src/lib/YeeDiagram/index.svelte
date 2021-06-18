@@ -17,6 +17,7 @@
   export let candidates: Point[]
   export let nVoters: number = 100
   export let r: number = 20
+  export let fidelity = 100
   export let method: keyof typeof methods = 'plurality'
 
 
@@ -25,12 +26,9 @@
   const colors = scaleOrdinal(
     namedCandidates.map(({i}) => i), 
     [
-      '#009E73',
-      '#0072B2', 
-      '#D55E00', 
-      '#F0E442',
-      '#56B4E9',
-      '#E69F00'
+      '#0C7BDC',
+      '#DC3220',
+      '#FFC034'
     ]
   ).unknown('#000000')
   let voronoi: Voronoi<Delaunay.Point>
@@ -43,15 +41,15 @@
     .fill(null)
     .map(() => [voterDistribution(), voterDistribution()])
   const elect = methods[method]
-  const fidelity = 50
   const winners: [Point, NamedPoint][] = new Array(fidelity ** 2)
   $: updateWinners = () => {
     if (!regionSelection) return
 
     for (let x=0; x < fidelity; x++) {
-      let offset = fidelity * x
+      const offset = fidelity * x
+      const jitter = x % 2 ? 0 : 0.5
       for (let y=0; y < fidelity; y++) {
-        let point: Point = [x * 100 / fidelity, y * 100 / fidelity]
+        let point: Point = [x * 100 / fidelity, y * 100 / fidelity + jitter]
         winners[offset + y] = [
           point, 
           elect(namedCandidates, voters, point, r)
@@ -99,7 +97,7 @@
       .join('circle')
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
-      .attr('r', 2)
+      .attr('r', 6)
       .attr('fill', ({i}) => colors(i))
       .call(dragBehavior)
 
@@ -111,7 +109,9 @@
   <svg 
     id={id}
     viewBox="0 0 100 100"
-  />
+  >
+    <line x1=0 y1=50 x2=100 y2=50 stroke-color="black" />
+  </svg>
   {#if (label)}
   <figcaption>{label}</figcaption>
   {/if}
@@ -120,7 +120,7 @@
 <style>
   figure {
     aspect-ratio: 1/1;
-    max-width: 300px;
+    max-width: 600px;
     margin: 0 auto;
   }
   svg {
@@ -130,5 +130,9 @@
   figcaption {
     text-align: center;
     font-style: italic;
+  }
+  line {
+    stroke-width: 0.2;
+    stroke: black;
   }
 </style>

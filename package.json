@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
-    "preview": "svelte-kit preview",
+    "preview": "svelte-kit build && svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
@@ -37,6 +37,7 @@
     "prismjs": "^1.23.0",
     "rehype-katex": "^5.0.0",
     "remark-autolink-headings": "^6.0.1",
+    "remark-footnotes": "^2.0.0",
     "remark-math": "^3.0.1",
     "sass": "^1.34.1",
     "svelte-vega": "^1.1.0",
