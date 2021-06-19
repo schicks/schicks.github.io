@@ -12,18 +12,20 @@
 <script lang="ts">
   import {scaleOrdinal, randomNormal, Delaunay, drag, select} from 'd3'
   import { onMount } from 'svelte'
+  import bush from './assets/bush.png'
+  import gore from './assets/gore.png'
+  import nader from './assets/nader.png'
 
   export let label: string | undefined
   export let candidates: Point[]
   export let nVoters: number = 100
   export let r: number = 20
-  export let fidelity = 20
+  export let fidelity = 30
   export let method: keyof typeof methods = 'plurality'
 
 
   let namedCandidates = candidates.map(([x, y], i) => ({x, y, i}))
-
-  const colors = scaleOrdinal(
+  let colors = scaleOrdinal(
     namedCandidates.map(({i}) => i), 
     [
       '#0C7BDC',
@@ -31,17 +33,25 @@
       '#FFC034'
     ]
   ).unknown('#000000')
-  let voronoi: Voronoi<Delaunay.Point>
-  
-  let height: number
-  let width: number
-  let regionSelection: Selection<SVGPathElement, [Point, NamedPoint], SVGGElement, unknown> | undefined = undefined
+  let pictures = scaleOrdinal(
+    namedCandidates.map(({i}) => i),
+    [gore, bush, nader]
+  )
+
   const voterDistribution = randomNormal(0, 20)
   const voters: Point[] = new Array(nVoters)
     .fill(null)
     .map(() => [voterDistribution(), voterDistribution()])
   const elect = methods[method]
   const winners: [Point, NamedPoint][] = new Array(fidelity ** 2)
+  const imgSize = 10
+
+
+  let height: number
+  let width: number
+  let regionSelection: Selection<SVGPathElement, [Point, NamedPoint], SVGGElement, unknown> | undefined = undefined
+  let voronoi: Voronoi<Delaunay.Point>
+
   $: updateWinners = () => {
     if (!regionSelection) return
 
@@ -71,11 +81,12 @@
   created += 1
   const id = `yee-diagram-${created}`
 
-  const dragBehavior = drag<SVGCircleElement, NamedPoint>()
+  const dragBehavior = drag<SVGGElement, NamedPoint>()
     .on('drag', function(event, d: NamedPoint) {
+      d.x = event.x
+      d.y = event.y
       select(this)
-        .attr('cx', d.x = event.x)
-        .attr('cy', d.y = event.y)
+      .attr('transform', `translate(${d.x} ${d.y})`)
     })
     .on('end.update', () => updateWinners())
 
@@ -92,15 +103,27 @@
 
     updateWinners()
 
-    parent
-      .selectAll<SVGCircleElement, unknown>('circle')
+    const candidateSelection = parent
+      .selectAll<SVGGElement, unknown>('g.candidate')
       .data(namedCandidates)
-      .join('circle')
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
+      .join('g')
+      .attr('class', 'candidate')
+      .attr('transform', d => `translate(${d.x} ${d.y})`)
+      .call(dragBehavior)
+    
+    candidateSelection
+      .append('circle')
       .attr('r', 6)
       .attr('fill', ({i}) => colors(i))
-      .call(dragBehavior)
+
+    candidateSelection
+      .append('image')
+      .attr('width', imgSize)
+      .attr('height', imgSize)
+      .attr('x', -imgSize / 2)
+      .attr('y', -imgSize / 2)
+      .attr('clip-path', 'url(#imgClip)')
+      .attr('href', ({i}) => pictures(i))
 
   })
 
@@ -112,6 +135,11 @@
     viewBox="0 0 100 100"
   >
     <line x1=0 y1=50 x2=100 y2=50 stroke-color="black" />
+    <defs>
+      <clipPath id="imgClip">
+        <circle r=5/>
+      </clipPath>
+    </defs>
   </svg>
   {#if (label)}
   <figcaption>{label}</figcaption>
