@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-  import type {Voronoi, Selection} from 'd3'
+  import {Voronoi, Selection, randomLcg} from 'd3'
   import type {Point, NamedPoint} from './types'
   import {plurality, approval} from './elections'
   const methods = {
@@ -21,6 +21,7 @@
   export let nVoters: number = 100
   export let r: number = 20
   export let fidelity = 30
+  export let seed = 1158
   export let method: keyof typeof methods = 'plurality'
 
 
@@ -38,7 +39,7 @@
     [gore, bush, nader]
   )
 
-  const voterDistribution = randomNormal(0, 20)
+  const voterDistribution = randomNormal.source(randomLcg(seed))(0, 20)
   const voters: Point[] = new Array(nVoters)
     .fill(null)
     .map(() => [voterDistribution(), voterDistribution()])
