@@ -4,7 +4,7 @@ export const formatPoint = (
   [x, y]: Point
 ): string => `${Math.round(x)},${Math.round(y)}`
 
-const euclidean = (
+export const euclidean = (
   [ax, ay]: Point, 
   [bx, by]: Point
 ): number => Math.sqrt((ax-bx)**2 + (ay-by)**2)

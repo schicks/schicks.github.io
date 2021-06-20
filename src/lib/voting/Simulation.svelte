@@ -1,17 +1,13 @@
 <script context="module" lang="ts">
-  import type {Voronoi, Selection} from 'd3'
+  import {pointer} from 'd3'
   import type {Point, NamedPoint} from './types'
-  import {plurality, approval} from './elections'
-  const methods = {
-    plurality,
-    approval
-  }
   let created = 0;
 </script>
 
 <script lang="ts">
-  import {scaleOrdinal, randomNormal, Delaunay, drag, select} from 'd3'
+  import {scaleOrdinal, randomNormal, Selection, drag, select} from 'd3'
   import { onMount } from 'svelte'
+  import {euclidean} from './elections'
   import bush from './assets/bush.png'
   import gore from './assets/gore.png'
   import nader from './assets/nader.png'
@@ -19,9 +15,6 @@
   export let label: string | undefined
   export let candidates: Point[]
   export let nVoters: number = 100
-  export let r: number = 20
-  export let fidelity = 30
-  export let method: keyof typeof methods = 'plurality'
 
 
   let namedCandidates = candidates.map(([x, y], i) => ({x, y, i}))
@@ -39,47 +32,31 @@
   )
 
   const voterDistribution = randomNormal(0, 20)
-  const voters: Point[] = new Array(nVoters)
-    .fill(null)
-    .map(() => [voterDistribution(), voterDistribution()])
-  const elect = methods[method]
-  const winners: [Point, NamedPoint][] = new Array(fidelity ** 2)
   const imgSize = 10
-
-
-  let height: number
-  let width: number
-  let regionSelection: Selection<SVGPathElement, [Point, NamedPoint], SVGGElement, unknown> | undefined = undefined
-  let voronoi: Voronoi<Delaunay.Point>
-
-  $: updateWinners = () => {
-    if (!regionSelection) return
-
-    const cellSize = 100 / fidelity
-    for (let x=0; x < fidelity; x++) {
-      const offset = fidelity * x
-      const jitter = x % 2 ? 0 : 0.5
-      for (let y=0; y < fidelity; y++) {
-        let point: Point = [x * cellSize, (y + jitter) * cellSize]
-        winners[offset + y] = [
-          point, 
-          elect(namedCandidates, voters, point, r)
-        ]
-      }
-    }
-
-    voronoi = Delaunay
-      .from(winners, ([[x]]) => x, ([[_, y]]) => y)
-      .voronoi([0, 0, width, height])
-    regionSelection
-      .data(winners)
-      .attr('d', (_, i) => voronoi.renderCell(i))
-      .attr('fill', d => colors(d[1].i))
-  }
-  $: updateWinners()
+  
+  let voters: Point[] = []
+  let parent: Selection<SVGSVGElement, any, any, any>
   
   created += 1
-  const id = `yee-diagram-${created}`
+  const id = `voting-simulation-${created}`
+
+  const updateVoters = () => {
+    parent
+    .selectAll('circle.voter')
+    .data(voters)
+    .join('circle')
+    .attr('class', 'voter')
+    .attr('cx', ([x]) => x)
+    .attr('cy', ([_, y]) => y)
+    .attr('r', 1)
+    .attr('opacity', 0.5)
+    .attr('fill', voter => {
+      return colors(namedCandidates.sort((a, b) => {
+        return euclidean(voter, [a.x, a.y]) - euclidean(voter, [b.x, b.y])
+      })[0].i)
+    })
+  }
+
 
   const dragBehavior = drag<SVGGElement, NamedPoint>()
     .on('drag', function(event, d: NamedPoint) {
@@ -88,20 +65,26 @@
       select(this)
       .attr('transform', `translate(${d.x} ${d.y})`)
     })
-    .on('end.update', () => updateWinners())
+    .on('end.update', updateVoters)
 
   onMount(() => {
-    const parent = select<SVGSVGElement, unknown>('#'+id)
-    regionSelection = parent
-      .append('g')
-      .attr('stroke', 'none')
-      .selectAll<SVGPathElement, unknown>('path')
-      .data(winners)
-      .join('path')
-      .attr('opacity', .3)
-      .attr('stroke-width', 0)
+    parent = select<SVGSVGElement, unknown>('#'+id)
 
-    updateWinners()
+    const simulate = (x: number, y: number) => {
+      voters = new Array(nVoters)
+        .fill(null)
+        .map(() => [
+          voterDistribution() + x, 
+          voterDistribution() + y
+        ])
+      updateVoters()
+    }
+
+    parent.on('click', (event) => {
+      const [x, y] = pointer(event)
+      simulate(x, y)
+    })
+    simulate(50, 50)
 
     const candidateSelection = parent
       .selectAll<SVGGElement, unknown>('g.candidate')
@@ -129,7 +112,7 @@
 
 </script>
 
-<figure bind:clientWidth={width} bind:clientHeight={height}>
+<figure>
   <svg 
     id={id}
     viewBox="0 0 100 100"
