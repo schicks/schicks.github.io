@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>Simon would have said</title>
+    <link>schicks.github.io</link>
+    
+      <item>
+        <title>Req: Postman in the terminal</title>
+        <link>schicks.github.io/release-announcement-req</link>
+        <pubDate>Thu, 16 Jun 2022 15:34:32 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Visualizing Voting Systems: Plurality vs Approval Voting</title>
+        <link>schicks.github.io/visualizing-voting-systems</link>
+        <pubDate>Wed, 16 Jun 2021 09:45:32 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Static rendering in Sveltekit</title>
+        <link>schicks.github.io/static-rendering-in-sveltekit</link>
+        <pubDate>Tue, 15 Jun 2021 10:44:30 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Type Safe URL Wrangling in React</title>
+        <link>schicks.github.io/type-safe-url-wrangling</link>
+        <pubDate>Fri, 04 Jun 2021 16:45:19 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Deriving Derive Macros with Monoids</title>
+        <link>schicks.github.io/deriving-derive-macros</link>
+        <pubDate>Tue, 20 Apr 2021 00:00:00 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Koka vs the World</title>
+        <link>schicks.github.io/koka-vs-the-world</link>
+        <pubDate>Tue, 20 Apr 2021 00:00:00 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Tree Traversals in Typescript</title>
+        <link>schicks.github.io/typescript-tree-traversals</link>
+        <pubDate>Tue, 20 Apr 2021 00:00:00 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Better Pooled Coronavirus Testing</title>
+        <link>schicks.github.io/better-pooled-coronavirus-testing</link>
+        <pubDate>Wed, 26 Aug 2020 00:00:00 GMT</pubDate>
+      </item>
+    
+  </channel>
+</rss>
