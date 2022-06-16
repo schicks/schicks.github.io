@@ -1,14 +1,13 @@
 <script context="module" lang="ts">
-  import type {Post} from '$lib/getPosts'
-  export async function load(
-    { session }: { session: { posts: Post[] } }
-  ) {
+  import type { Post } from '$lib/getPosts'
+  export async function load({ session }: { session: { posts: Post[] } }) {
     return {
       props: {
         posts: session.posts
       }
     }
   }
+  export const prerender = false
 </script>
 
 <script lang="ts">

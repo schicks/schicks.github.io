@@ -20,14 +20,17 @@ const config = {
   ],
 
   kit: {
-    // hydrate the <div id="svelte"> element in src/app.html
+    prerender: {
+      default: true
+    },
     adapter: adapter(),
     browser: { router: false },
     vite: {
       build: {
         minify: 'esbuild'
       }
-    }
+    },
+    trailingSlash: 'always'
   }
 }
 
