@@ -1,10 +1,11 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-98ea1574.js",
+    "file": "start-56e933b7.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
-      "_index-911407ad.js"
+      "_index-6a923fd1.js",
+      "_preload-helper-60cab3ee.js"
     ],
     "dynamicImports": [
       "src/routes/__layout.svelte",
@@ -22,12 +23,12 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "pages/__layout.svelte-7266ac1b.js",
+    "file": "pages/__layout.svelte-aa0683f5.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js"
+      "_index-6a923fd1.js"
     ],
     "css": [
       "assets/pages/__layout.svelte-53fd8d9b.css"
@@ -40,106 +41,117 @@
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
-    "file": "error.svelte-cb2302a2.js",
+    "file": "error.svelte-b6e0c4fe.js",
     "src": ".svelte-kit/runtime/components/error.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js"
+      "_index-6a923fd1.js"
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-d9c21b24.js",
+    "file": "pages/index.svelte-ed227f33.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js"
+      "_index-6a923fd1.js",
+      "_preload-helper-60cab3ee.js"
+    ],
+    "dynamicImports": [
+      "src/routes/posts/better-pooled-coronavirus-testing.mdx",
+      "src/routes/posts/deriving-derive-macros.mdx",
+      "src/routes/posts/koka-vs-the-world.mdx",
+      "src/routes/posts/release-announcement-req.mdx",
+      "src/routes/posts/static-rendering-in-sveltekit.mdx",
+      "src/routes/posts/type-safe-url-wrangling.mdx",
+      "src/routes/posts/typescript-tree-traversals.mdx",
+      "src/routes/posts/visualizing-voting-systems.mdx"
     ],
     "css": [
       "assets/pages/index.svelte-432ff938.css"
     ]
   },
   "src/routes/posts/better-pooled-coronavirus-testing.mdx": {
-    "file": "pages/posts/better-pooled-coronavirus-testing.mdx-98d12292.js",
+    "file": "pages/posts/better-pooled-coronavirus-testing.mdx-ffc41b90.js",
     "src": "src/routes/posts/better-pooled-coronavirus-testing.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
+      "_index-6a923fd1.js",
       "_utilities-ae3a2b53.js",
-      "_blog-7ff63fb2.js"
+      "_blog-278d05c6.js"
     ]
   },
   "src/routes/posts/deriving-derive-macros.mdx": {
-    "file": "pages/posts/deriving-derive-macros.mdx-f4bce12c.js",
+    "file": "pages/posts/deriving-derive-macros.mdx-9a7a22ed.js",
     "src": "src/routes/posts/deriving-derive-macros.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
-      "_blog-7ff63fb2.js"
+      "_index-6a923fd1.js",
+      "_blog-278d05c6.js"
     ]
   },
   "src/routes/posts/koka-vs-the-world.mdx": {
-    "file": "pages/posts/koka-vs-the-world.mdx-5d67a0bf.js",
+    "file": "pages/posts/koka-vs-the-world.mdx-eb2aeeae.js",
     "src": "src/routes/posts/koka-vs-the-world.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
-      "_blog-7ff63fb2.js"
+      "_index-6a923fd1.js",
+      "_blog-278d05c6.js"
     ]
   },
   "src/routes/posts/release-announcement-req.mdx": {
-    "file": "pages/posts/release-announcement-req.mdx-e0dc0d8f.js",
+    "file": "pages/posts/release-announcement-req.mdx-2e8beb0c.js",
     "src": "src/routes/posts/release-announcement-req.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
-      "_blog-7ff63fb2.js"
+      "_index-6a923fd1.js",
+      "_blog-278d05c6.js"
     ]
   },
   "src/routes/posts/static-rendering-in-sveltekit.mdx": {
-    "file": "pages/posts/static-rendering-in-sveltekit.mdx-33b18e76.js",
+    "file": "pages/posts/static-rendering-in-sveltekit.mdx-3392379e.js",
     "src": "src/routes/posts/static-rendering-in-sveltekit.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
+      "_index-6a923fd1.js",
       "_utilities-ae3a2b53.js",
-      "_blog-7ff63fb2.js"
+      "_blog-278d05c6.js"
     ]
   },
   "src/routes/posts/type-safe-url-wrangling.mdx": {
-    "file": "pages/posts/type-safe-url-wrangling.mdx-cf8f6dfe.js",
+    "file": "pages/posts/type-safe-url-wrangling.mdx-5d928df7.js",
     "src": "src/routes/posts/type-safe-url-wrangling.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
-      "_blog-7ff63fb2.js"
+      "_index-6a923fd1.js",
+      "_blog-278d05c6.js"
     ]
   },
   "src/routes/posts/typescript-tree-traversals.mdx": {
-    "file": "pages/posts/typescript-tree-traversals.mdx-7465a2bb.js",
+    "file": "pages/posts/typescript-tree-traversals.mdx-540de83a.js",
     "src": "src/routes/posts/typescript-tree-traversals.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
-      "_blog-7ff63fb2.js"
+      "_index-6a923fd1.js",
+      "_blog-278d05c6.js"
     ]
   },
   "src/routes/posts/visualizing-voting-systems.mdx": {
-    "file": "pages/posts/visualizing-voting-systems.mdx-23b7bbe7.js",
+    "file": "pages/posts/visualizing-voting-systems.mdx-d3dd6b43.js",
     "src": "src/routes/posts/visualizing-voting-systems.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
-      "_blog-7ff63fb2.js"
+      "_index-6a923fd1.js",
+      "_blog-278d05c6.js"
     ],
     "css": [
       "assets/pages/posts/visualizing-voting-systems.mdx-93e80c45.css"
@@ -151,25 +163,28 @@
     ]
   },
   "src/routes/whos-simon.mdx": {
-    "file": "pages/whos-simon.mdx-2c9ce69b.js",
+    "file": "pages/whos-simon.mdx-6cbb0baf.js",
     "src": "src/routes/whos-simon.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-911407ad.js",
-      "_blog-7ff63fb2.js"
+      "_index-6a923fd1.js",
+      "_blog-278d05c6.js"
     ]
   },
-  "_index-911407ad.js": {
-    "file": "chunks/index-911407ad.js"
+  "_index-6a923fd1.js": {
+    "file": "chunks/index-6a923fd1.js"
+  },
+  "_preload-helper-60cab3ee.js": {
+    "file": "chunks/preload-helper-60cab3ee.js"
   },
   "_utilities-ae3a2b53.js": {
     "file": "chunks/utilities-ae3a2b53.js"
   },
-  "_blog-7ff63fb2.js": {
-    "file": "chunks/blog-7ff63fb2.js",
+  "_blog-278d05c6.js": {
+    "file": "chunks/blog-278d05c6.js",
     "imports": [
-      "_index-911407ad.js"
+      "_index-6a923fd1.js"
     ],
     "css": [
       "assets/blog-bb74b951.css"
