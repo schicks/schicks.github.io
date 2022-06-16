@@ -1,0 +1,239 @@
+{
+  ".svelte-kit/runtime/client/start.js": {
+    "file": "start-221c4af7.js",
+    "src": ".svelte-kit/runtime/client/start.js",
+    "isEntry": true,
+    "imports": [
+      "_index-911407ad.js"
+    ],
+    "dynamicImports": [
+      "src/routes/__layout.svelte",
+      ".svelte-kit/runtime/components/error.svelte",
+      "src/routes/index.svelte",
+      "src/routes/posts/better-pooled-coronavirus-testing.mdx",
+      "src/routes/posts/deriving-derive-macros.mdx",
+      "src/routes/posts/koka-vs-the-world.mdx",
+      "src/routes/posts/release-announcement-req.mdx",
+      "src/routes/posts/static-rendering-in-sveltekit.mdx",
+      "src/routes/posts/type-safe-url-wrangling.mdx",
+      "src/routes/posts/typescript-tree-traversals.mdx",
+      "src/routes/posts/visualizing-voting-systems.mdx",
+      "src/routes/whos-simon.mdx"
+    ]
+  },
+  "src/routes/__layout.svelte": {
+    "file": "pages/__layout.svelte-7266ac1b.js",
+    "src": "src/routes/__layout.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js"
+    ],
+    "css": [
+      "assets/pages/__layout.svelte-53fd8d9b.css"
+    ],
+    "assets": [
+      "assets/rss-5e9f88af.svg",
+      "assets/cottage-a5c14d1f.svg",
+      "assets/github-6a9577cd.svg",
+      "assets/linkedin-9636faf9.svg"
+    ]
+  },
+  ".svelte-kit/runtime/components/error.svelte": {
+    "file": "error.svelte-cb2302a2.js",
+    "src": ".svelte-kit/runtime/components/error.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js"
+    ]
+  },
+  "src/routes/index.svelte": {
+    "file": "pages/index.svelte-3fabfc62.js",
+    "src": "src/routes/index.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js"
+    ],
+    "css": [
+      "assets/pages/index.svelte-432ff938.css"
+    ]
+  },
+  "src/routes/posts/better-pooled-coronavirus-testing.mdx": {
+    "file": "pages/posts/better-pooled-coronavirus-testing.mdx-01c9c5dd.js",
+    "src": "src/routes/posts/better-pooled-coronavirus-testing.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_utilities-ae3a2b53.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "src/routes/posts/deriving-derive-macros.mdx": {
+    "file": "pages/posts/deriving-derive-macros.mdx-024bf2ff.js",
+    "src": "src/routes/posts/deriving-derive-macros.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "src/routes/posts/koka-vs-the-world.mdx": {
+    "file": "pages/posts/koka-vs-the-world.mdx-2817df18.js",
+    "src": "src/routes/posts/koka-vs-the-world.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "src/routes/posts/release-announcement-req.mdx": {
+    "file": "pages/posts/release-announcement-req.mdx-b607aec9.js",
+    "src": "src/routes/posts/release-announcement-req.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "src/routes/posts/static-rendering-in-sveltekit.mdx": {
+    "file": "pages/posts/static-rendering-in-sveltekit.mdx-2abcab44.js",
+    "src": "src/routes/posts/static-rendering-in-sveltekit.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_utilities-ae3a2b53.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "src/routes/posts/type-safe-url-wrangling.mdx": {
+    "file": "pages/posts/type-safe-url-wrangling.mdx-98491366.js",
+    "src": "src/routes/posts/type-safe-url-wrangling.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "src/routes/posts/typescript-tree-traversals.mdx": {
+    "file": "pages/posts/typescript-tree-traversals.mdx-4da56a5f.js",
+    "src": "src/routes/posts/typescript-tree-traversals.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "src/routes/posts/visualizing-voting-systems.mdx": {
+    "file": "pages/posts/visualizing-voting-systems.mdx-0b6f75b8.js",
+    "src": "src/routes/posts/visualizing-voting-systems.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_blog-9875105f.js"
+    ],
+    "css": [
+      "assets/pages/posts/visualizing-voting-systems.mdx-93e80c45.css"
+    ],
+    "assets": [
+      "assets/bush-84d45f5e.png",
+      "assets/gore-91728b43.png",
+      "assets/nader-536cf690.png"
+    ]
+  },
+  "src/routes/whos-simon.mdx": {
+    "file": "pages/whos-simon.mdx-cf0b4f3a.js",
+    "src": "src/routes/whos-simon.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-911407ad.js",
+      "_blog-9875105f.js"
+    ]
+  },
+  "_index-911407ad.js": {
+    "file": "chunks/index-911407ad.js"
+  },
+  "_utilities-ae3a2b53.js": {
+    "file": "chunks/utilities-ae3a2b53.js"
+  },
+  "_blog-9875105f.js": {
+    "file": "chunks/blog-9875105f.js",
+    "imports": [
+      "_index-911407ad.js"
+    ],
+    "css": [
+      "assets/blog-36595c37.css"
+    ],
+    "assets": [
+      "assets/KaTeX_AMS-Regular-d4e02895.woff2",
+      "assets/KaTeX_AMS-Regular-4b0fee78.woff",
+      "assets/KaTeX_AMS-Regular-b51a6c5d.ttf",
+      "assets/KaTeX_Caligraphic-Bold-28f271b5.woff2",
+      "assets/KaTeX_Caligraphic-Bold-b452e2f5.woff",
+      "assets/KaTeX_Caligraphic-Bold-5b7f2e0d.ttf",
+      "assets/KaTeX_Caligraphic-Regular-ff3fad5b.woff2",
+      "assets/KaTeX_Caligraphic-Regular-828cff46.woff",
+      "assets/KaTeX_Caligraphic-Regular-5592c3df.ttf",
+      "assets/KaTeX_Fraktur-Bold-e3856115.woff2",
+      "assets/KaTeX_Fraktur-Bold-4cc3b89f.woff",
+      "assets/KaTeX_Fraktur-Bold-84fca0ee.ttf",
+      "assets/KaTeX_Fraktur-Regular-12fe5ce1.woff2",
+      "assets/KaTeX_Fraktur-Regular-e694e0c0.woff",
+      "assets/KaTeX_Fraktur-Regular-87ae4332.ttf",
+      "assets/KaTeX_Main-Bold-8ccc3f67.woff2",
+      "assets/KaTeX_Main-Bold-dbc57f15.woff",
+      "assets/KaTeX_Main-Bold-80e749e9.ttf",
+      "assets/KaTeX_Main-BoldItalic-d0631d89.woff2",
+      "assets/KaTeX_Main-BoldItalic-3d4ad87a.woff",
+      "assets/KaTeX_Main-BoldItalic-4b560bdf.ttf",
+      "assets/KaTeX_Main-Italic-bd5d04f2.woff2",
+      "assets/KaTeX_Main-Italic-0ba24307.woff",
+      "assets/KaTeX_Main-Italic-5a09c2d1.ttf",
+      "assets/KaTeX_Main-Regular-b8e59810.woff2",
+      "assets/KaTeX_Main-Regular-8963c6b5.woff",
+      "assets/KaTeX_Main-Regular-f454cf43.ttf",
+      "assets/KaTeX_Math-BoldItalic-2ac376b5.woff2",
+      "assets/KaTeX_Math-BoldItalic-e8e12d00.woff",
+      "assets/KaTeX_Math-BoldItalic-75a18dad.ttf",
+      "assets/KaTeX_Math-Italic-ab8e675a.woff2",
+      "assets/KaTeX_Math-Italic-aab87d9d.woff",
+      "assets/KaTeX_Math-Italic-1b84970c.ttf",
+      "assets/KaTeX_SansSerif-Bold-3ddb324d.woff2",
+      "assets/KaTeX_SansSerif-Bold-30a61437.woff",
+      "assets/KaTeX_SansSerif-Bold-771bc418.ttf",
+      "assets/KaTeX_SansSerif-Italic-bbdfba3f.woff2",
+      "assets/KaTeX_SansSerif-Italic-17682cd7.woff",
+      "assets/KaTeX_SansSerif-Italic-e3e03c54.ttf",
+      "assets/KaTeX_SansSerif-Regular-9fdb47f8.woff2",
+      "assets/KaTeX_SansSerif-Regular-5660f1b6.woff",
+      "assets/KaTeX_SansSerif-Regular-48936afa.ttf",
+      "assets/KaTeX_Script-Regular-45be9566.woff2",
+      "assets/KaTeX_Script-Regular-2361d9c8.woff",
+      "assets/KaTeX_Script-Regular-783bed39.ttf",
+      "assets/KaTeX_Size1-Regular-daf6d30b.woff2",
+      "assets/KaTeX_Size1-Regular-84d89c68.woff",
+      "assets/KaTeX_Size1-Regular-f50c0b58.ttf",
+      "assets/KaTeX_Size2-Regular-63030204.woff2",
+      "assets/KaTeX_Size2-Regular-d1a3752c.woff",
+      "assets/KaTeX_Size2-Regular-455f4fea.ttf",
+      "assets/KaTeX_Size3-Regular-ac0dd6b6.woff",
+      "assets/KaTeX_Size3-Regular-84a8987c.ttf",
+      "assets/KaTeX_Size4-Regular-fb136838.woff2",
+      "assets/KaTeX_Size4-Regular-74769c90.woff",
+      "assets/KaTeX_Size4-Regular-75820a0a.ttf",
+      "assets/KaTeX_Typewriter-Regular-613a6cf6.woff2",
+      "assets/KaTeX_Typewriter-Regular-81c0a733.woff",
+      "assets/KaTeX_Typewriter-Regular-e6d44b61.ttf"
+    ]
+  }
+}
