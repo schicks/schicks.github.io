@@ -1,13 +1,14 @@
 <script context="module" lang="ts">
-  import {pointer} from 'd3'
-  import type {Point, NamedPoint} from './types'
-  let created = 0;
+  import { pointer } from 'd3'
+  import type { Point, NamedPoint } from './types'
+  let created = 0
 </script>
 
 <script lang="ts">
-  import {scaleOrdinal, randomNormal, Selection, drag, select} from 'd3'
+  import { scaleOrdinal, randomNormal, drag, select } from 'd3'
+  import type { Selection } from 'd3'
   import { onMount } from 'svelte'
-  import {euclidean} from './elections'
+  import { euclidean } from './elections'
   import bush from './assets/bush.png'
   import gore from './assets/gore.png'
   import nader from './assets/nader.png'
@@ -16,67 +17,59 @@
   export let candidates: Point[]
   export let nVoters: number = 100
 
-
-  let namedCandidates = candidates.map(([x, y], i) => ({x, y, i}))
+  let namedCandidates = candidates.map(([x, y], i) => ({ x, y, i }))
   let colors = scaleOrdinal(
-    namedCandidates.map(({i}) => i), 
-    [
-      '#0C7BDC',
-      '#DC3220',
-      '#FFC034'
-    ]
+    namedCandidates.map(({ i }) => i),
+    ['#0C7BDC', '#DC3220', '#FFC034']
   ).unknown('#000000')
   let pictures = scaleOrdinal(
-    namedCandidates.map(({i}) => i),
+    namedCandidates.map(({ i }) => i),
     [gore, bush, nader]
   )
 
   const voterDistribution = randomNormal(0, 20)
   const imgSize = 10
-  
+
   let voters: Point[] = []
   let parent: Selection<SVGSVGElement, any, any, any>
-  
+
   created += 1
   const id = `voting-simulation-${created}`
 
   const updateVoters = () => {
     parent
-    .selectAll('circle.voter')
-    .data(voters)
-    .join('circle')
-    .attr('class', 'voter')
-    .attr('cx', ([x]) => x)
-    .attr('cy', ([_, y]) => y)
-    .attr('r', 1)
-    .attr('opacity', 0.5)
-    .attr('fill', voter => {
-      return colors(namedCandidates.sort((a, b) => {
-        return euclidean(voter, [a.x, a.y]) - euclidean(voter, [b.x, b.y])
-      })[0].i)
-    })
+      .selectAll('circle.voter')
+      .data(voters)
+      .join('circle')
+      .attr('class', 'voter')
+      .attr('cx', ([x]) => x)
+      .attr('cy', ([_, y]) => y)
+      .attr('r', 1)
+      .attr('opacity', 0.5)
+      .attr('fill', (voter) => {
+        return colors(
+          namedCandidates.sort((a, b) => {
+            return euclidean(voter, [a.x, a.y]) - euclidean(voter, [b.x, b.y])
+          })[0].i
+        )
+      })
   }
 
-
   const dragBehavior = drag<SVGGElement, NamedPoint>()
-    .on('drag', function(event, d: NamedPoint) {
+    .on('drag', function (event, d: NamedPoint) {
       d.x = event.x
       d.y = event.y
-      select(this)
-      .attr('transform', `translate(${d.x} ${d.y})`)
+      select(this).attr('transform', `translate(${d.x} ${d.y})`)
     })
     .on('end.update', updateVoters)
 
   onMount(() => {
-    parent = select<SVGSVGElement, unknown>('#'+id)
+    parent = select<SVGSVGElement, unknown>('#' + id)
 
     const simulate = (x: number, y: number) => {
       voters = new Array(nVoters)
         .fill(null)
-        .map(() => [
-          voterDistribution() + x, 
-          voterDistribution() + y
-        ])
+        .map(() => [voterDistribution() + x, voterDistribution() + y])
       updateVoters()
     }
 
@@ -91,13 +84,13 @@
       .data(namedCandidates)
       .join('g')
       .attr('class', 'candidate')
-      .attr('transform', d => `translate(${d.x} ${d.y})`)
+      .attr('transform', (d) => `translate(${d.x} ${d.y})`)
       .call(dragBehavior)
-    
+
     candidateSelection
       .append('circle')
       .attr('r', 6)
-      .attr('fill', ({i}) => colors(i))
+      .attr('fill', ({ i }) => colors(i))
 
     candidateSelection
       .append('image')
@@ -106,26 +99,21 @@
       .attr('x', -imgSize / 2)
       .attr('y', -imgSize / 2)
       .attr('clip-path', 'url(#imgClip)')
-      .attr('href', ({i}) => pictures(i))
-
+      .attr('href', ({ i }) => pictures(i))
   })
-
 </script>
 
 <figure>
-  <svg 
-    id={id}
-    viewBox="0 0 100 100"
-  >
-    <line x1=0 y1=50 x2=100 y2=50 stroke-color="black" />
+  <svg {id} viewBox="0 0 100 100">
+    <line x1="0" y1="50" x2="100" y2="50" />
     <defs>
       <clipPath id="imgClip">
-        <circle r=5/>
+        <circle r="5" />
       </clipPath>
     </defs>
   </svg>
-  {#if (label)}
-  <figcaption>{label}</figcaption>
+  {#if label}
+    <figcaption>{label}</figcaption>
   {/if}
 </figure>
 

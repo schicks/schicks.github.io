@@ -3,7 +3,7 @@ const getFilename = (path: string): string | undefined => path.split('/').pop()
 export type Post = {
   title: string
   slug: string
-  blurb: string,
+  blurb: string
   date: Date
 }
 

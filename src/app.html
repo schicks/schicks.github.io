@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Simon would have said</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
 
-<head>
-  <title>Simon would have said</title>
-  <meta charset="utf-8" />
-  <link rel="icon" href="/favicon.png" />
-  <link rel="stylesheet" href="/global.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+      gtag('config', 'G-YS6BJ97BPH')
+    </script>
+    %sveltekit.head%
+  </head>
 
-    gtag('config', 'G-YS6BJ97BPH');
-  </script>
-  %sveltekit.head%
-</head>
-
-<body>
-  <div>%sveltekit.body%</div>
-</body>
-
+  <body>
+    <div>%sveltekit.body%</div>
+  </body>
 </html>

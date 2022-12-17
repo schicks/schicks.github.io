@@ -1,36 +1,28 @@
-import type {NamedPoint, Point} from './types'
+import type { NamedPoint, Point } from './types'
 
-export const formatPoint = (
-  [x, y]: Point
-): string => `${Math.round(x)},${Math.round(y)}`
+export const formatPoint = ([x, y]: Point): string => `${Math.round(x)},${Math.round(y)}`
 
-export const euclidean = (
-  [ax, ay]: Point, 
-  [bx, by]: Point
-): number => Math.sqrt((ax-bx)**2 + (ay-by)**2)
+export const euclidean = ([ax, ay]: Point, [bx, by]: Point): number =>
+  Math.sqrt((ax - bx) ** 2 + (ay - by) ** 2)
 
-const tallyVote = (
-  tally: {[key in number]?: number},
-  candidate: number | null
-) => {
+const tallyVote = (tally: { [key in number]?: number }, candidate: number | null) => {
   const winner = candidate ?? -1
   tally[winner] = (tally[winner] ?? 0) + 1
 }
 
-const odysseus = {x: 0, y: 0, i: -1}
-
+const odysseus = { x: 0, y: 0, i: -1 }
 
 export const plurality = (
-  candidates: NamedPoint[], 
+  candidates: NamedPoint[],
   voters: Point[],
   [ox, oy]: Point
 ): NamedPoint => {
-  const tally: {[key in number]?: number} = {}
+  const tally: { [key in number]?: number } = {}
   voters.forEach(([x, y]) => {
     let winner: number | null = null
     let min = 200
-    candidates.forEach(({x: cx, y: cy, i}) => {
-      const dist = euclidean([x+ox, y+oy], [cx, cy])
+    candidates.forEach(({ x: cx, y: cy, i }) => {
+      const dist = euclidean([x + ox, y + oy], [cx, cy])
       if (dist < min) {
         winner = i
         min = dist
@@ -51,15 +43,15 @@ export const plurality = (
 }
 
 export const approval = (
-  candidates: NamedPoint[], 
+  candidates: NamedPoint[],
   voters: Point[],
   [ox, oy]: Point,
   r: number
 ): NamedPoint => {
-  const tally: {[key in number]?: number} = {}
+  const tally: { [key in number]?: number } = {}
   voters.forEach(([x, y]) => {
-    candidates.forEach(({x: cx, y: cy, i}) => {
-      const dist = euclidean([x+ox, y+oy], [cx, cy])
+    candidates.forEach(({ x: cx, y: cy, i }) => {
+      const dist = euclidean([x + ox, y + oy], [cx, cy])
       if (dist < r) {
         tallyVote(tally, i)
       }
