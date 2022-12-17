@@ -3,35 +3,40 @@
   import home from '$lib/icons/cottage.svg'
   import github from '$lib/icons/github.svg'
   import linkedin from '$lib/icons/linkedin.svg'
+  import { page } from '$app/stores'
+
+  $: full = $page.url.searchParams.get('fullscreen')
 </script>
 
-<header>
-  <a href="/" class="big"><h1>Simon would have said</h1></a>
-  <div class="links">
-    <span class="big"><a href="/resume">Resume</a></span>
-    <span class="big"><a href="/whos-simon"> Who's Simon? </a></span>
-    <span class="small">
-      <a href="/">
-        <img src={home} alt="Back to index" />
-      </a></span
-    >
-    <span>
-      <a href="https://github.com/schicks">
-        <img src={github} alt="Github" style="height: 24px" />
-      </a></span
-    >
-    <span>
-      <a href="https://www.linkedin.com/in/sam-schick-868ab8ab/">
-        <img src={linkedin} alt="Linkedin" style="height: 24px" />
-      </a></span
-    >
-    <span>
-      <a href="/feed.xml">
-        <img src={rss} alt="rss feed" />
-      </a></span
-    >
-  </div>
-</header>
+{#if !full}
+  <header>
+    <a href="/" class="big"><h1>Simon would have said</h1></a>
+    <div class="links">
+      <span class="big"><a href="/resume">Resume</a></span>
+      <span class="big"><a href="/whos-simon"> Who's Simon? </a></span>
+      <span class="small">
+        <a href="/">
+          <img src={home} alt="Back to index" />
+        </a></span
+      >
+      <span>
+        <a href="https://github.com/schicks">
+          <img src={github} alt="Github" style="height: 24px" />
+        </a></span
+      >
+      <span>
+        <a href="https://www.linkedin.com/in/sam-schick-868ab8ab/">
+          <img src={linkedin} alt="Linkedin" style="height: 24px" />
+        </a></span
+      >
+      <span>
+        <a href="/feed.xml">
+          <img src={rss} alt="rss feed" />
+        </a></span
+      >
+    </div>
+  </header>
+{/if}
 <div class="body">
   <slot />
 </div>
