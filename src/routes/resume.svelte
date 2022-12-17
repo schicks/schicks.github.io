@@ -257,5 +257,13 @@
       display: flex;
       flex-direction: column;
     }
+    header {
+      flex-direction: column;
+
+      summary {
+        align-self: flex-start;
+        margin: 5px 0 10px;
+      }
+    }
   }
 </style>
