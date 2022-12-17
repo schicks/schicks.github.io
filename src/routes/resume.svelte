@@ -8,8 +8,8 @@
     <dd><a href="mailto:resume@schicksw.mozmail.com">resume@schicksw.mozmail.com</a></dd>
     <dt>phone</dt>
     <dd>518-729-0655</dd>
-    <dt>website</dt>
-    <dd><a href="https://schicks.github.io">Personal Blog</a></dd>
+    <dt class="noprint">website</dt>
+    <dd class="noprint"><a href="https://schicks.github.io">Personal Blog</a></dd>
     <dt>education</dt>
     <dd>
       <div>B.S. in Mathematics,&nbsp</div>
@@ -264,6 +264,18 @@
         align-self: flex-start;
         margin: 5px 0 10px;
       }
+    }
+  }
+
+  @media print {
+    a {
+      text-decoration: none;
+    }
+    .noprint {
+      display: none;
+    }
+    footer dt {
+      border: none!important;
     }
   }
 </style>
