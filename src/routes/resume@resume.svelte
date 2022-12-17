@@ -1,9 +1,11 @@
 <header>
-  <h1><a href="/">Samuel W. Schick</a></h1>
+  <h1><a href="/">Sam Schick</a></h1>
   <summary>Data Engineer</summary>
 </header>
 <section class="info">
   <dl>
+    <dt>pronouns</dt>
+    <dd>they/them</dd>
     <dt>email</dt>
     <dd><a href="mailto:resume@schicksw.mozmail.com">resume@schicksw.mozmail.com</a></dd>
     <dt>phone</dt>
@@ -153,11 +155,13 @@
   <h2>Technical Strengths</h2>
   <dl>
     <dt>Computer Languages</dt>
-    <dd>Typescript, Python, OCaml, Rust, Julia</dd>
+    <dd>Typescript, Python</dd>
     <dt>Databases</dt>
     <dd>Postgres, Elasticsearch, Redis, Kafka</dd>
     <dt>Frameworks</dt>
     <dd>AWS CDK, Airflow, Spark, FastAPI, React, Svelte</dd>
+    <dt>Software Development Models</dt>
+    <dd>Agile, Extreme Programming, Domain Driven Design</dd>
   </dl>
 </footer>
 
