@@ -215,8 +215,12 @@
       font-style: normal;
     }
     .jobrole {
+      margin-left: 8px;
       display: flex;
       justify-content: space-between;
+    }
+    ul {
+      margin-top: 4px;
     }
     summary {
       display: flex;
@@ -227,8 +231,7 @@
       font-weight: bold;
     }
   }
-
-  footer dl {
+  footer {
     dt {
       font-weight: bold;
       &::after {
@@ -238,10 +241,11 @@
   }
 
   @media (min-width: 750px) {
-    footer dl {
+    footer {
       dt {
         font-weight: bold;
-        padding-bottom: 2px;
+        padding-bottom: 4px;
+        margin-bottom: -4px;
         border-bottom: 1px dotted black;
         &::after {
           content: ':';
