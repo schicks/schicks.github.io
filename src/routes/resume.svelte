@@ -11,7 +11,10 @@
     <dt>website</dt>
     <dd><a href="https://schicks.github.io">Personal Blog</a></dd>
     <dt>education</dt>
-    <dd>B.S. in Mathematics, University of Rochester</dd>
+    <dd>
+      <div>B.S. in Mathematics,</div>
+      <div>University of Rochester</div>
+    </dd>
   </dl>
 </section>
 <article class="experience">
@@ -178,17 +181,22 @@
   }
 
   .info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     dt {
       display: none;
     }
     dl {
+      margin: 10px auto;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       max-width: 600px;
+    }
+    dd {
+      display: flex;
+      flex-direction: column;
+    }
+    dd div {
+      display: inline-block;
     }
   }
 
@@ -199,17 +207,18 @@
   }
 
   .experience {
-    summary,
+    h3,
+    h4 {
+      margin: 0;
+      font-style: normal;
+    }
     .jobrole {
       display: flex;
       justify-content: space-between;
-      h3,
-      h4 {
-        margin: 0;
-        font-style: normal;
-      }
     }
     summary {
+      display: flex;
+      justify-content: space-between;
       margin-bottom: 4px;
     }
     aside {
@@ -220,16 +229,33 @@
   footer dl {
     dt {
       font-weight: bold;
-      padding-bottom: 2px;
-      border-bottom: 1px dotted black;
       &::after {
         content: ':';
       }
     }
-    dd {
-      position: relative;
-      margin-left: 300px;
-      bottom: 22px;
+  }
+
+  @media (min-width: 750px) {
+    footer dl {
+      dt {
+        font-weight: bold;
+        padding-bottom: 2px;
+        border-bottom: 1px dotted black;
+        &::after {
+          content: ':';
+        }
+      }
+      dd {
+        position: relative;
+        margin-left: 300px;
+        bottom: 22px;
+      }
+    }
+  }
+
+  @media (max-width: 500px) {
+    .jobrole {
+      flex-direction: column;
     }
   }
 </style>
