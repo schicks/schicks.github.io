@@ -37,7 +37,7 @@
       </li>
       <li>
         Facilitated simple, declarative state transfer between airflow tasks by creating a python
-        package for persistent dataclasses backed by S3.
+        package for persistent dataclasses backed by S3. 
       </li>
       <li>Created new granular search API using a vector search model for semantic similarity.</li>
       <li>
@@ -52,7 +52,7 @@
     <ul>
       <li>
         Rewrote the shared navigation for all Pluralsight pages in Svelte, reducing the deployed
-        size by a factor of three and drastically reducing the dependency surface, making the code
+        size by a factor of three and the dependency surface by 50%, making the code
         easier to maintain going forward.
       </li>
       <li>
@@ -94,7 +94,7 @@
       <li>Built the new search experience and relevance engine for the learner experience site.</li>
       <li>
         Created an experiment platform to iteratively improve search result quality using live
-        feedback on query performance.
+        feedback on query performance. Over it's lifetime this platform has doubled the search clickthrough rate.
       </li>
       <li>
         Translated between the the needs of search as a product and the highly technical search
