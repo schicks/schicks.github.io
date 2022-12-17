@@ -12,7 +12,7 @@
   <header>
     <a href="/" class="big"><h1>Simon would have said</h1></a>
     <div class="links">
-      <span class="big"><a href="/resume">Resume</a></span>
+      <span class="big"><a href="/resume?fullscreen=true">Resume</a></span>
       <span class="big"><a href="/whos-simon"> Who's Simon? </a></span>
       <span class="small">
         <a href="/">

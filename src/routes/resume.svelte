@@ -1,5 +1,5 @@
 <header>
-  <h1>Samuel W. Schick</h1>
+  <h1><a href="/">Samuel W. Schick</a></h1>
   <summary>Data Engineer</summary>
 </header>
 <section class="info">
@@ -170,6 +170,12 @@
 
     h1 {
       margin: 0;
+      a {
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     summary {
@@ -275,7 +281,7 @@
       display: none;
     }
     footer dt {
-      border: none!important;
+      border: none !important;
     }
   }
 </style>
