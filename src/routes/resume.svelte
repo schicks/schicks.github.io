@@ -12,7 +12,7 @@
     <dd><a href="https://schicks.github.io">Personal Blog</a></dd>
     <dt>education</dt>
     <dd>
-      <div>B.S. in Mathematics,</div>
+      <div>B.S. in Mathematics,&nbsp</div>
       <div>University of Rochester</div>
     </dd>
   </dl>
@@ -191,10 +191,6 @@
       flex-wrap: wrap;
       max-width: 600px;
     }
-    dd {
-      display: flex;
-      flex-direction: column;
-    }
     dd div {
       display: inline-block;
     }
@@ -255,6 +251,10 @@
 
   @media (max-width: 500px) {
     .jobrole {
+      flex-direction: column;
+    }
+    .info dd {
+      display: flex;
       flex-direction: column;
     }
   }
