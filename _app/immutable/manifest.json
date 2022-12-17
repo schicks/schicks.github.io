@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-56e933b7.js",
+    "file": "start-60c45e42.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -19,11 +19,12 @@
       "src/routes/posts/type-safe-url-wrangling.mdx",
       "src/routes/posts/typescript-tree-traversals.mdx",
       "src/routes/posts/visualizing-voting-systems.mdx",
+      "src/routes/resume.svelte",
       "src/routes/whos-simon.mdx"
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "pages/__layout.svelte-aa0683f5.js",
+    "file": "pages/__layout.svelte-756a7a75.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -31,7 +32,7 @@
       "_index-6a923fd1.js"
     ],
     "css": [
-      "assets/pages/__layout.svelte-53fd8d9b.css"
+      "assets/pages/__layout.svelte-a075e7c9.css"
     ],
     "assets": [
       "assets/rss-5e9f88af.svg",
@@ -50,7 +51,7 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-ed227f33.js",
+    "file": "pages/index.svelte-d0e8bb72.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -73,13 +74,13 @@
     ]
   },
   "src/routes/posts/better-pooled-coronavirus-testing.mdx": {
-    "file": "pages/posts/better-pooled-coronavirus-testing.mdx-ffc41b90.js",
+    "file": "pages/posts/better-pooled-coronavirus-testing.mdx-a534e481.js",
     "src": "src/routes/posts/better-pooled-coronavirus-testing.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_index-6a923fd1.js",
-      "_utilities-ae3a2b53.js",
+      "_utilities-6d1358d1.js",
       "_blog-278d05c6.js"
     ]
   },
@@ -114,13 +115,13 @@
     ]
   },
   "src/routes/posts/static-rendering-in-sveltekit.mdx": {
-    "file": "pages/posts/static-rendering-in-sveltekit.mdx-3392379e.js",
+    "file": "pages/posts/static-rendering-in-sveltekit.mdx-0128ed5c.js",
     "src": "src/routes/posts/static-rendering-in-sveltekit.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_index-6a923fd1.js",
-      "_utilities-ae3a2b53.js",
+      "_utilities-6d1358d1.js",
       "_blog-278d05c6.js"
     ]
   },
@@ -145,7 +146,7 @@
     ]
   },
   "src/routes/posts/visualizing-voting-systems.mdx": {
-    "file": "pages/posts/visualizing-voting-systems.mdx-d3dd6b43.js",
+    "file": "pages/posts/visualizing-voting-systems.mdx-915c8ae5.js",
     "src": "src/routes/posts/visualizing-voting-systems.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -162,8 +163,20 @@
       "assets/nader-536cf690.png"
     ]
   },
+  "src/routes/resume.svelte": {
+    "file": "pages/resume.svelte-f71fa149.js",
+    "src": "src/routes/resume.svelte",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-6a923fd1.js"
+    ],
+    "css": [
+      "assets/pages/resume.svelte-afe20f6d.css"
+    ]
+  },
   "src/routes/whos-simon.mdx": {
-    "file": "pages/whos-simon.mdx-6cbb0baf.js",
+    "file": "pages/whos-simon.mdx-32c1e391.js",
     "src": "src/routes/whos-simon.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -178,8 +191,8 @@
   "_preload-helper-60cab3ee.js": {
     "file": "chunks/preload-helper-60cab3ee.js"
   },
-  "_utilities-ae3a2b53.js": {
-    "file": "chunks/utilities-ae3a2b53.js"
+  "_utilities-6d1358d1.js": {
+    "file": "chunks/utilities-6d1358d1.js"
   },
   "_blog-278d05c6.js": {
     "file": "chunks/blog-278d05c6.js",

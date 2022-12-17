@@ -1,47 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Simon would have said</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
 
-<head>
-  <title>Simon would have said</title>
-  <meta charset="utf-8" />
-  <link rel="icon" href="/favicon.png" />
-  <link rel="stylesheet" href="/global.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-YS6BJ97BPH');
-  </script>
-  <meta http-equiv="content-security-policy" content="">
-	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-53fd8d9b.css">
+      gtag('config', 'G-YS6BJ97BPH')
+    </script>
+    <meta http-equiv="content-security-policy" content="">
+	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-a075e7c9.css">
 	<link rel="stylesheet" href="/_app/immutable/assets/pages/posts/visualizing-voting-systems.mdx-93e80c45.css">
 	<link rel="stylesheet" href="/_app/immutable/assets/blog-bb74b951.css">
-	<link rel="modulepreload" href="/_app/immutable/start-56e933b7.js">
+	<link rel="modulepreload" href="/_app/immutable/start-60c45e42.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/index-6a923fd1.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/preload-helper-60cab3ee.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-aa0683f5.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/posts/visualizing-voting-systems.mdx-d3dd6b43.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-756a7a75.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/posts/visualizing-voting-systems.mdx-915c8ae5.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/blog-278d05c6.js">
-</head>
+  </head>
 
-<body>
-  <div>
+  <body>
+    <div>
 
 
-<header class="svelte-1kswfwv"><a href="/" class="big svelte-1kswfwv"><h1>Simon would have said</h1></a>
-  <div class="links svelte-1kswfwv"><a href="/whos-simon" class="big svelte-1kswfwv">Who&#39;s Simon?
-    </a>
-    <a href="/" class="small svelte-1kswfwv"><img src="/_app/immutable/assets/cottage-a5c14d1f.svg" alt="Back to index" class="svelte-1kswfwv"></a>
-    <a href="https://github.com/schicks" class="svelte-1kswfwv"><img src="/_app/immutable/assets/github-6a9577cd.svg" alt="Github" style="height: 24px" class="svelte-1kswfwv"></a>
-    <a href="https://www.linkedin.com/in/sam-schick-868ab8ab/" class="svelte-1kswfwv"><img src="/_app/immutable/assets/linkedin-9636faf9.svg" alt="Linkedin" style="height: 24px" class="svelte-1kswfwv"></a>
-    <a href="/feed.xml" class="svelte-1kswfwv"><img src="/_app/immutable/assets/rss-5e9f88af.svg" alt="rss feed" class="svelte-1kswfwv"></a></div></header>
-<div class="body svelte-1kswfwv"><article class="blog"><h2>Visualizing Voting Systems: Plurality vs Approval Voting</h2>
+<header class="svelte-18lm2j2"><a href="/" class="big svelte-18lm2j2"><h1 class="svelte-18lm2j2">Simon would have said</h1></a>
+  <div class="links svelte-18lm2j2"><span class="big svelte-18lm2j2"><a href="/resume" class="svelte-18lm2j2">Resume</a></span>
+    <span class="big svelte-18lm2j2"><a href="/whos-simon" class="svelte-18lm2j2">Who&#39;s Simon? </a></span>
+    <span class="small svelte-18lm2j2"><a href="/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/cottage-a5c14d1f.svg" alt="Back to index" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://github.com/schicks" class="svelte-18lm2j2"><img src="/_app/immutable/assets/github-6a9577cd.svg" alt="Github" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://www.linkedin.com/in/sam-schick-868ab8ab/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/linkedin-9636faf9.svg" alt="Linkedin" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="/feed.xml" class="svelte-18lm2j2"><img src="/_app/immutable/assets/rss-5e9f88af.svg" alt="rss feed" class="svelte-18lm2j2"></a></span></div></header>
+<div class="body svelte-18lm2j2"><article class="blog"><h2>Visualizing Voting Systems: Plurality vs Approval Voting</h2>
   <p>What question do we expect to answer by holding an election? Elections are how we select our government, but they aren’t the only way to do that. We hold elections because we believe they tell us something about who has the right to control our government in a way that appointments or heredity does not. But different voting methods answer different questions. </p>
 <p>Visualizing our voting systems can help give us a sense of how the questions each system asks shape the answers we get. By playing around with what happens depending on where candidates are relative to each other, you can get a sense of what incentives our voting system gives to the people we elect. We’re going to explore different systems by simulating many elections and seeing how the results change depending on where the average voter is.</p>
-<figure class="svelte-cane51"><svg id="voting-simulation-1" viewBox="0 0 100 100" class="svelte-cane51"><line x1="0" y1="50" x2="100" y2="50" stroke-color="black" class="svelte-cane51"></line><defs><clipPath id="imgClip"><circle r="5"></circle></clipPath></defs></svg>
+<figure class="svelte-cane51"><svg id="voting-simulation-1" viewBox="0 0 100 100" class="svelte-cane51"><line x1="0" y1="50" x2="100" y2="50" class="svelte-cane51"></line><defs><clipPath id="imgClip"><circle r="5"></circle></clipPath></defs></svg>
   <figcaption class="svelte-cane51">Click anywhere to simulate a new election where the average voter is where you clicked. Drag the candidates around to see how the results change.</figcaption>
 </figure>
 <p>This diagram shows a single election. The colored circles represent the positions of the candidates and voters in some abstract space. Imagine that the Y axis measures how focused the candidate is on environmental protection, and the X axis measures their position on some other issue like corporate tax rates. Voters prefer candidates that are closer to them. Clicking anywhere on this diagram simulates a new election where the average voter is where you clicked. What that means is that if we averaged together the positions of all of the voters they would be at that point, but if you click on the same point a few times you’ll see that the position of each voter can change.</p>
@@ -56,7 +57,7 @@
 <blockquote><p>Nader, running a low-budget campaign, is not airing any television commercials of his own and it’s possible that the RLC will end up spending more on pro-Nader media that Nader himself.
 <sup id="fnref-3"><a href="#fn-3" class="footnote-ref">3</a></sup></p></blockquote>
 <p>Why were environmentalists, relatively ideolically similar to Nader, pleading with him not to run? Why were republicans trying to get people to vote for one of their opponents? All of these people believed that votes for Nader would have the effect of electing Bush, because of something known as the <a href="https://electionscience.org/library/the-spoiler-effect/" rel="nofollow">spoiler effect</a>.</p>
-<figure class="svelte-cane51"><svg id="yee-diagram-1" viewBox="0 0 100 100" class="svelte-cane51"><line x1="0" y1="50" x2="100" y2="50" stroke-color="black" class="svelte-cane51"></line><defs><clipPath id="imgClip"><circle r="5"></circle></clipPath></defs></svg>
+<figure class="svelte-cane51"><svg id="yee-diagram-1" viewBox="0 0 100 100" class="svelte-cane51"><line x1="0" y1="50" x2="100" y2="50" class="svelte-cane51"></line><defs><clipPath id="imgClip"><circle r="5"></circle></clipPath></defs></svg>
   <figcaption class="svelte-cane51">This is a Yee diagram. Each cell is colored by simulating an election with the average voter at that point.</figcaption>
 </figure>
 <p>This visualization is called a <a href="https://electowiki.org/wiki/Yee_diagram" rel="nofollow">Yee diagram</a>. The background is colored based on who would win if the average voter was at that point. If there is a tie, the background will be grey; the black line just gives us a sense of where the middle is.</p>
@@ -75,14 +76,15 @@
 <ol><li id="fn-1"><a href="https://web.archive.org/web/20010415013029/http://www.nadersraidersforgore.com/printversion.htm" rel="nofollow">Open letter from Naders Raiders for Gore</a><a href="#fnref-1" class="footnote-backref">↩</a></li>
 <li id="fn-2"><a href="https://web.archive.org/web/20160829041953/http://www.commondreams.org/headlines/102700-03.htm" rel="nofollow">Open letter from Carl Pope</a><a href="#fnref-2" class="footnote-backref">↩</a></li>
 <li id="fn-3"><a href="https://web.archive.org/web/20050916115106/https://www.washingtonpost.com/wp-srv/aponline/20001027/aponline115918_000.htm" rel="nofollow">Washington Post article on GOP ads for Nader</a><a href="#fnref-3" class="footnote-backref">↩</a></li>
-<li id="fn-4">Approval voting has another parameter that we don’t have to think about in the context of plurality voting; how accepting are you? The less accepting you are, the more likely you are to only vote for one candidate, or to refuse to vote at all. The more accepting you are, the more likely you are to be ok with every candidate, and therefore indifferent to the outcome. In the approval diagram, voters vote for anyone within a certain radius of them. While picking a radius that is very small or very large compared to the distribution of voters leads to some strange effects, in practice such behavior is unlikely. A very large radius would mean that most people are voting for every candidate, despite the fact that that means their vote is irrelevant. A very small radius would mean that most people refuse to vote at all unless the perfect candidate is running.<a href="#fnref-4" class="footnote-backref">↩</a></li></ol></div></article>
+<li id="fn-4">Approval voting has another parameter that we don’t have to think about in the context of plurality voting; how accepting are you? The less accepting you are, the more likely you are to only vote for one candidate, or to refuse to vote at all. The more accepting you are, the more likely you are to be ok with every candidate, and therefore indifferent to the outcome. In the approval diagram, voters vote for anyone within a certain radius of them. While picking a radius that is very small or very large compared to the distribution of voters leads to some strange effects, in practice such behavior is unlikely. A very large radius would mean that most people are voting for every candidate, despite the fact that that means their vote is irrelevant. A very small radius would mean that most people refuse to vote at all unless the perfect candidate is running.<a href="#fnref-4" class="footnote-backref">↩</a></li></ol></div>
+</article>
 </div>
 
 
-		<script type="module" data-sveltekit-hydrate="19e9enl">
-		import { start } from "/_app/immutable/start-56e933b7.js";
+		<script type="module" data-sveltekit-hydrate="1619bc">
+		import { start } from "/_app/immutable/start-60c45e42.js";
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="19e9enl"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1619bc"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: (function(a,b){return {posts:[{title:"Req: Postman in the terminal",date:1655393672000,status:a,blurb:"Postman is great, but we could do better.",slug:"release-announcement-req"},{title:"Visualizing Voting Systems: Plurality vs Approval Voting",date:1623836732000,status:a,blurb:"Visualizing our voting systems can help give us a sense of how the questions each system asks shape the answers we get. By playing around with what happens depending on where candidates are relative to each other, you can get a sense of what incentives our voting system gives to the people we elect.",slug:"visualizing-voting-systems"},{title:"Static rendering in Sveltekit",date:1623753870000,status:a,blurb:"Sveltekit endpoints can shift chart rendering from runtime to compile time for more accessible websites.",slug:"static-rendering-in-sveltekit"},{title:"Type Safe URL Wrangling in React",date:1622825119000,status:a,blurb:"Search params in the URL are an underrated way to store state, but synchronizing access to them from multiple components can be tricky to type well.",slug:"type-safe-url-wrangling"},{title:"Deriving Derive Macros with Monoids",date:b,status:a,blurb:"Custom derive macros are used in a number of rust libraries to make it easy and obvious to implement some trait for structs as long as all of its fields also implement that trait.",slug:"deriving-derive-macros"},{title:"Koka vs the World",date:b,status:a,blurb:"I love statically typed functional programming. Building up programs in statically typed functional style feels like a conversation with the compiler about what is possible. Python fanatics tell me over and over that you can't prototype that way. Unfortunately, heartbreakingly, sometimes they're right.",slug:"koka-vs-the-world"},{title:"Tree Traversals in Typescript",date:b,status:a,blurb:"In a search engine, we might want to be able to slice and dice the search results that came back by three different facets; by content type, by content level, and by timeframe.",slug:"typescript-tree-traversals"},{title:"Better Pooled Coronavirus Testing",date:1598400000000,status:a,blurb:"We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by pooling tests.",slug:"better-pooled-coronavirus-testing"}]}}("published",1618876800000)),
 			route: false,
@@ -97,6 +99,5 @@
 			}
 		});
 	</script></div>
-</body>
-
+  </body>
 </html>
