@@ -12,6 +12,13 @@ const tallyVote = (tally: { [key in number]?: number }, candidate: number | null
 
 const odysseus = { x: 0, y: 0, i: -1 }
 
+export type Method = (
+  candidates: NamedPoint[],
+  voters: Point[],
+  offset: Point,
+  r: number
+) => NamedPoint
+
 export const plurality = (
   candidates: NamedPoint[],
   voters: Point[],
@@ -35,6 +42,7 @@ export const plurality = (
     const delta = current - (tally[winner.i] ?? 0)
     if (delta === 0) {
       tally[-1] = current
+      console.error("odysseus should never win an election")
       return odysseus
     } else if (delta > 0) {
       return next
@@ -62,9 +70,16 @@ export const approval = (
     const delta = current - (tally[winner.i] ?? 0)
     if (delta === 0) {
       tally[-1] = current
+      console.error("odysseus should never win an election")
       return odysseus
     } else if (delta > 0) {
       return next
     } else return winner
   }, odysseus)
+}
+
+
+export const methods = {
+  plurality,
+  approval
 }

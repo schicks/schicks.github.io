@@ -1,12 +1,13 @@
+<!--
+  @component
+  Draws a Yee diagram given a set of candidate positions.
+  Takes as a parameter the name of one of the voting metods from "./elections".
+-->
 <script context="module" lang="ts">
   import { Voronoi, randomLcg } from 'd3'
   import type { Selection } from 'd3'
   import type { Point, NamedPoint } from './types'
-  import { plurality, approval } from './elections'
-  const methods = {
-    plurality,
-    approval
-  }
+  import { methods } from './elections'
   let created = 0
 </script>
 

@@ -1,3 +1,12 @@
+<!--
+  @component
+  Presents a simulated plurality election.
+  Voter preferences and candidate positions are assumed to exist in the same 2D plane.
+  Voters are assumed to prefer candidates closest to them, and are colored as such.
+  Labels the candidates as bush, nader and gore.
+
+-->
+
 <script context="module" lang="ts">
   import { pointer } from 'd3'
   import type { Point, NamedPoint } from './types'
