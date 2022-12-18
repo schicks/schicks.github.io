@@ -6,7 +6,6 @@
   Labels the candidates as bush, nader and gore.
 
 -->
-
 <script context="module" lang="ts">
   import { pointer } from 'd3'
   import type { Point, NamedPoint } from './types'
@@ -24,7 +23,7 @@
 
   export let label: string | undefined
   export let candidates: Point[]
-  export let nVoters: number = 100
+  export let nVoters = 100
 
   let namedCandidates = candidates.map(([x, y], i) => ({ x, y, i }))
   let colors = scaleOrdinal(

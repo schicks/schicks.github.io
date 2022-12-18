@@ -11,7 +11,7 @@
     "format": "prettier --write --plugin-search-dir=. .",
     "deploy": "svelte-kit build && node ./deploy.js",
     "test": "jest",
-    "precommit": "npm run lint && npm run check && tsc --noEmit && npm test"
+    "precommit": "npm run lint && npm run check && npm test"
   },
   "devDependencies": {
     "@sveltejs/kit": "next",
@@ -39,6 +39,7 @@
     "d3": "^7.0.0",
     "katex": "^0.13.11",
     "mdsvex": "^0.9.7",
+    "nodejs-polars": "^0.6.0",
     "prismjs": "^1.23.0",
     "rehype-katex": "^5.0.0",
     "remark-autolink-headings": "^6.0.1",

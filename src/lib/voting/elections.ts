@@ -14,16 +14,13 @@ const odysseus = { x: 0, y: 0, i: -1 }
 
 export type Method = (
   candidates: NamedPoint[],
-  voters: Point[],
-  offset: Point,
-  r: number
-) => NamedPoint
+  voters: Point[]
+) => (offset: Point, r: number) => NamedPoint
 
-export const plurality = (
-  candidates: NamedPoint[],
-  voters: Point[],
-  [ox, oy]: Point
-): NamedPoint => {
+export const plurality: Method = (candidates: NamedPoint[], voters: Point[]) => ([
+  ox,
+  oy
+]: Point): NamedPoint => {
   const tally: { [key in number]?: number } = {}
   voters.forEach(([x, y]) => {
     let winner: number | null = null
@@ -42,7 +39,7 @@ export const plurality = (
     const delta = current - (tally[winner.i] ?? 0)
     if (delta === 0) {
       tally[-1] = current
-      console.error("odysseus should never win an election")
+      console.error('odysseus should never win an election')
       return odysseus
     } else if (delta > 0) {
       return next
@@ -50,9 +47,7 @@ export const plurality = (
   }, odysseus)
 }
 
-export const approval = (
-  candidates: NamedPoint[],
-  voters: Point[],
+export const approval: Method = (candidates: NamedPoint[], voters: Point[]) => (
   [ox, oy]: Point,
   r: number
 ): NamedPoint => {
@@ -70,14 +65,13 @@ export const approval = (
     const delta = current - (tally[winner.i] ?? 0)
     if (delta === 0) {
       tally[-1] = current
-      console.error("odysseus should never win an election")
+      console.error('odysseus should never win an election')
       return odysseus
     } else if (delta > 0) {
       return next
     } else return winner
   }, odysseus)
 }
-
 
 export const methods = {
   plurality,

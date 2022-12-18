@@ -20,8 +20,8 @@
 
   export let label: string | undefined
   export let candidates: Point[]
-  export let nVoters: number = 100
-  export let r: number = 20
+  export let nVoters = 100
+  export let r = 20
   export let fidelity = 30
   export let seed = 1158
   export let method: keyof typeof methods = 'plurality'
@@ -40,7 +40,7 @@
   const voters: Point[] = new Array(nVoters)
     .fill(null)
     .map(() => [voterDistribution(), voterDistribution()])
-  const elect = methods[method]
+  const elect = methods[method](namedCandidates, voters)
   const winners: [Point, NamedPoint][] = new Array(fidelity ** 2)
   const imgSize = 10
 
@@ -58,7 +58,7 @@
       const jitter = x % 2 ? 0 : 0.5
       for (let y = 0; y < fidelity; y++) {
         let point: Point = [x * cellSize, (y + jitter) * cellSize]
-        winners[offset + y] = [point, elect(namedCandidates, voters, point, r)]
+        winners[offset + y] = [point, elect(point, r)]
       }
     }
 
