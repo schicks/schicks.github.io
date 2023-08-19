@@ -1,10 +1,10 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-7c03990e.js",
+    "file": "start-ec32f360.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
+      "_index-986541d7.js",
       "_preload-helper-60cab3ee.js"
     ],
     "dynamicImports": [
@@ -25,12 +25,12 @@
     ]
   },
   "src/routes/__layout.svelte": {
-    "file": "pages/__layout.svelte-756a7a75.js",
+    "file": "pages/__layout.svelte-e331525b.js",
     "src": "src/routes/__layout.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js"
+      "_index-986541d7.js"
     ],
     "css": [
       "assets/pages/__layout.svelte-a075e7c9.css"
@@ -43,33 +43,33 @@
     ]
   },
   ".svelte-kit/runtime/components/error.svelte": {
-    "file": "error.svelte-b6e0c4fe.js",
+    "file": "error.svelte-d4822038.js",
     "src": ".svelte-kit/runtime/components/error.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js"
+      "_index-986541d7.js"
     ]
   },
   "src/routes/__layout-resume.svelte": {
-    "file": "pages/__layout-resume.svelte-6781d1d7.js",
+    "file": "pages/__layout-resume.svelte-bdb013e9.js",
     "src": "src/routes/__layout-resume.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js"
+      "_index-986541d7.js"
     ],
     "css": [
       "assets/pages/__layout-resume.svelte-d22f2a37.css"
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-d0e8bb72.js",
+    "file": "pages/index.svelte-7d38225d.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
+      "_index-986541d7.js",
       "_preload-helper-60cab3ee.js"
     ],
     "dynamicImports": [
@@ -87,85 +87,85 @@
     ]
   },
   "src/routes/posts/better-pooled-coronavirus-testing.mdx": {
-    "file": "pages/posts/better-pooled-coronavirus-testing.mdx-a534e481.js",
+    "file": "pages/posts/better-pooled-coronavirus-testing.mdx-224c0681.js",
     "src": "src/routes/posts/better-pooled-coronavirus-testing.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
+      "_index-986541d7.js",
       "_utilities-6d1358d1.js",
-      "_blog-278d05c6.js"
+      "_blog-0a461edf.js"
     ]
   },
   "src/routes/posts/deriving-derive-macros.mdx": {
-    "file": "pages/posts/deriving-derive-macros.mdx-9a7a22ed.js",
+    "file": "pages/posts/deriving-derive-macros.mdx-31e87890.js",
     "src": "src/routes/posts/deriving-derive-macros.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
-      "_blog-278d05c6.js"
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
     ]
   },
   "src/routes/posts/koka-vs-the-world.mdx": {
-    "file": "pages/posts/koka-vs-the-world.mdx-eb2aeeae.js",
+    "file": "pages/posts/koka-vs-the-world.mdx-7eee6d0b.js",
     "src": "src/routes/posts/koka-vs-the-world.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
-      "_blog-278d05c6.js"
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
     ]
   },
   "src/routes/posts/release-announcement-req.mdx": {
-    "file": "pages/posts/release-announcement-req.mdx-2e8beb0c.js",
+    "file": "pages/posts/release-announcement-req.mdx-3bfb3785.js",
     "src": "src/routes/posts/release-announcement-req.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
-      "_blog-278d05c6.js"
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
     ]
   },
   "src/routes/posts/static-rendering-in-sveltekit.mdx": {
-    "file": "pages/posts/static-rendering-in-sveltekit.mdx-0128ed5c.js",
+    "file": "pages/posts/static-rendering-in-sveltekit.mdx-7e3b10c5.js",
     "src": "src/routes/posts/static-rendering-in-sveltekit.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
+      "_index-986541d7.js",
       "_utilities-6d1358d1.js",
-      "_blog-278d05c6.js"
+      "_blog-0a461edf.js"
     ]
   },
   "src/routes/posts/type-safe-url-wrangling.mdx": {
-    "file": "pages/posts/type-safe-url-wrangling.mdx-5d928df7.js",
+    "file": "pages/posts/type-safe-url-wrangling.mdx-107b86d9.js",
     "src": "src/routes/posts/type-safe-url-wrangling.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
-      "_blog-278d05c6.js"
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
     ]
   },
   "src/routes/posts/typescript-tree-traversals.mdx": {
-    "file": "pages/posts/typescript-tree-traversals.mdx-540de83a.js",
+    "file": "pages/posts/typescript-tree-traversals.mdx-ec8fec61.js",
     "src": "src/routes/posts/typescript-tree-traversals.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
-      "_blog-278d05c6.js"
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
     ]
   },
   "src/routes/posts/visualizing-voting-systems.mdx": {
-    "file": "pages/posts/visualizing-voting-systems.mdx-915c8ae5.js",
+    "file": "pages/posts/visualizing-voting-systems.mdx-b48342a2.js",
     "src": "src/routes/posts/visualizing-voting-systems.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
-      "_blog-278d05c6.js"
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
     ],
     "css": [
       "assets/pages/posts/visualizing-voting-systems.mdx-93e80c45.css"
@@ -177,29 +177,29 @@
     ]
   },
   "src/routes/resume@resume.svelte": {
-    "file": "pages/resume@resume.svelte-791cfb5b.js",
+    "file": "pages/resume@resume.svelte-7ae910bc.js",
     "src": "src/routes/resume@resume.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js"
+      "_index-986541d7.js"
     ],
     "css": [
       "assets/pages/resume@resume.svelte-e6663138.css"
     ]
   },
   "src/routes/whos-simon.mdx": {
-    "file": "pages/whos-simon.mdx-32c1e391.js",
+    "file": "pages/whos-simon.mdx-a0c37398.js",
     "src": "src/routes/whos-simon.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
-      "_index-6a923fd1.js",
-      "_blog-278d05c6.js"
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
     ]
   },
-  "_index-6a923fd1.js": {
-    "file": "chunks/index-6a923fd1.js"
+  "_index-986541d7.js": {
+    "file": "chunks/index-986541d7.js"
   },
   "_preload-helper-60cab3ee.js": {
     "file": "chunks/preload-helper-60cab3ee.js"
@@ -207,10 +207,10 @@
   "_utilities-6d1358d1.js": {
     "file": "chunks/utilities-6d1358d1.js"
   },
-  "_blog-278d05c6.js": {
-    "file": "chunks/blog-278d05c6.js",
+  "_blog-0a461edf.js": {
+    "file": "chunks/blog-0a461edf.js",
     "imports": [
-      "_index-6a923fd1.js"
+      "_index-986541d7.js"
     ],
     "css": [
       "assets/blog-bb74b951.css"

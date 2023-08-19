@@ -19,12 +19,12 @@
     <meta http-equiv="content-security-policy" content="">
 	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-a075e7c9.css">
 	<link rel="stylesheet" href="/_app/immutable/assets/blog-bb74b951.css">
-	<link rel="modulepreload" href="/_app/immutable/start-7c03990e.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-6a923fd1.js">
+	<link rel="modulepreload" href="/_app/immutable/start-ec32f360.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-986541d7.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/preload-helper-60cab3ee.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-756a7a75.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/posts/release-announcement-req.mdx-2e8beb0c.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/blog-278d05c6.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e331525b.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/posts/release-announcement-req.mdx-3bfb3785.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/blog-0a461edf.js">
   </head>
 
   <body>
@@ -47,15 +47,16 @@
 <li>read requests in a standard format from a static file</li>
 <li>be distributed as a static binary (none of this <a href="https://httpyac.github.io/" rel="nofollow">install from npm</a> nonsense)</li></ul>
 <p>So I wrote <a href="https://github.com/schicks/req/releases/tag/v1.0.0" rel="nofollow">req</a>. Req takes in a file containing a <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" rel="nofollow">spec compliant</a> HTTP request, performs that request, and returns the response body to stdout. By default it <em>only</em> returns the body, making it simple to pipe into other tools, but on a flag it can return other metadata as well.</p>
-<p>I get that the world probably didn’t need another HTTP client, but it was fun to have a project to work in a language that I don’t get to work in every day that filled a real gap in the way I work. Often I struggle to stick with projects because the goal feels kind of abstract. It was very nice to have something that I am already using regularly to test and debug HTTP apps.</p>
-</article>
+<p>I get that the world probably didn’t need another HTTP client, but it was fun to have a project to work in a language that I don’t get to work in every day that filled a real gap in the way I work. Often I struggle to stick with projects because the goal feels kind of abstract. It was very nice to have something that I am already using regularly to test and debug HTTP apps.</p></article>
+
+<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Req: Postman in the terminal" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
 </div>
 
 
-		<script type="module" data-sveltekit-hydrate="1a499lf">
-		import { start } from "/_app/immutable/start-7c03990e.js";
+		<script type="module" data-sveltekit-hydrate="1p8rvku">
+		import { start } from "/_app/immutable/start-ec32f360.js";
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1a499lf"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1p8rvku"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: (function(a,b){return {posts:[{title:"Req: Postman in the terminal",date:1655393672000,status:a,blurb:"Postman is great, but we could do better.",slug:"release-announcement-req"},{title:"Visualizing Voting Systems: Plurality vs Approval Voting",date:1623836732000,status:a,blurb:"Visualizing our voting systems can help give us a sense of how the questions each system asks shape the answers we get. By playing around with what happens depending on where candidates are relative to each other, you can get a sense of what incentives our voting system gives to the people we elect.",slug:"visualizing-voting-systems"},{title:"Static rendering in Sveltekit",date:1623753870000,status:a,blurb:"Sveltekit endpoints can shift chart rendering from runtime to compile time for more accessible websites.",slug:"static-rendering-in-sveltekit"},{title:"Type Safe URL Wrangling in React",date:1622825119000,status:a,blurb:"Search params in the URL are an underrated way to store state, but synchronizing access to them from multiple components can be tricky to type well.",slug:"type-safe-url-wrangling"},{title:"Deriving Derive Macros with Monoids",date:b,status:a,blurb:"Custom derive macros are used in a number of rust libraries to make it easy and obvious to implement some trait for structs as long as all of its fields also implement that trait.",slug:"deriving-derive-macros"},{title:"Koka vs the World",date:b,status:a,blurb:"I love statically typed functional programming. Building up programs in statically typed functional style feels like a conversation with the compiler about what is possible. Python fanatics tell me over and over that you can't prototype that way. Unfortunately, heartbreakingly, sometimes they're right.",slug:"koka-vs-the-world"},{title:"Tree Traversals in Typescript",date:b,status:a,blurb:"In a search engine, we might want to be able to slice and dice the search results that came back by three different facets; by content type, by content level, and by timeframe.",slug:"typescript-tree-traversals"},{title:"Better Pooled Coronavirus Testing",date:1598400000000,status:a,blurb:"We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by pooling tests.",slug:"better-pooled-coronavirus-testing"}]}}("published",1618876800000)),
 			route: false,

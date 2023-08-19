@@ -19,12 +19,12 @@
     <meta http-equiv="content-security-policy" content="">
 	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-a075e7c9.css">
 	<link rel="stylesheet" href="/_app/immutable/assets/blog-bb74b951.css">
-	<link rel="modulepreload" href="/_app/immutable/start-7c03990e.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-6a923fd1.js">
+	<link rel="modulepreload" href="/_app/immutable/start-ec32f360.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-986541d7.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/preload-helper-60cab3ee.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-756a7a75.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/posts/deriving-derive-macros.mdx-9a7a22ed.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/blog-278d05c6.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e331525b.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/posts/deriving-derive-macros.mdx-31e87890.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/blog-0a461edf.js">
   </head>
 
   <body>
@@ -111,15 +111,16 @@
 <ul><li>a pattern match against the enum</li>
 <li>a natural implementation for the context of each branch</li></ul>
 <p>However, I am less confident that the “natural” implementation I describe there is useful in the enum case. I think in general that you do want some way to consider the context of which branch you are under. For instance, Serde has a <a href="https://serde.rs/enum-representations.html" rel="nofollow">variety of ways</a> that you can represent enums, and two of the three involve considering at least the <em>name</em> of the variant.</p>
-<p>Similar to the potential generalization of the struct approach, the enum version could be <em>much</em> more useful with the addition of helper macros. Then each branch could be processed with a different monoid, and individual fields could be processed differently as above. However, that’s way too much code to put in a blog post. I’m not <a href="https://fasterthanli.me/articles/getting-in-and-out-of-trouble-with-rust-futures" rel="nofollow">Amos</a>.</p>
-</article>
+<p>Similar to the potential generalization of the struct approach, the enum version could be <em>much</em> more useful with the addition of helper macros. Then each branch could be processed with a different monoid, and individual fields could be processed differently as above. However, that’s way too much code to put in a blog post. I’m not <a href="https://fasterthanli.me/articles/getting-in-and-out-of-trouble-with-rust-futures" rel="nofollow">Amos</a>.</p></article>
+
+<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Deriving Derive Macros with Monoids" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
 </div>
 
 
-		<script type="module" data-sveltekit-hydrate="wdvi0u">
-		import { start } from "/_app/immutable/start-7c03990e.js";
+		<script type="module" data-sveltekit-hydrate="j3nsgk">
+		import { start } from "/_app/immutable/start-ec32f360.js";
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="wdvi0u"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="j3nsgk"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: (function(a,b){return {posts:[{title:"Req: Postman in the terminal",date:1655393672000,status:a,blurb:"Postman is great, but we could do better.",slug:"release-announcement-req"},{title:"Visualizing Voting Systems: Plurality vs Approval Voting",date:1623836732000,status:a,blurb:"Visualizing our voting systems can help give us a sense of how the questions each system asks shape the answers we get. By playing around with what happens depending on where candidates are relative to each other, you can get a sense of what incentives our voting system gives to the people we elect.",slug:"visualizing-voting-systems"},{title:"Static rendering in Sveltekit",date:1623753870000,status:a,blurb:"Sveltekit endpoints can shift chart rendering from runtime to compile time for more accessible websites.",slug:"static-rendering-in-sveltekit"},{title:"Type Safe URL Wrangling in React",date:1622825119000,status:a,blurb:"Search params in the URL are an underrated way to store state, but synchronizing access to them from multiple components can be tricky to type well.",slug:"type-safe-url-wrangling"},{title:"Deriving Derive Macros with Monoids",date:b,status:a,blurb:"Custom derive macros are used in a number of rust libraries to make it easy and obvious to implement some trait for structs as long as all of its fields also implement that trait.",slug:"deriving-derive-macros"},{title:"Koka vs the World",date:b,status:a,blurb:"I love statically typed functional programming. Building up programs in statically typed functional style feels like a conversation with the compiler about what is possible. Python fanatics tell me over and over that you can't prototype that way. Unfortunately, heartbreakingly, sometimes they're right.",slug:"koka-vs-the-world"},{title:"Tree Traversals in Typescript",date:b,status:a,blurb:"In a search engine, we might want to be able to slice and dice the search results that came back by three different facets; by content type, by content level, and by timeframe.",slug:"typescript-tree-traversals"},{title:"Better Pooled Coronavirus Testing",date:1598400000000,status:a,blurb:"We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by pooling tests.",slug:"better-pooled-coronavirus-testing"}]}}("published",1618876800000)),
 			route: false,

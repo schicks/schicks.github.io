@@ -19,12 +19,12 @@
     <meta http-equiv="content-security-policy" content="">
 	<link rel="stylesheet" href="/_app/immutable/assets/pages/__layout.svelte-a075e7c9.css">
 	<link rel="stylesheet" href="/_app/immutable/assets/blog-bb74b951.css">
-	<link rel="modulepreload" href="/_app/immutable/start-7c03990e.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/index-6a923fd1.js">
+	<link rel="modulepreload" href="/_app/immutable/start-ec32f360.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/index-986541d7.js">
 	<link rel="modulepreload" href="/_app/immutable/chunks/preload-helper-60cab3ee.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-756a7a75.js">
-	<link rel="modulepreload" href="/_app/immutable/pages/posts/koka-vs-the-world.mdx-eb2aeeae.js">
-	<link rel="modulepreload" href="/_app/immutable/chunks/blog-278d05c6.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/__layout.svelte-e331525b.js">
+	<link rel="modulepreload" href="/_app/immutable/pages/posts/koka-vs-the-world.mdx-7eee6d0b.js">
+	<link rel="modulepreload" href="/_app/immutable/chunks/blog-0a461edf.js">
   </head>
 
   <body>
@@ -107,15 +107,16 @@ fun <span class="token function">test</span><span class="token punctuation">(</s
 <p>Koka does transform those mutable variables into a state effect to make sure to have all of the wonderful functional semantics that help us keep code composable, but it also uses the <a href="https://www.microsoft.com/en-us/research/uploads/prod/2020/11/perceus-tr-v1.pdf" rel="nofollow">Perceus</a> compiler to transform that state effect into in-place updates wherever possible. Reuse analysis is even more powerful, taking clean functional expressions like list maps or tree traversals and transforming them into in-place mutations whenever possible, gracefully degrading back to shared memory persistent representations when not. The <a href="https://koka-lang.github.io/koka/doc/book.html#sec-fbip" rel="nofollow">Koka book</a> explains this much better than I can, but it is worth glancing at the benchmarks they’ve done so far.</p>
 <img src="https://raw.githubusercontent.com/koka-lang/koka/master/doc/bench-amd3600-nov-2020.png" style="max-width: 800px;" alt="benchmark comparing koka to other languages">
 <p>This unfinished research language can outperform C++. Benchmarks should always be taken with an ocean of salt, and these problems certainly weren’t chosen at random, but the firm foundation of Perceus gives me hope that these results are real and will be borne out in practice.</p>
-<p>It is early days for Koka. It isn’t ready for production, and new languages usually aren’t adopted, but there is <em>so</em> much in Koka that is fundamentally better than existing languages that I would be heartbroken if these things didn’t catch on. Maybe it is a stepping stone, and something else will productionalize these ideas, but it is hard to imagine changing very much. Koka improves on the state of the art in so many places that it feels to me like making it productional is the path forward, rather than adopting these ideas into other languages.</p>
-</article>
+<p>It is early days for Koka. It isn’t ready for production, and new languages usually aren’t adopted, but there is <em>so</em> much in Koka that is fundamentally better than existing languages that I would be heartbroken if these things didn’t catch on. Maybe it is a stepping stone, and something else will productionalize these ideas, but it is hard to imagine changing very much. Koka improves on the state of the art in so many places that it feels to me like making it productional is the path forward, rather than adopting these ideas into other languages.</p></article>
+
+<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Koka vs the World" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
 </div>
 
 
-		<script type="module" data-sveltekit-hydrate="1pc737p">
-		import { start } from "/_app/immutable/start-7c03990e.js";
+		<script type="module" data-sveltekit-hydrate="nk8hms">
+		import { start } from "/_app/immutable/start-ec32f360.js";
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="1pc737p"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="nk8hms"]').parentNode,
 			paths: {"base":"","assets":""},
 			session: (function(a,b){return {posts:[{title:"Req: Postman in the terminal",date:1655393672000,status:a,blurb:"Postman is great, but we could do better.",slug:"release-announcement-req"},{title:"Visualizing Voting Systems: Plurality vs Approval Voting",date:1623836732000,status:a,blurb:"Visualizing our voting systems can help give us a sense of how the questions each system asks shape the answers we get. By playing around with what happens depending on where candidates are relative to each other, you can get a sense of what incentives our voting system gives to the people we elect.",slug:"visualizing-voting-systems"},{title:"Static rendering in Sveltekit",date:1623753870000,status:a,blurb:"Sveltekit endpoints can shift chart rendering from runtime to compile time for more accessible websites.",slug:"static-rendering-in-sveltekit"},{title:"Type Safe URL Wrangling in React",date:1622825119000,status:a,blurb:"Search params in the URL are an underrated way to store state, but synchronizing access to them from multiple components can be tricky to type well.",slug:"type-safe-url-wrangling"},{title:"Deriving Derive Macros with Monoids",date:b,status:a,blurb:"Custom derive macros are used in a number of rust libraries to make it easy and obvious to implement some trait for structs as long as all of its fields also implement that trait.",slug:"deriving-derive-macros"},{title:"Koka vs the World",date:b,status:a,blurb:"I love statically typed functional programming. Building up programs in statically typed functional style feels like a conversation with the compiler about what is possible. Python fanatics tell me over and over that you can't prototype that way. Unfortunately, heartbreakingly, sometimes they're right.",slug:"koka-vs-the-world"},{title:"Tree Traversals in Typescript",date:b,status:a,blurb:"In a search engine, we might want to be able to slice and dice the search results that came back by three different facets; by content type, by content level, and by timeframe.",slug:"typescript-tree-traversals"},{title:"Better Pooled Coronavirus Testing",date:1598400000000,status:a,blurb:"We need to be doing more Coronavirus testing, but it is hard to scale up the number of tests we can run in a day. One way the CDC is recommending getting around this restriction is by pooling tests.",slug:"better-pooled-coronavirus-testing"}]}}("published",1618876800000)),
 			route: false,
