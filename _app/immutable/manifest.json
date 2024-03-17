@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-ec32f360.js",
+    "file": "start-2587346b.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -15,6 +15,7 @@
       "src/routes/posts/better-pooled-coronavirus-testing.mdx",
       "src/routes/posts/deriving-derive-macros.mdx",
       "src/routes/posts/koka-vs-the-world.mdx",
+      "src/routes/posts/pi-by-hand.mdx",
       "src/routes/posts/release-announcement-req.mdx",
       "src/routes/posts/static-rendering-in-sveltekit.mdx",
       "src/routes/posts/type-safe-url-wrangling.mdx",
@@ -64,7 +65,7 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-7d38225d.js",
+    "file": "pages/index.svelte-70548186.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -76,6 +77,7 @@
       "src/routes/posts/better-pooled-coronavirus-testing.mdx",
       "src/routes/posts/deriving-derive-macros.mdx",
       "src/routes/posts/koka-vs-the-world.mdx",
+      "src/routes/posts/pi-by-hand.mdx",
       "src/routes/posts/release-announcement-req.mdx",
       "src/routes/posts/static-rendering-in-sveltekit.mdx",
       "src/routes/posts/type-safe-url-wrangling.mdx",
@@ -115,6 +117,20 @@
     "imports": [
       "_index-986541d7.js",
       "_blog-0a461edf.js"
+    ]
+  },
+  "src/routes/posts/pi-by-hand.mdx": {
+    "file": "pages/posts/pi-by-hand.mdx-50d25a8f.js",
+    "src": "src/routes/posts/pi-by-hand.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-986541d7.js",
+      "_blog-0a461edf.js",
+      "_transform-56f485c3.js"
+    ],
+    "css": [
+      "assets/pages/posts/pi-by-hand.mdx-3d93f555.css"
     ]
   },
   "src/routes/posts/release-announcement-req.mdx": {
@@ -159,13 +175,14 @@
     ]
   },
   "src/routes/posts/visualizing-voting-systems.mdx": {
-    "file": "pages/posts/visualizing-voting-systems.mdx-b48342a2.js",
+    "file": "pages/posts/visualizing-voting-systems.mdx-881bbfd7.js",
     "src": "src/routes/posts/visualizing-voting-systems.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
       "_index-986541d7.js",
-      "_blog-0a461edf.js"
+      "_blog-0a461edf.js",
+      "_transform-56f485c3.js"
     ],
     "css": [
       "assets/pages/posts/visualizing-voting-systems.mdx-93e80c45.css"
@@ -276,5 +293,8 @@
       "assets/KaTeX_Typewriter-Regular-e14fed02.woff",
       "assets/KaTeX_Typewriter-Regular-f01f3e87.ttf"
     ]
+  },
+  "_transform-56f485c3.js": {
+    "file": "chunks/transform-56f485c3.js"
   }
 }
