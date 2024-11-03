@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-2587346b.js",
+    "file": "start-20a27a4e.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -17,6 +17,7 @@
       "src/routes/posts/koka-vs-the-world.mdx",
       "src/routes/posts/pi-by-hand.mdx",
       "src/routes/posts/release-announcement-req.mdx",
+      "src/routes/posts/representation-apis.mdx",
       "src/routes/posts/static-rendering-in-sveltekit.mdx",
       "src/routes/posts/type-safe-url-wrangling.mdx",
       "src/routes/posts/typescript-tree-traversals.mdx",
@@ -65,7 +66,7 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-70548186.js",
+    "file": "pages/index.svelte-17a62890.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -79,6 +80,7 @@
       "src/routes/posts/koka-vs-the-world.mdx",
       "src/routes/posts/pi-by-hand.mdx",
       "src/routes/posts/release-announcement-req.mdx",
+      "src/routes/posts/representation-apis.mdx",
       "src/routes/posts/static-rendering-in-sveltekit.mdx",
       "src/routes/posts/type-safe-url-wrangling.mdx",
       "src/routes/posts/typescript-tree-traversals.mdx",
@@ -136,6 +138,16 @@
   "src/routes/posts/release-announcement-req.mdx": {
     "file": "pages/posts/release-announcement-req.mdx-3bfb3785.js",
     "src": "src/routes/posts/release-announcement-req.mdx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-986541d7.js",
+      "_blog-0a461edf.js"
+    ]
+  },
+  "src/routes/posts/representation-apis.mdx": {
+    "file": "pages/posts/representation-apis.mdx-f721081e.js",
+    "src": "src/routes/posts/representation-apis.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
     "imports": [
