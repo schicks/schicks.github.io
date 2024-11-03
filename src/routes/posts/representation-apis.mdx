@@ -1,0 +1,218 @@
+---
+title: Unifying API representations in Typescript
+date: 2024-11-02
+status: published
+blurb: Many different typescript libraries have very similar APIs. We can stitch them together by thinking about them as representations of data.
+---
+
+Every programming language has patterns that become idiomatic. Some of these patterns are encouraged by language features. Others are adopted by a popular library, and copied over and over. In TypeScript, a common pattern is to create a representation of a data structure that a library can transform into something useful. But each library ends up having its own, slightly different representation API.
+
+I had a project recently where I was working with [pact](https://github.com/pact-foundation/pact-js) to do something a little unusual. The typical case for pact is for consumers of an API to write mocks that they can test against, and share these mocks with producers to serve as contract tests on the producer side. In my case, I was working against an API that had no interest in getting contract tests from me. The documentation was terrible, and I needed a way to validate that the requests I made would result in sane responses. I used pact to build mocks I could use in unit tests, and validated that those mocks matched the real API myself.
+
+This worked reasonably well, but I started noticing some troubling repetition. To validate the response shapes internally to the application and fail fast if something went wrong, I was using [Zod](https://zod.dev/) to describe the API response shape. And to validate that any logic in my API client was correct, I was writing tests against it (wrapped around mocks, rather than hitting the real API) using [Jest asymmetric matchers](https://jestjs.io/docs/expect#asymmetric-matchers). For all three of these I needed to describe a data shape to the library, and there was frequently a _lot_ of overlap between them.
+
+> For brevity, in the examples below I only show the zod and jest examples, but a quick look at the [pact matchers API](https://github.com/pact-foundation/pact-js?tab=readme-ov-file#writing-a-consumer-test) should give you a sense of how similar writing these shapes for pact was.
+
+```typescript
+// Types and validation for user preferences
+const PreferencesSchema = z.object({
+  theme: z.enum(["light", "dark", "system"]),
+  notifications: z.object({
+    email: z.boolean(),
+    pushEnabled: z.boolean(),
+    quiet: z.object({
+      start: z.string(),
+      end: z.string()
+    })
+  })
+});
+
+type Preferences = z.infer<typeof PreferencesSchema>;
+
+// API handler
+export function validatePreferences(preferences: unknown): SafeParseReturnType<Preferences> {
+  const result = PreferencesSchema.safeParse(preferences);
+  if (!result.success) {
+    return {
+      success: false,
+      error: new Error('Invalid preferences: ' + result.error.message)
+    };
+  }
+  return { success: true, data: result.data };
+}
+
+// Test
+describe('validatePreferences', () => {
+  it('validates user preferences', () => {
+    const result = validatePreferences({
+      theme: 'dark',
+      notifications: {
+        email: true,
+        pushEnabled: false,
+        quiet: {
+          start: '22:00',
+          end: '07:00'
+        }
+      } 
+    });
+
+    expect(result.error).toBeUndefined()
+
+    expect(result.data).toEqual(
+      // notice how similar this expectation is to the zod type
+      expect.objectContaining({
+        theme: expect.stringMatching(/^(light|dark|system)$/),
+        notifications: expect.objectContaining({
+          email: expect.any(Boolean),
+          pushEnabled: expect.any(Boolean),
+          quiet: expect.objectContaining({
+            start: expect.any(String),
+            end: expect.any(String)
+          })
+        })
+      })
+    );
+  });
+});
+```
+
+We describe the same structure twice: as a Zod schema for validation and type generation, and as a Jest matcher for testing. Updating this structure requires changing both representations, creating maintenance overhead and the risk of inconsistencies.
+
+## A Unified Representation System
+
+An alternative would be to have a single representation that can produce both a test expectation (as a jest matcher) and a parser (as a zod schema). Lets look at how we might build that.
+
+First, we want to sketch out what our representation will look like with some basic types and helper functions. This will be the "API layer" of our tool.
+
+```typescript
+// Base shapes
+type StringShape = { type: 'string' };
+type NumberShape = { type: 'number' };
+type ObjectShape = {
+  type: 'object';
+  fields: Record<string, Shape>;
+};
+
+type Shape = StringShape | NumberShape | ObjectShape;
+
+// Helper to create shapes with preserved type information
+const shape = {
+  string: (): StringShape => ({ type: 'string' }),
+  number: (): NumberShape => ({ type: 'number' }),
+  object: <T extends Record<string, Shape>>(fields: T): ObjectShape & { fields: T } => ({
+    type: 'object',
+    fields
+  })
+};
+```
+
+This representation is very minimal. We don't handle unions, intersections, literals, arrays, and lots of other things. But it's enough to demonstrate what declaring a representation might look like, and how we might use one.
+
+Then we create some functions that can use this representation. We want to be able to do three things. First, like zod, we want to get a typescript type that matches the shape we describe. This will make it easier to write other code that integrates these pieces. Second, we want to produce a zod schema that matches the shape, so we can parse potentially bad input into something we are confident in. Finally, we want to create jest expectations that validate our output meets the shape we described.
+
+```typescript
+// Convert shape to TypeScript type
+type ShapeToType<S extends Shape> =
+  S extends StringShape ? string :
+  S extends NumberShape ? number :
+  S extends ObjectShape ? {
+    [K in keyof S['fields']]: ShapeToType<S['fields'][K]>
+  } :
+  never;
+
+// Convert shape to Zod schema  
+function shapeToZod<S extends Shape>(s: S): z.ZodType<ShapeToType<S>> {
+  switch (s.type) {
+    case 'string':
+      return z.string() as z.ZodType<ShapeToType<S>>;
+    case 'number': 
+      return z.number() as z.ZodType<ShapeToType<S>>;
+    case 'object':
+      const schema: Record<string, z.ZodType<any>> = {};
+      for (const [key, field] of Object.entries(s.fields)) {
+        schema[key] = shapeToZod(field);
+      }
+      return z.object(schema) as z.ZodType<ShapeToType<S>>;
+  }
+}
+
+// Convert shape to Jest matcher
+function shapeToMatcher<S extends Shape>(s: S): jest.AsymmetricMatcher {
+  switch (s.type) {
+    case 'string':
+      return expect.any(String);  
+    case 'number':
+      return expect.any(Number);
+    case 'object':
+      const matcher: Record<string, jest.AsymmetricMatcher> = {};
+      for (const [key, field] of Object.entries(s.fields)) {
+        matcher[key] = shapeToMatcher(field);
+      }
+      return expect.objectContaining(matcher);
+  }
+}
+```
+
+These are relatively simple in part because our API doesn't allow for _that_ many different data types, but also because of the similarities we already noted between the zod and jest APIs. We don't have to go all the way from a data shape to a parser; we just have to go from our description of a data shape to zods.
+
+Now we can rewrite our preferences example:
+
+```typescript
+const preferencesShape = shape.object({
+  theme: shape.string(), // Could extend to handle enums
+  notifications: shape.object({
+    email: shape.string(),
+    pushEnabled: shape.boolean(), 
+    quiet: shape.object({
+      start: shape.string(),
+      end: shape.string() 
+    })
+  })
+});
+
+// Get all three formats from one source
+type Preferences = ShapeToType<typeof preferencesShape>;
+const preferencesSchema = shapeToZod(preferencesShape);  
+const preferencesMatcher = shapeToMatcher(preferencesShape);
+
+function validatePreferences(data: unknown): Result<Preferences> {
+  const result = preferencesSchema.safeParse(data);
+  if (!result.success) {
+    return {
+      success: false,
+      error: new Error('Invalid preferences: ' + result.error.message)
+    };  
+  }
+  return { success: true, data: result.data };
+}
+
+test('validatePreferences', () => {
+  const result = validatePreferences({
+    theme: 'dark',
+    notifications: { 
+      email: true,
+      pushEnabled: false,
+      quiet: {
+        start: '22:00', 
+        end: '07:00'
+      }
+    }
+  });
+
+  if (!result.success) { 
+    fail(result.error.message);
+  }
+  expect(result.data).toEqual(preferencesMatcher);
+});
+```
+
+The toy example here isn't that useful. There is not a lot of value in testing a zod schema with a jest matcher based off of the same shape. But in actual applications it is not unusual to have multiple different ways a shape is produced, or multiple different tests at different layers of the stack that might require different tools. For example, in my original example, pact was generating data of a shape that was validated by zod as well as validating data from the external API. Generally, this pattern is something you might reach for when you have multiple different representations that need to be kept in sync.
+
+## Practical Applications 
+
+While we could extend this into a full pluggable library, as the above sample shows it is also easy to write case-specific glue code to serve the purpose. A library of this form would only have much benefit if it were adopted by many other libraries as an API. Glue code of this form can be useful on many projects as they grow above toy sized. 
+
+Even if you don't intend to write code like this, representation APIs are common enough that having a better sense of how they are implemented and what they are doing is worthwhile. This hopefully gave you a taste, but if you're interested in more try exploring the code of (or even PR'ing!) big representation libraries like zod.
+
+
+> This post was written with a lot of help from [Claude](https://claude.ai). The experience of writing with an AI was... a mixed back. More on that in an upcoming post.
