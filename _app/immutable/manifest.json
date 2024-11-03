@@ -1,6 +1,6 @@
 {
   ".svelte-kit/runtime/client/start.js": {
-    "file": "start-20a27a4e.js",
+    "file": "start-44346cdb.js",
     "src": ".svelte-kit/runtime/client/start.js",
     "isEntry": true,
     "imports": [
@@ -66,7 +66,7 @@
     ]
   },
   "src/routes/index.svelte": {
-    "file": "pages/index.svelte-17a62890.js",
+    "file": "pages/index.svelte-83fdb693.js",
     "src": "src/routes/index.svelte",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -146,7 +146,7 @@
     ]
   },
   "src/routes/posts/representation-apis.mdx": {
-    "file": "pages/posts/representation-apis.mdx-f721081e.js",
+    "file": "pages/posts/representation-apis.mdx-5b5df2dc.js",
     "src": "src/routes/posts/representation-apis.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
@@ -218,7 +218,7 @@
     ]
   },
   "src/routes/whos-simon.mdx": {
-    "file": "pages/whos-simon.mdx-a0c37398.js",
+    "file": "pages/whos-simon.mdx-40a432ad.js",
     "src": "src/routes/whos-simon.mdx",
     "isEntry": true,
     "isDynamicEntry": true,
