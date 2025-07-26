@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simon would have said</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-YS6BJ97BPH')
+    </script>
+    <meta http-equiv="content-security-policy" content="">
+		<link href="../_app/immutable/assets/_layout-e790d386.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/blog-1f80565d.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/pi-by-hand-592e9f64.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/visualizing-voting-systems-0ed28d66.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/start-a6505234.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index-58f43e7f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-380e795b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper-a4192956.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/control-f5b05b5f.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-aa3ad892.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-9cbb603b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-da46b06b.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/posts/_slug_/_page.svelte-e8c51160.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/posts/_slug_/_page.ts-557ee4e4.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_page-602a8250.js"><title>Deriving Derive Macros with Monoids</title><!-- HEAD_svelte-1l490sv_START --><!-- HEAD_svelte-1l490sv_END -->
+  </head>
+
+  <body>
+    <div>
+
+
+<header class="svelte-18lm2j2"><a href="/" class="big svelte-18lm2j2"><h1 class="svelte-18lm2j2">Simon would have said</h1></a>
+  <div class="links svelte-18lm2j2"><span class="big svelte-18lm2j2"><a href="/resume" class="svelte-18lm2j2">Resume</a></span>
+    <span class="big svelte-18lm2j2"><a href="/whos-simon" class="svelte-18lm2j2">Who&#39;s Simon? </a></span>
+    <span class="small svelte-18lm2j2"><a href="/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/cottage-a5c14d1f.svg" alt="Back to index" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://github.com/schicks" class="svelte-18lm2j2"><img src="/_app/immutable/assets/github-54cde8ee.svg" alt="Github" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://www.linkedin.com/in/sam-schick-868ab8ab/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/linkedin-78909844.svg" alt="Linkedin" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="/feed.xml" class="svelte-18lm2j2"><img src="/_app/immutable/assets/rss-5e9f88af.svg" alt="rss feed" class="svelte-18lm2j2"></a></span></div></header>
+<div class="body svelte-18lm2j2"><article class="blog"><h2>Deriving Derive Macros with Monoids</h2>
+  <p>Custom derive macros are used in a variety of rust libraries (<a href="https://serde.rs/" rel="nofollow">serde</a>, <a href="https://github.com/google/argh" rel="nofollow">argh</a>, and of course <a href="https://github.com/schicks/sedk" rel="nofollow">sedk</a>) to make it easy and obvious to implement some trait for structs and/or enums as long as all of the fields in that struct or enum implement the trait. Built in derives also tend to follow this pattern. We know that there is an obvious definition of <code>PartialEq</code> for a struct as long as there is a definition of <code>PartialEq</code> for each field; two structs are equal all of their fields are equal.</p>
+<p>There is a more general pattern here. given any product type (struct) and a trait that can be implemented with a single function, we can come up with an easy implementation of a trait as long as:</p>
+<ul><li>All fields in the type implement the trait</li>
+<li>the return type of the trait function has monoidal structure</li></ul>
+<h2>Monoidal Structure?</h2>
+<p>A monoid is a certain sort of structure that a type can have. We can sketch it with a trait.</p>
+<pre class="language-rust"><!-- HTML_TAG_START --><code class="language-rust"><span class="token keyword">trait</span> <span class="token type-definition class-name">Monoid</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">fn</span> <span class="token function-definition function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token keyword">Self</span>
+
+  <span class="token keyword">fn</span> <span class="token function-definition function">append</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span><span class="token keyword">Self</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token keyword">Self</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p>However, to truly be a monoid, implementing types would have to satisfy a few more restructions.</p>
+<pre class="language-rust"><!-- HTML_TAG_START --><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">T_is_a_monoid</span><span class="token punctuation">(</span>example<span class="token punctuation">:</span> <span class="token class-name">T</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token macro property">assert_eq!</span><span class="token punctuation">(</span>example<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">::</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> example<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token macro property">assert_eq!</span><span class="token punctuation">(</span><span class="token class-name">T</span><span class="token punctuation">::</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>example<span class="token punctuation">)</span><span class="token punctuation">,</span> example<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p>If we could run this test on every possible instance of the type <code>T</code>, and it passed for all of them, we would have proven that <code>T</code> is a monoid.</p>
+<p>Monoids are neat and come up frequently. Addition and multiplication are both monoids over numbers, with <code>0</code> and <code>1</code> as the return values of <code>empty</code> respectively. String concatenation is a monoid, with the empty string as the <code>empty</code> value. Booleans have two monoids; <code>and</code> is a monoid with an empty value of <code>true</code>, and <code>or</code> is a monoid with an empty value of <code>false</code>.</p>
+<p>We need a monoid so that we can combine together the result of applying the trait function to each individual field into a single value for the whole struct. In the context of <code>PartialEq</code>, our derived implementation uses <code>and</code> as it’s monoid; that is, the <code>eq</code> function returns true if the <code>eq</code> comparison applied to <em>every</em> field returns true.</p>
+<p><em>For a more in depth explanation of what a monoid is, read <a href="https://bartoszmilewski.com/2015/07/21/free-monoids/" rel="nofollow">Bartosz Milewski’s</a> excellent series on category theory for programmers.</em></p>
+<h2>Derivation for Structs</h2>
+<p><em>If you haven’t worked with derive macros before, I highly recommend <a href="https://blog.turbo.fish/proc-macro-simple-derive/" rel="nofollow">this blog post</a> for a quick explanation and <a href="https://github.com/dtolnay/proc-macro-workshop" rel="nofollow">this repo</a> for a more in depth walkthrough. The <a href="https://docs.rs/syn/0.15.26/syn/" rel="nofollow">syn documentation</a> is also quite useful.</em></p>
+<p>Lets say I have some trait.</p>
+<pre class="language-rust"><!-- HTML_TAG_START --><code class="language-rust"><span class="token keyword">trait</span> <span class="token type-definition class-name">MyTrait</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">my_trait_func</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">ReturnType</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p>There are implementations of <code>MyTrait</code> for a variety of different things that we’ll call “primitives” in the sense that they implement <code>MyTrait</code> by hand. What we want is to come up with some obvious implementation of <code>MyTrait</code> for any struct or enum made up of <code>impl MyTrait</code> fields.</p>
+<p>Structs are easy. We’ve said that all of our fields must implement the trait. Then we just need to apply our monoidal function to the result, and a single object of type <code>ReturnType</code> falls out. voila, we have our implementation.</p>
+<pre class="language-rust"><!-- HTML_TAG_START --><code class="language-rust"><span class="token keyword">fn</span> <span class="token function-definition function">impl_struct</span><span class="token punctuation">(</span> <span class="token comment">// arguments correspond to our assumptions.</span>
+  input<span class="token punctuation">:</span> <span class="token class-name">DeriveInput</span><span class="token punctuation">,</span> <span class="token comment">// we have some struct</span>
+  trait_name<span class="token punctuation">:</span> <span class="token class-name">Ident</span><span class="token punctuation">,</span> <span class="token comment">// that we want to derive a trait on.</span>
+  trait_func_name<span class="token punctuation">:</span> <span class="token class-name">Ident</span><span class="token punctuation">,</span> <span class="token comment">// that trait can be implemented with one function.</span>
+  return_type<span class="token punctuation">:</span> <span class="token class-name">Ident</span> <span class="token comment">// that function has some return type with monoidal structure</span>
+<span class="token punctuation">)</span> <span class="token punctuation">-></span> <span class="token class-name">TokenStream</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">let</span> struct_name <span class="token operator">=</span> input<span class="token punctuation">.</span>ident<span class="token punctuation">;</span>
+  <span class="token keyword">let</span> struct_fields <span class="token operator">=</span> <span class="token keyword">match</span> input<span class="token punctuation">.</span>data <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Data</span><span class="token punctuation">::</span><span class="token class-name">Struct</span><span class="token punctuation">(</span><span class="token class-name">DataStruct</span> <span class="token punctuation">&#123;</span>
+      fields<span class="token punctuation">:</span> <span class="token class-name">Fields</span><span class="token punctuation">::</span><span class="token class-name">Named</span><span class="token punctuation">(</span>fields<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token punctuation">..</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token operator">=></span> fields<span class="token punctuation">.</span>named<span class="token punctuation">,</span>
+    _ <span class="token operator">=></span> <span class="token macro property">panic!</span><span class="token punctuation">(</span><span class="token string">"not a struct"</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> empty_value <span class="token operator">=</span> <span class="token macro property">quote!</span><span class="token punctuation">&#123;</span> #<span class="token namespace">return_type<span class="token punctuation">::</span></span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">let</span> trait_func_impl <span class="token operator">=</span> fields
+  <span class="token punctuation">.</span><span class="token function">into_iter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>field<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">&#123;</span> <span class="token comment">// for each field</span>
+    <span class="token keyword">let</span> field_name <span class="token operator">=</span> field<span class="token punctuation">.</span>ident<span class="token punctuation">;</span>
+    <span class="token macro property">quote!</span><span class="token punctuation">&#123;</span>#field_name<span class="token punctuation">.</span>#<span class="token function">trait_func_name</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span> <span class="token comment">// apply the trait function to get some instance of #return_type</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">fold</span><span class="token punctuation">(</span>empty_value<span class="token punctuation">,</span> <span class="token closure-params"><span class="token closure-punctuation punctuation">|</span>accumulated_code<span class="token punctuation">,</span> field_result<span class="token closure-punctuation punctuation">|</span></span> <span class="token punctuation">&#123;</span> <span class="token comment">// then combine the results</span>
+    <span class="token macro property">quote!</span><span class="token punctuation">&#123;</span>#<span class="token namespace">return_type<span class="token punctuation">::</span></span><span class="token function">append</span><span class="token punctuation">(</span>#accumulated_code<span class="token punctuation">,</span> #field_result<span class="token punctuation">)</span><span class="token punctuation">&#125;</span> <span class="token comment">// using the binary function from the monoid over #return_type</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token macro property">quote!</span><span class="token punctuation">&#123;</span>
+    <span class="token attribute attr-name">#[automatically_derived]</span>
+    <span class="token keyword">impl</span> #trait_name <span class="token keyword">for</span> #struct_name <span class="token punctuation">&#123;</span>
+      <span class="token keyword">fn</span> #<span class="token function">trait_func_name</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token keyword">self</span><span class="token punctuation">)</span> <span class="token punctuation">-></span> #return_type <span class="token punctuation">&#123;</span>
+        #trait_func_impl
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p><em>Notice that when we run a fold in the macro, the produced code will simply nest this statement repeatedly; <code>monoid(monoid(monoid(empty, a), b), c)</code>. We use the empty value so we don’t have to worry about whether the struct actually has fields; an empty struct would just return <code>#return_type::empty()</code>.</em></p>
+<p>This will give us a working implementation of our trait. It might not be the implementation we want; maybe we don’t care about every field, or need to consider fields in different ways. In fact, given this monoidal structure, there is a much simpler implementation that always works for any type; simply returning <code>#return_type::empty()</code>.</p>
+<p>This implementation seems nicer than that to me, because it considers each field in a uniform way, and because it nicely captures the core of what things like serde and argh are doing with their derive macros. In fact, if we generalize this to support helper attributes which could replace <code>#trait_func_name</code> with some arbitrary other function on <code>#field_name</code> that could produce a <code>#return_type</code>, this becomes much more flexible and could be useful in a variety of settings.</p>
+<h2>What if <code>#return_type</code> is <code>Self</code>?</h2>
+<p>This doesn’t work as well, because <code>Self</code> means different things for each field and for the struct as a whole. However, if we look at the places where derive macros are common, they don’t tend to have polymorphic return types. Instead they go to some consistent type with monoidal structure.</p>
+<h2>What about enums?</h2>
+<p>In the enum case, we can do the same thing for each branch independently. As long as each variant could be derived in a way similar to above, we can derive the implementation for the enum to be</p>
+<ul><li>a pattern match against the enum</li>
+<li>a natural implementation for the context of each branch</li></ul>
+<p>However, I am less confident that the “natural” implementation I describe there is useful in the enum case. I think in general that you do want some way to consider the context of which branch you are under. For instance, Serde has a <a href="https://serde.rs/enum-representations.html" rel="nofollow">variety of ways</a> that you can represent enums, and two of the three involve considering at least the <em>name</em> of the variant.</p>
+<p>Similar to the potential generalization of the struct approach, the enum version could be <em>much</em> more useful with the addition of helper macros. Then each branch could be processed with a different monoid, and individual fields could be processed differently as above. However, that’s way too much code to put in a blog post. I’m not <a href="https://fasterthanli.me/articles/getting-in-and-out-of-trouble-with-rust-futures" rel="nofollow">Amos</a>.</p></article>
+
+<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Deriving Derive Macros with Monoids" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
+
+
+</div>
+
+
+		<script type="module" data-sveltekit-hydrate="11b0cp2">
+			import { start } from "../_app/immutable/start-a6505234.js";
+
+			start({
+				env: {},
+				paths: {"base":"","assets":""},
+				target: document.querySelector('[data-sveltekit-hydrate="11b0cp2"]').parentNode,
+				version: "1753490088626",
+				hydrate: {
+					node_ids: [0, 4],
+					data: [null,null],
+					form: null
+				}
+			});
+		</script>
+	</div>
+  </body>
+</html>

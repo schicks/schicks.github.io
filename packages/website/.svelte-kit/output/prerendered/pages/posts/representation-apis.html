@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simon would have said</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-YS6BJ97BPH')
+    </script>
+    <meta http-equiv="content-security-policy" content="">
+		<link href="../_app/immutable/assets/_layout-e790d386.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/blog-1f80565d.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/pi-by-hand-592e9f64.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/visualizing-voting-systems-0ed28d66.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/start-a6505234.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index-58f43e7f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-380e795b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper-a4192956.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/control-f5b05b5f.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-aa3ad892.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-9cbb603b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-da46b06b.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/posts/_slug_/_page.svelte-e8c51160.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/posts/_slug_/_page.ts-557ee4e4.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_page-602a8250.js"><title>Unifying API representations in Typescript</title><!-- HEAD_svelte-1l490sv_START --><!-- HEAD_svelte-1l490sv_END -->
+  </head>
+
+  <body>
+    <div>
+
+
+<header class="svelte-18lm2j2"><a href="/" class="big svelte-18lm2j2"><h1 class="svelte-18lm2j2">Simon would have said</h1></a>
+  <div class="links svelte-18lm2j2"><span class="big svelte-18lm2j2"><a href="/resume" class="svelte-18lm2j2">Resume</a></span>
+    <span class="big svelte-18lm2j2"><a href="/whos-simon" class="svelte-18lm2j2">Who&#39;s Simon? </a></span>
+    <span class="small svelte-18lm2j2"><a href="/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/cottage-a5c14d1f.svg" alt="Back to index" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://github.com/schicks" class="svelte-18lm2j2"><img src="/_app/immutable/assets/github-54cde8ee.svg" alt="Github" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://www.linkedin.com/in/sam-schick-868ab8ab/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/linkedin-78909844.svg" alt="Linkedin" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="/feed.xml" class="svelte-18lm2j2"><img src="/_app/immutable/assets/rss-5e9f88af.svg" alt="rss feed" class="svelte-18lm2j2"></a></span></div></header>
+<div class="body svelte-18lm2j2"><article class="blog"><h2>Unifying API representations in Typescript</h2>
+  <p>Every programming language has patterns that become idiomatic. Some of these patterns are encouraged by language features. Others are adopted by a popular library, and copied over and over. In TypeScript, a common pattern is to create a representation of a data structure that a library can transform into something useful. But each library ends up having its own, slightly different representation API.</p>
+<p>I had a project recently where I was working with <a href="https://github.com/pact-foundation/pact-js" rel="nofollow">pact</a> to do something a little unusual. The typical case for pact is for consumers of an API to write mocks that they can test against, and share these mocks with producers to serve as contract tests on the producer side. In my case, I was working against an API that had no interest in getting contract tests from me. The documentation was terrible, and I needed a way to validate that the requests I made would result in sane responses. I used pact to build mocks I could use in unit tests, and validated that those mocks matched the real API myself.</p>
+<p>This worked reasonably well, but I started noticing some troubling repetition. To validate the response shapes internally to the application and fail fast if something went wrong, I was using <a href="https://zod.dev/" rel="nofollow">Zod</a> to describe the API response shape. And to validate that any logic in my API client was correct, I was writing tests against it (wrapped around mocks, rather than hitting the real API) using <a href="https://jestjs.io/docs/expect#asymmetric-matchers" rel="nofollow">Jest asymmetric matchers</a>. For all three of these I needed to describe a data shape to the library, and there was frequently a <em>lot</em> of overlap between them.</p>
+<blockquote><p>For brevity, in the examples below I only show the zod and jest examples, but a quick look at the <a href="https://github.com/pact-foundation/pact-js?tab=readme-ov-file#writing-a-consumer-test" rel="nofollow">pact matchers API</a> should give you a sense of how similar writing these shapes for pact was.</p></blockquote>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token comment">// Types and validation for user preferences</span>
+<span class="token keyword">const</span> PreferencesSchema <span class="token operator">=</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  theme<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">enum</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">"light"</span><span class="token punctuation">,</span> <span class="token string">"dark"</span><span class="token punctuation">,</span> <span class="token string">"system"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  notifications<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    email<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">boolean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    pushEnabled<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">boolean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    quiet<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+      start<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      end<span class="token operator">:</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Preferences</span> <span class="token operator">=</span> z<span class="token punctuation">.</span>infer<span class="token operator">&lt;</span><span class="token keyword">typeof</span> PreferencesSchema<span class="token operator">></span><span class="token punctuation">;</span>
+
+<span class="token comment">// API handler</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">validatePreferences</span><span class="token punctuation">(</span>preferences<span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">)</span><span class="token operator">:</span> SafeParseReturnType<span class="token operator">&lt;</span>Preferences<span class="token operator">></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> PreferencesSchema<span class="token punctuation">.</span><span class="token function">safeParse</span><span class="token punctuation">(</span>preferences<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">.</span>success<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+      success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      error<span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Invalid preferences: '</span> <span class="token operator">+</span> result<span class="token punctuation">.</span>error<span class="token punctuation">.</span>message<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">&#123;</span> success<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> data<span class="token operator">:</span> result<span class="token punctuation">.</span>data <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Test</span>
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">'validatePreferences'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">'validates user preferences'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">validatePreferences</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+      theme<span class="token operator">:</span> <span class="token string">'dark'</span><span class="token punctuation">,</span>
+      notifications<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        email<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        pushEnabled<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        quiet<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+          start<span class="token operator">:</span> <span class="token string">'22:00'</span><span class="token punctuation">,</span>
+          end<span class="token operator">:</span> <span class="token string">'07:00'</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span> 
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>error<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBeUndefined</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toEqual</span><span class="token punctuation">(</span>
+      <span class="token comment">// notice how similar this expectation is to the zod type</span>
+      <span class="token class-name">expect</span><span class="token punctuation">.</span><span class="token function">objectContaining</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+        theme<span class="token operator">:</span> expect<span class="token punctuation">.</span><span class="token function">stringMatching</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">^(light|dark|system)$</span><span class="token regex-delimiter">/</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        notifications<span class="token operator">:</span> expect<span class="token punctuation">.</span><span class="token function">objectContaining</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+          email<span class="token operator">:</span> expect<span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          pushEnabled<span class="token operator">:</span> expect<span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>Boolean<span class="token punctuation">)</span><span class="token punctuation">,</span>
+          quiet<span class="token operator">:</span> expect<span class="token punctuation">.</span><span class="token function">objectContaining</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+            start<span class="token operator">:</span> expect<span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token punctuation">,</span>
+            end<span class="token operator">:</span> expect<span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>String<span class="token punctuation">)</span>
+          <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>We describe the same structure twice: as a Zod schema for validation and type generation, and as a Jest matcher for testing. Updating this structure requires changing both representations, creating maintenance overhead and the risk of inconsistencies.</p>
+<h2>A Unified Representation System</h2>
+<p>An alternative would be to have a single representation that can produce both a test expectation (as a jest matcher) and a parser (as a zod schema). Lets look at how we might build that.</p>
+<p>First, we want to sketch out what our representation will look like with some basic types and helper functions. This will be the “API layer” of our tool.</p>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token comment">// Base shapes</span>
+<span class="token keyword">type</span> <span class="token class-name">StringShape</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> type<span class="token operator">:</span> <span class="token string">'string'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">type</span> <span class="token class-name">NumberShape</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span> type<span class="token operator">:</span> <span class="token string">'number'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">type</span> <span class="token class-name">ObjectShape</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  type<span class="token operator">:</span> <span class="token string">'object'</span><span class="token punctuation">;</span>
+  fields<span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> Shape<span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">type</span> <span class="token class-name">Shape</span> <span class="token operator">=</span> StringShape <span class="token operator">|</span> NumberShape <span class="token operator">|</span> ObjectShape<span class="token punctuation">;</span>
+
+<span class="token comment">// Helper to create shapes with preserved type information</span>
+<span class="token keyword">const</span> shape <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+  <span class="token builtin">string</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> StringShape <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> type<span class="token operator">:</span> <span class="token string">'string'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token builtin">number</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> NumberShape <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span> type<span class="token operator">:</span> <span class="token string">'number'</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  object<span class="token operator">:</span> <span class="token operator">&lt;</span><span class="token constant">T</span> <span class="token keyword">extends</span> <span class="token class-name">Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> Shape<span class="token operator">></span></span><span class="token operator">></span><span class="token punctuation">(</span>fields<span class="token operator">:</span> <span class="token constant">T</span><span class="token punctuation">)</span><span class="token operator">:</span> ObjectShape <span class="token operator">&amp;</span> <span class="token punctuation">&#123;</span> fields<span class="token operator">:</span> <span class="token constant">T</span> <span class="token punctuation">&#125;</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    type<span class="token operator">:</span> <span class="token string">'object'</span><span class="token punctuation">,</span>
+    fields
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>This representation is very minimal. We don’t handle unions, intersections, literals, arrays, and lots of other things. But it’s enough to demonstrate what declaring a representation might look like, and how we might use one.</p>
+<p>Then we create some functions that can use this representation. We want to be able to do three things. First, like zod, we want to get a typescript type that matches the shape we describe. This will make it easier to write other code that integrates these pieces. Second, we want to produce a zod schema that matches the shape, so we can parse potentially bad input into something we are confident in. Finally, we want to create jest expectations that validate our output meets the shape we described.</p>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token comment">// Convert shape to TypeScript type</span>
+<span class="token keyword">type</span> <span class="token class-name">ShapeToType<span class="token operator">&lt;</span><span class="token constant">S</span> <span class="token keyword">extends</span> Shape<span class="token operator">></span></span> <span class="token operator">=</span>
+  <span class="token constant">S</span> <span class="token keyword">extends</span> <span class="token class-name">StringShape</span> <span class="token operator">?</span> <span class="token builtin">string</span> <span class="token operator">:</span>
+  <span class="token constant">S</span> <span class="token keyword">extends</span> <span class="token class-name">NumberShape</span> <span class="token operator">?</span> <span class="token builtin">number</span> <span class="token operator">:</span>
+  <span class="token constant">S</span> <span class="token keyword">extends</span> <span class="token class-name">ObjectShape</span> <span class="token operator">?</span> <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">[</span><span class="token constant">K</span> <span class="token keyword">in</span> <span class="token keyword">keyof</span> <span class="token constant">S</span><span class="token punctuation">[</span><span class="token string">'fields'</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">:</span> ShapeToType<span class="token operator">&lt;</span><span class="token constant">S</span><span class="token punctuation">[</span><span class="token string">'fields'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token constant">K</span><span class="token punctuation">]</span><span class="token operator">></span>
+  <span class="token punctuation">&#125;</span> <span class="token operator">:</span>
+  <span class="token builtin">never</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Convert shape to Zod schema  </span>
+<span class="token keyword">function</span> <span class="token generic-function"><span class="token function">shapeToZod</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token constant">S</span> <span class="token keyword">extends</span> Shape<span class="token operator">></span></span></span><span class="token punctuation">(</span>s<span class="token operator">:</span> <span class="token constant">S</span><span class="token punctuation">)</span><span class="token operator">:</span> z<span class="token punctuation">.</span>ZodType<span class="token operator">&lt;</span>ShapeToType<span class="token operator">&lt;</span><span class="token constant">S</span><span class="token operator">>></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>s<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> <span class="token string">'string'</span><span class="token operator">:</span>
+      <span class="token keyword">return</span> z<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> z<span class="token punctuation">.</span>ZodType<span class="token operator">&lt;</span>ShapeToType<span class="token operator">&lt;</span><span class="token constant">S</span><span class="token operator">>></span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">'number'</span><span class="token operator">:</span> 
+      <span class="token keyword">return</span> z<span class="token punctuation">.</span><span class="token function">number</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> z<span class="token punctuation">.</span>ZodType<span class="token operator">&lt;</span>ShapeToType<span class="token operator">&lt;</span><span class="token constant">S</span><span class="token operator">>></span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">'object'</span><span class="token operator">:</span>
+      <span class="token keyword">const</span> schema<span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> z<span class="token punctuation">.</span>ZodType<span class="token operator">&lt;</span><span class="token builtin">any</span><span class="token operator">>></span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token punctuation">[</span>key<span class="token punctuation">,</span> field<span class="token punctuation">]</span> <span class="token keyword">of</span> Object<span class="token punctuation">.</span><span class="token function">entries</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span>fields<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        schema<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">shapeToZod</span><span class="token punctuation">(</span>field<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+      <span class="token keyword">return</span> z<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span>schema<span class="token punctuation">)</span> <span class="token keyword">as</span> z<span class="token punctuation">.</span>ZodType<span class="token operator">&lt;</span>ShapeToType<span class="token operator">&lt;</span><span class="token constant">S</span><span class="token operator">>></span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Convert shape to Jest matcher</span>
+<span class="token keyword">function</span> <span class="token generic-function"><span class="token function">shapeToMatcher</span><span class="token generic class-name"><span class="token operator">&lt;</span><span class="token constant">S</span> <span class="token keyword">extends</span> Shape<span class="token operator">></span></span></span><span class="token punctuation">(</span>s<span class="token operator">:</span> <span class="token constant">S</span><span class="token punctuation">)</span><span class="token operator">:</span> jest<span class="token punctuation">.</span>AsymmetricMatcher <span class="token punctuation">&#123;</span>
+  <span class="token keyword">switch</span> <span class="token punctuation">(</span>s<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> <span class="token string">'string'</span><span class="token operator">:</span>
+      <span class="token keyword">return</span> expect<span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>String<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+    <span class="token keyword">case</span> <span class="token string">'number'</span><span class="token operator">:</span>
+      <span class="token keyword">return</span> expect<span class="token punctuation">.</span><span class="token function">any</span><span class="token punctuation">(</span>Number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token string">'object'</span><span class="token operator">:</span>
+      <span class="token keyword">const</span> matcher<span class="token operator">:</span> Record<span class="token operator">&lt;</span><span class="token builtin">string</span><span class="token punctuation">,</span> jest<span class="token punctuation">.</span>AsymmetricMatcher<span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token punctuation">[</span>key<span class="token punctuation">,</span> field<span class="token punctuation">]</span> <span class="token keyword">of</span> Object<span class="token punctuation">.</span><span class="token function">entries</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span>fields<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        matcher<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">shapeToMatcher</span><span class="token punctuation">(</span>field<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+      <span class="token keyword">return</span> expect<span class="token punctuation">.</span><span class="token function">objectContaining</span><span class="token punctuation">(</span>matcher<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code><!-- HTML_TAG_END --></pre>
+<p>These are relatively simple in part because our API doesn’t allow for <em>that</em> many different data types, but also because of the similarities we already noted between the zod and jest APIs. We don’t have to go all the way from a data shape to a parser; we just have to go from our description of a data shape to zods.</p>
+<p>Now we can rewrite our preferences example:</p>
+<pre class="language-typescript"><!-- HTML_TAG_START --><code class="language-typescript"><span class="token keyword">const</span> preferencesShape <span class="token operator">=</span> shape<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+  theme<span class="token operator">:</span> shape<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// Could extend to handle enums</span>
+  notifications<span class="token operator">:</span> shape<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    email<span class="token operator">:</span> shape<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    pushEnabled<span class="token operator">:</span> shape<span class="token punctuation">.</span><span class="token function">boolean</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+    quiet<span class="token operator">:</span> shape<span class="token punctuation">.</span><span class="token function">object</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+      start<span class="token operator">:</span> shape<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      end<span class="token operator">:</span> shape<span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Get all three formats from one source</span>
+<span class="token keyword">type</span> <span class="token class-name">Preferences</span> <span class="token operator">=</span> ShapeToType<span class="token operator">&lt;</span><span class="token keyword">typeof</span> preferencesShape<span class="token operator">></span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> preferencesSchema <span class="token operator">=</span> <span class="token function">shapeToZod</span><span class="token punctuation">(</span>preferencesShape<span class="token punctuation">)</span><span class="token punctuation">;</span>  
+<span class="token keyword">const</span> preferencesMatcher <span class="token operator">=</span> <span class="token function">shapeToMatcher</span><span class="token punctuation">(</span>preferencesShape<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">validatePreferences</span><span class="token punctuation">(</span>data<span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">)</span><span class="token operator">:</span> Result<span class="token operator">&lt;</span>Preferences<span class="token operator">></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> preferencesSchema<span class="token punctuation">.</span><span class="token function">safeParse</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">.</span>success<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+      success<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      error<span class="token operator">:</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">'Invalid preferences: '</span> <span class="token operator">+</span> result<span class="token punctuation">.</span>error<span class="token punctuation">.</span>message<span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>  
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">&#123;</span> success<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> data<span class="token operator">:</span> result<span class="token punctuation">.</span>data <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">test</span><span class="token punctuation">(</span><span class="token string">'validatePreferences'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">validatePreferences</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    theme<span class="token operator">:</span> <span class="token string">'dark'</span><span class="token punctuation">,</span>
+    notifications<span class="token operator">:</span> <span class="token punctuation">&#123;</span> 
+      email<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+      pushEnabled<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+      quiet<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+        start<span class="token operator">:</span> <span class="token string">'22:00'</span><span class="token punctuation">,</span> 
+        end<span class="token operator">:</span> <span class="token string">'07:00'</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>result<span class="token punctuation">.</span>success<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+    <span class="token function">fail</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>error<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token function">expect</span><span class="token punctuation">(</span>result<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toEqual</span><span class="token punctuation">(</span>preferencesMatcher<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code><!-- HTML_TAG_END --></pre>
+<p>The toy example here isn’t that useful. There is not a lot of value in testing a zod schema with a jest matcher based off of the same shape. But in actual applications it is not unusual to have multiple different ways a shape is produced, or multiple different tests at different layers of the stack that might require different tools. For example, in my original example, pact was generating data of a shape that was validated by zod as well as validating data from the external API. Generally, this pattern is something you might reach for when you have multiple different representations that need to be kept in sync.</p>
+<h2>Practical Applications</h2>
+<p>While we could extend this into a full pluggable library, as the above sample shows it is also easy to write case-specific glue code to serve the purpose. A library of this form would only have much benefit if it were adopted by many other libraries as an API. Glue code of this form can be useful on many projects as they grow above toy sized. </p>
+<p>Even if you don’t intend to write code like this, representation APIs are common enough that having a better sense of how they are implemented and what they are doing is worthwhile. This hopefully gave you a taste, but if you’re interested in more try exploring the code of (or even PR’ing!) big representation libraries like zod.</p>
+<blockquote><p>This post was written with a lot of help from <a href="https://claude.ai" rel="nofollow">Claude</a>. The experience of writing with an AI was… a mixed bag. More on that in an upcoming post.</p></blockquote></article>
+
+<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Unifying API representations in Typescript" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
+
+
+</div>
+
+
+		<script type="module" data-sveltekit-hydrate="13ur48o">
+			import { start } from "../_app/immutable/start-a6505234.js";
+
+			start({
+				env: {},
+				paths: {"base":"","assets":""},
+				target: document.querySelector('[data-sveltekit-hydrate="13ur48o"]').parentNode,
+				version: "1753490088626",
+				hydrate: {
+					node_ids: [0, 4],
+					data: [null,null],
+					form: null
+				}
+			});
+		</script>
+	</div>
+  </body>
+</html>
