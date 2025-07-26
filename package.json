@@ -16,6 +16,7 @@
     "deploy": "npm run deploy --workspace=website"
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "nx": "21.3.7"
   }
 }
