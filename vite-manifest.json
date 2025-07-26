@@ -1,0 +1,710 @@
+{
+  "../../node_modules/@sveltejs/kit/src/runtime/client/start.js": {
+    "dynamicImports": [
+      ".svelte-kit/generated/nodes/0.js",
+      ".svelte-kit/generated/nodes/1.js",
+      ".svelte-kit/generated/nodes/2.js",
+      ".svelte-kit/generated/nodes/3.js",
+      ".svelte-kit/generated/nodes/4.js",
+      ".svelte-kit/generated/nodes/5.js",
+      ".svelte-kit/generated/nodes/6.js"
+    ],
+    "file": "_app/immutable/start-4f8d155b.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_singletons-380e795b.js",
+      "_preload-helper-a4192956.js",
+      "_control-f5b05b5f.js"
+    ],
+    "isEntry": true,
+    "src": "../../node_modules/@sveltejs/kit/src/runtime/client/start.js"
+  },
+  "../../node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
+    "file": "_app/immutable/components/error.svelte-09da2ee4.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_singletons-380e795b.js"
+    ],
+    "isEntry": true,
+    "src": "../../node_modules/@sveltejs/kit/src/runtime/components/error.svelte"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_AMS-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_AMS-Regular-68534840.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_AMS-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_AMS-Regular-30da91e8.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_AMS-Regular-0cdd387c.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_AMS-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Caligraphic-Bold-07d8e303.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff": {
+    "file": "_app/immutable/assets/KaTeX_Caligraphic-Bold-1ae6bd74.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Caligraphic-Bold-de7701e4.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Bold.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Caligraphic-Regular-ed0b7437.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Caligraphic-Regular-3398dd02.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Caligraphic-Regular-5d53e70a.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Caligraphic-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Fraktur-Bold-9163df9c.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff": {
+    "file": "_app/immutable/assets/KaTeX_Fraktur-Bold-9be7ceb8.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Fraktur-Bold-74444efd.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Bold.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Fraktur-Regular-1e6f9579.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Fraktur-Regular-5e28753b.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Fraktur-Regular-51814d27.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Fraktur-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Bold.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Main-Bold-138ac28d.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Bold.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff": {
+    "file": "_app/immutable/assets/KaTeX_Main-Bold-c76c5d69.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Main-Bold-0f60d1b8.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Bold.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Main-BoldItalic-70ee1f64.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff": {
+    "file": "_app/immutable/assets/KaTeX_Main-BoldItalic-a6f7ec0d.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Main-BoldItalic-99cd42a3.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-BoldItalic.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Italic.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Main-Italic-0d85ae7c.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Italic.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff": {
+    "file": "_app/immutable/assets/KaTeX_Main-Italic-f1d6ef86.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Main-Italic-97479ca6.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Italic.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Main-Regular-d0332f52.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Main-Regular-c6368d87.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Main-Regular-c2342cd8.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Main-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Math-BoldItalic-f9377ab0.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff": {
+    "file": "_app/immutable/assets/KaTeX_Math-BoldItalic-850c0af5.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Math-BoldItalic-dc47344d.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Math-BoldItalic.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Math-Italic.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Math-Italic-08ce98e5.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Math-Italic.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff": {
+    "file": "_app/immutable/assets/KaTeX_Math-Italic-8a8d2445.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Math-Italic-7af58c5e.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Math-Italic.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.ttf": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Bold-1ece03f7.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Bold-ece03cfd.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff2": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Bold-e99ae511.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Bold.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.ttf": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Italic-3931dd81.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Italic-91ee6750.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff2": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Italic-00b26ac8.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Italic.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Regular-f36ea897.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Regular-11e4dc8a.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_SansSerif-Regular-68e8c73e.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_SansSerif-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Script-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Script-Regular-1c67f068.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Script-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Script-Regular-d96cdf2b.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Script-Regular-036d4e95.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Script-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size1-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Size1-Regular-95b6d2f1.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size1-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Size1-Regular-c943cc98.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Size1-Regular-6b47c401.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size1-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size2-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Size2-Regular-a6b2099f.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size2-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Size2-Regular-2014c523.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Size2-Regular-d04c5421.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size2-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size3-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Size3-Regular-500e04d5.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size3-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size3-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Size3-Regular-6ab6b62e.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size3-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size4-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Size4-Regular-c647367d.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size4-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Size4-Regular-99f9c675.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Size4-Regular-a4af7d41.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Size4-Regular.woff2"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.ttf": {
+    "file": "_app/immutable/assets/KaTeX_Typewriter-Regular-f01f3e87.ttf",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.ttf"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff": {
+    "file": "_app/immutable/assets/KaTeX_Typewriter-Regular-e14fed02.woff",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff"
+  },
+  "../../node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff2": {
+    "file": "_app/immutable/assets/KaTeX_Typewriter-Regular-71d517d6.woff2",
+    "src": "../../node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff2"
+  },
+  ".svelte-kit/generated/nodes/0.js": {
+    "file": "_app/immutable/chunks/0-7a76a600.js",
+    "imports": [
+      "__layout-da46b06b.js",
+      "src/routes/+layout.svelte"
+    ],
+    "isDynamicEntry": true,
+    "src": ".svelte-kit/generated/nodes/0.js"
+  },
+  ".svelte-kit/generated/nodes/1.js": {
+    "file": "_app/immutable/chunks/1-15c1f094.js",
+    "imports": [
+      "../../node_modules/@sveltejs/kit/src/runtime/components/error.svelte"
+    ],
+    "isDynamicEntry": true,
+    "src": ".svelte-kit/generated/nodes/1.js"
+  },
+  ".svelte-kit/generated/nodes/2.js": {
+    "file": "_app/immutable/chunks/2-ac52131e.js",
+    "imports": [
+      "src/routes/resume/+layout.svelte"
+    ],
+    "isDynamicEntry": true,
+    "src": ".svelte-kit/generated/nodes/2.js"
+  },
+  ".svelte-kit/generated/nodes/3.js": {
+    "file": "_app/immutable/chunks/3-2f5b0912.js",
+    "imports": [
+      "__page-a01e76f9.js",
+      "src/routes/+page.svelte"
+    ],
+    "isDynamicEntry": true,
+    "src": ".svelte-kit/generated/nodes/3.js"
+  },
+  ".svelte-kit/generated/nodes/4.js": {
+    "file": "_app/immutable/chunks/4-242c79bb.js",
+    "imports": [
+      "__page-602a8250.js",
+      "src/routes/posts/[slug]/+page.svelte"
+    ],
+    "isDynamicEntry": true,
+    "src": ".svelte-kit/generated/nodes/4.js"
+  },
+  ".svelte-kit/generated/nodes/5.js": {
+    "file": "_app/immutable/chunks/5-43bcfef6.js",
+    "imports": [
+      "src/routes/resume/+page.svelte"
+    ],
+    "isDynamicEntry": true,
+    "src": ".svelte-kit/generated/nodes/5.js"
+  },
+  ".svelte-kit/generated/nodes/6.js": {
+    "file": "_app/immutable/chunks/6-dc59c02d.js",
+    "imports": [
+      "src/routes/whos-simon/+page.mdx"
+    ],
+    "isDynamicEntry": true,
+    "src": ".svelte-kit/generated/nodes/6.js"
+  },
+  "__layout-da46b06b.js": {
+    "file": "_app/immutable/chunks/_layout-da46b06b.js"
+  },
+  "__page-602a8250.js": {
+    "dynamicImports": [
+      "src/routes/posts/better-pooled-coronavirus-testing.mdx",
+      "src/routes/posts/deriving-derive-macros.mdx",
+      "src/routes/posts/koka-vs-the-world.mdx",
+      "src/routes/posts/pi-by-hand.mdx",
+      "src/routes/posts/release-announcement-req.mdx",
+      "src/routes/posts/representation-apis.mdx",
+      "src/routes/posts/static-rendering-in-sveltekit.mdx",
+      "src/routes/posts/type-safe-url-wrangling.mdx",
+      "src/routes/posts/typescript-tree-traversals.mdx",
+      "src/routes/posts/visualizing-voting-systems.mdx"
+    ],
+    "file": "_app/immutable/chunks/_page-602a8250.js",
+    "imports": [
+      "_preload-helper-a4192956.js",
+      "_control-f5b05b5f.js"
+    ]
+  },
+  "__page-a01e76f9.js": {
+    "dynamicImports": [
+      "src/routes/posts/better-pooled-coronavirus-testing.mdx",
+      "src/routes/posts/deriving-derive-macros.mdx",
+      "src/routes/posts/koka-vs-the-world.mdx",
+      "src/routes/posts/pi-by-hand.mdx",
+      "src/routes/posts/release-announcement-req.mdx",
+      "src/routes/posts/representation-apis.mdx",
+      "src/routes/posts/static-rendering-in-sveltekit.mdx",
+      "src/routes/posts/type-safe-url-wrangling.mdx",
+      "src/routes/posts/typescript-tree-traversals.mdx",
+      "src/routes/posts/visualizing-voting-systems.mdx"
+    ],
+    "file": "_app/immutable/chunks/_page-a01e76f9.js",
+    "imports": [
+      "_preload-helper-a4192956.js"
+    ]
+  },
+  "_blog-d7f7866c.js": {
+    "assets": [
+      "_app/immutable/assets/KaTeX_AMS-Regular-0cdd387c.woff2",
+      "_app/immutable/assets/KaTeX_AMS-Regular-30da91e8.woff",
+      "_app/immutable/assets/KaTeX_AMS-Regular-68534840.ttf",
+      "_app/immutable/assets/KaTeX_Caligraphic-Bold-de7701e4.woff2",
+      "_app/immutable/assets/KaTeX_Caligraphic-Bold-1ae6bd74.woff",
+      "_app/immutable/assets/KaTeX_Caligraphic-Bold-07d8e303.ttf",
+      "_app/immutable/assets/KaTeX_Caligraphic-Regular-5d53e70a.woff2",
+      "_app/immutable/assets/KaTeX_Caligraphic-Regular-3398dd02.woff",
+      "_app/immutable/assets/KaTeX_Caligraphic-Regular-ed0b7437.ttf",
+      "_app/immutable/assets/KaTeX_Fraktur-Bold-74444efd.woff2",
+      "_app/immutable/assets/KaTeX_Fraktur-Bold-9be7ceb8.woff",
+      "_app/immutable/assets/KaTeX_Fraktur-Bold-9163df9c.ttf",
+      "_app/immutable/assets/KaTeX_Fraktur-Regular-51814d27.woff2",
+      "_app/immutable/assets/KaTeX_Fraktur-Regular-5e28753b.woff",
+      "_app/immutable/assets/KaTeX_Fraktur-Regular-1e6f9579.ttf",
+      "_app/immutable/assets/KaTeX_Main-Bold-0f60d1b8.woff2",
+      "_app/immutable/assets/KaTeX_Main-Bold-c76c5d69.woff",
+      "_app/immutable/assets/KaTeX_Main-Bold-138ac28d.ttf",
+      "_app/immutable/assets/KaTeX_Main-BoldItalic-99cd42a3.woff2",
+      "_app/immutable/assets/KaTeX_Main-BoldItalic-a6f7ec0d.woff",
+      "_app/immutable/assets/KaTeX_Main-BoldItalic-70ee1f64.ttf",
+      "_app/immutable/assets/KaTeX_Main-Italic-97479ca6.woff2",
+      "_app/immutable/assets/KaTeX_Main-Italic-f1d6ef86.woff",
+      "_app/immutable/assets/KaTeX_Main-Italic-0d85ae7c.ttf",
+      "_app/immutable/assets/KaTeX_Main-Regular-c2342cd8.woff2",
+      "_app/immutable/assets/KaTeX_Main-Regular-c6368d87.woff",
+      "_app/immutable/assets/KaTeX_Main-Regular-d0332f52.ttf",
+      "_app/immutable/assets/KaTeX_Math-BoldItalic-dc47344d.woff2",
+      "_app/immutable/assets/KaTeX_Math-BoldItalic-850c0af5.woff",
+      "_app/immutable/assets/KaTeX_Math-BoldItalic-f9377ab0.ttf",
+      "_app/immutable/assets/KaTeX_Math-Italic-7af58c5e.woff2",
+      "_app/immutable/assets/KaTeX_Math-Italic-8a8d2445.woff",
+      "_app/immutable/assets/KaTeX_Math-Italic-08ce98e5.ttf",
+      "_app/immutable/assets/KaTeX_SansSerif-Bold-e99ae511.woff2",
+      "_app/immutable/assets/KaTeX_SansSerif-Bold-ece03cfd.woff",
+      "_app/immutable/assets/KaTeX_SansSerif-Bold-1ece03f7.ttf",
+      "_app/immutable/assets/KaTeX_SansSerif-Italic-00b26ac8.woff2",
+      "_app/immutable/assets/KaTeX_SansSerif-Italic-91ee6750.woff",
+      "_app/immutable/assets/KaTeX_SansSerif-Italic-3931dd81.ttf",
+      "_app/immutable/assets/KaTeX_SansSerif-Regular-68e8c73e.woff2",
+      "_app/immutable/assets/KaTeX_SansSerif-Regular-11e4dc8a.woff",
+      "_app/immutable/assets/KaTeX_SansSerif-Regular-f36ea897.ttf",
+      "_app/immutable/assets/KaTeX_Script-Regular-036d4e95.woff2",
+      "_app/immutable/assets/KaTeX_Script-Regular-d96cdf2b.woff",
+      "_app/immutable/assets/KaTeX_Script-Regular-1c67f068.ttf",
+      "_app/immutable/assets/KaTeX_Size1-Regular-6b47c401.woff2",
+      "_app/immutable/assets/KaTeX_Size1-Regular-c943cc98.woff",
+      "_app/immutable/assets/KaTeX_Size1-Regular-95b6d2f1.ttf",
+      "_app/immutable/assets/KaTeX_Size2-Regular-d04c5421.woff2",
+      "_app/immutable/assets/KaTeX_Size2-Regular-2014c523.woff",
+      "_app/immutable/assets/KaTeX_Size2-Regular-a6b2099f.ttf",
+      "_app/immutable/assets/KaTeX_Size3-Regular-6ab6b62e.woff",
+      "_app/immutable/assets/KaTeX_Size3-Regular-500e04d5.ttf",
+      "_app/immutable/assets/KaTeX_Size4-Regular-a4af7d41.woff2",
+      "_app/immutable/assets/KaTeX_Size4-Regular-99f9c675.woff",
+      "_app/immutable/assets/KaTeX_Size4-Regular-c647367d.ttf",
+      "_app/immutable/assets/KaTeX_Typewriter-Regular-71d517d6.woff2",
+      "_app/immutable/assets/KaTeX_Typewriter-Regular-e14fed02.woff",
+      "_app/immutable/assets/KaTeX_Typewriter-Regular-f01f3e87.ttf"
+    ],
+    "css": [
+      "_app/immutable/assets/blog-1f80565d.css"
+    ],
+    "file": "_app/immutable/chunks/blog-d7f7866c.js",
+    "imports": [
+      "_index-58f43e7f.js"
+    ]
+  },
+  "_control-f5b05b5f.js": {
+    "file": "_app/immutable/chunks/control-f5b05b5f.js"
+  },
+  "_index-58f43e7f.js": {
+    "file": "_app/immutable/chunks/index-58f43e7f.js"
+  },
+  "_preload-helper-a4192956.js": {
+    "file": "_app/immutable/chunks/preload-helper-a4192956.js"
+  },
+  "_singletons-380e795b.js": {
+    "file": "_app/immutable/chunks/singletons-380e795b.js",
+    "imports": [
+      "_index-58f43e7f.js"
+    ]
+  },
+  "_transform-53bf2b54.js": {
+    "file": "_app/immutable/chunks/transform-53bf2b54.js"
+  },
+  "_utilities-001e5f4e.js": {
+    "file": "_app/immutable/chunks/utilities-001e5f4e.js"
+  },
+  "blog.css": {
+    "file": "_app/immutable/assets/blog-1f80565d.css",
+    "src": "blog.css"
+  },
+  "src/lib/icons/cottage.svg": {
+    "file": "_app/immutable/assets/cottage-a5c14d1f.svg",
+    "src": "src/lib/icons/cottage.svg"
+  },
+  "src/lib/icons/github.svg": {
+    "file": "_app/immutable/assets/github-6a9577cd.svg",
+    "src": "src/lib/icons/github.svg"
+  },
+  "src/lib/icons/linkedin.svg": {
+    "file": "_app/immutable/assets/linkedin-9636faf9.svg",
+    "src": "src/lib/icons/linkedin.svg"
+  },
+  "src/lib/icons/rss.svg": {
+    "file": "_app/immutable/assets/rss-5e9f88af.svg",
+    "src": "src/lib/icons/rss.svg"
+  },
+  "src/lib/voting/assets/bush.png": {
+    "file": "_app/immutable/assets/bush-84d45f5e.png",
+    "src": "src/lib/voting/assets/bush.png"
+  },
+  "src/lib/voting/assets/gore.png": {
+    "file": "_app/immutable/assets/gore-91728b43.png",
+    "src": "src/lib/voting/assets/gore.png"
+  },
+  "src/lib/voting/assets/nader.png": {
+    "file": "_app/immutable/assets/nader-536cf690.png",
+    "src": "src/lib/voting/assets/nader.png"
+  },
+  "src/routes/+layout.css": {
+    "file": "_app/immutable/assets/_layout-e790d386.css",
+    "src": "src/routes/+layout.css"
+  },
+  "src/routes/+layout.svelte": {
+    "assets": [
+      "_app/immutable/assets/rss-5e9f88af.svg",
+      "_app/immutable/assets/cottage-a5c14d1f.svg",
+      "_app/immutable/assets/github-6a9577cd.svg",
+      "_app/immutable/assets/linkedin-9636faf9.svg"
+    ],
+    "css": [
+      "_app/immutable/assets/_layout-e790d386.css"
+    ],
+    "file": "_app/immutable/components/pages/_layout.svelte-4403f07f.js",
+    "imports": [
+      "_index-58f43e7f.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+layout.svelte"
+  },
+  "src/routes/+layout.ts": {
+    "file": "_app/immutable/modules/pages/_layout.ts-9cbb603b.js",
+    "imports": [
+      "__layout-da46b06b.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+layout.ts"
+  },
+  "src/routes/+page.css": {
+    "file": "_app/immutable/assets/_page-2086f2c4.css",
+    "src": "src/routes/+page.css"
+  },
+  "src/routes/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page-2086f2c4.css"
+    ],
+    "file": "_app/immutable/components/pages/_page.svelte-e632b119.js",
+    "imports": [
+      "_index-58f43e7f.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+page.svelte"
+  },
+  "src/routes/+page.ts": {
+    "file": "_app/immutable/modules/pages/_page.ts-78d1f364.js",
+    "imports": [
+      "__page-a01e76f9.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/+page.ts"
+  },
+  "src/routes/posts/[slug]/+page.svelte": {
+    "file": "_app/immutable/components/pages/posts/_slug_/_page.svelte-e8c51160.js",
+    "imports": [
+      "_index-58f43e7f.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/posts/[slug]/+page.svelte"
+  },
+  "src/routes/posts/[slug]/+page.ts": {
+    "file": "_app/immutable/modules/pages/posts/_slug_/_page.ts-557ee4e4.js",
+    "imports": [
+      "_preload-helper-a4192956.js",
+      "__page-602a8250.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/posts/[slug]/+page.ts"
+  },
+  "src/routes/posts/better-pooled-coronavirus-testing.mdx": {
+    "file": "_app/immutable/chunks/better-pooled-coronavirus-testing-20f2f300.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_utilities-001e5f4e.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/better-pooled-coronavirus-testing.mdx"
+  },
+  "src/routes/posts/deriving-derive-macros.mdx": {
+    "file": "_app/immutable/chunks/deriving-derive-macros-02e0b65f.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/deriving-derive-macros.mdx"
+  },
+  "src/routes/posts/koka-vs-the-world.mdx": {
+    "file": "_app/immutable/chunks/koka-vs-the-world-18c19115.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/koka-vs-the-world.mdx"
+  },
+  "src/routes/posts/pi-by-hand.css": {
+    "file": "_app/immutable/assets/pi-by-hand-592e9f64.css",
+    "src": "src/routes/posts/pi-by-hand.css"
+  },
+  "src/routes/posts/pi-by-hand.mdx": {
+    "css": [
+      "_app/immutable/assets/pi-by-hand-592e9f64.css"
+    ],
+    "file": "_app/immutable/chunks/pi-by-hand-2e131c62.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js",
+      "_transform-53bf2b54.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/pi-by-hand.mdx"
+  },
+  "src/routes/posts/release-announcement-req.mdx": {
+    "file": "_app/immutable/chunks/release-announcement-req-4219edd4.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/release-announcement-req.mdx"
+  },
+  "src/routes/posts/representation-apis.mdx": {
+    "file": "_app/immutable/chunks/representation-apis-3a52d87c.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/representation-apis.mdx"
+  },
+  "src/routes/posts/static-rendering-in-sveltekit.mdx": {
+    "file": "_app/immutable/chunks/static-rendering-in-sveltekit-6bd049e4.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_utilities-001e5f4e.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/static-rendering-in-sveltekit.mdx"
+  },
+  "src/routes/posts/type-safe-url-wrangling.mdx": {
+    "file": "_app/immutable/chunks/type-safe-url-wrangling-fa2ded61.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/type-safe-url-wrangling.mdx"
+  },
+  "src/routes/posts/typescript-tree-traversals.mdx": {
+    "file": "_app/immutable/chunks/typescript-tree-traversals-76144981.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/typescript-tree-traversals.mdx"
+  },
+  "src/routes/posts/visualizing-voting-systems.css": {
+    "file": "_app/immutable/assets/visualizing-voting-systems-0ed28d66.css",
+    "src": "src/routes/posts/visualizing-voting-systems.css"
+  },
+  "src/routes/posts/visualizing-voting-systems.mdx": {
+    "assets": [
+      "_app/immutable/assets/bush-84d45f5e.png",
+      "_app/immutable/assets/gore-91728b43.png",
+      "_app/immutable/assets/nader-536cf690.png"
+    ],
+    "css": [
+      "_app/immutable/assets/visualizing-voting-systems-0ed28d66.css"
+    ],
+    "file": "_app/immutable/chunks/visualizing-voting-systems-3743244d.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js",
+      "_transform-53bf2b54.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "src/routes/posts/visualizing-voting-systems.mdx"
+  },
+  "src/routes/resume/+layout.css": {
+    "file": "_app/immutable/assets/_layout-c53005e9.css",
+    "src": "src/routes/resume/+layout.css"
+  },
+  "src/routes/resume/+layout.svelte": {
+    "css": [
+      "_app/immutable/assets/_layout-c53005e9.css"
+    ],
+    "file": "_app/immutable/components/pages/resume/_layout.svelte-51f08755.js",
+    "imports": [
+      "_index-58f43e7f.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/resume/+layout.svelte"
+  },
+  "src/routes/resume/+page.css": {
+    "file": "_app/immutable/assets/_page-1c6eed25.css",
+    "src": "src/routes/resume/+page.css"
+  },
+  "src/routes/resume/+page.svelte": {
+    "css": [
+      "_app/immutable/assets/_page-1c6eed25.css"
+    ],
+    "file": "_app/immutable/components/pages/resume/_page.svelte-0307b033.js",
+    "imports": [
+      "_index-58f43e7f.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/resume/+page.svelte"
+  },
+  "src/routes/whos-simon/+page.mdx": {
+    "file": "_app/immutable/components/pages/whos-simon/_page.mdx-98c6ca05.js",
+    "imports": [
+      "_index-58f43e7f.js",
+      "_blog-d7f7866c.js"
+    ],
+    "isEntry": true,
+    "src": "src/routes/whos-simon/+page.mdx"
+  }
+}

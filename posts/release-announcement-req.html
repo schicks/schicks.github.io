@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simon would have said</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.png" />
+    <link rel="stylesheet" href="/global.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YS6BJ97BPH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-YS6BJ97BPH')
+    </script>
+    <meta http-equiv="content-security-policy" content="">
+		<link href="../_app/immutable/assets/_layout-e790d386.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/blog-1f80565d.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/pi-by-hand-592e9f64.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/visualizing-voting-systems-0ed28d66.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/start-4f8d155b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index-58f43e7f.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-380e795b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper-a4192956.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/control-f5b05b5f.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-4403f07f.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-9cbb603b.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-da46b06b.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/posts/_slug_/_page.svelte-e8c51160.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/posts/_slug_/_page.ts-557ee4e4.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_page-602a8250.js"><title>Req: Postman in the terminal</title><!-- HEAD_svelte-1l490sv_START --><!-- HEAD_svelte-1l490sv_END -->
+  </head>
+
+  <body>
+    <div>
+
+
+<header class="svelte-18lm2j2"><a href="/" class="big svelte-18lm2j2"><h1 class="svelte-18lm2j2">Simon would have said</h1></a>
+  <div class="links svelte-18lm2j2"><span class="big svelte-18lm2j2"><a href="/resume" class="svelte-18lm2j2">Resume</a></span>
+    <span class="big svelte-18lm2j2"><a href="/whos-simon" class="svelte-18lm2j2">Who&#39;s Simon? </a></span>
+    <span class="small svelte-18lm2j2"><a href="/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/cottage-a5c14d1f.svg" alt="Back to index" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://github.com/schicks" class="svelte-18lm2j2"><img src="/_app/immutable/assets/github-6a9577cd.svg" alt="Github" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="https://www.linkedin.com/in/sam-schick-868ab8ab/" class="svelte-18lm2j2"><img src="/_app/immutable/assets/linkedin-9636faf9.svg" alt="Linkedin" style="height: 24px" class="svelte-18lm2j2"></a></span>
+    <span class="svelte-18lm2j2"><a href="/feed.xml" class="svelte-18lm2j2"><img src="/_app/immutable/assets/rss-5e9f88af.svg" alt="rss feed" class="svelte-18lm2j2"></a></span></div></header>
+<div class="body svelte-18lm2j2"><article class="blog"><h2>Req: Postman in the terminal</h2>
+  <p>I use <a href="https://www.postman.com/downloads/" rel="nofollow">Postman</a> a lot at work. It’s really helpful to have an interface where I can write down a request, run it, and then iterate on it based on the response. However, the fact that it’s a GUI tool puts some real limitations on it. </p>
+<p>Between VS Code, zoom, docker, firefox, and slack, I’m often already pushing my computer a little harder than it’s happy place, and adding another electron application isn’t ideal. Worse than that, trying to eyeball my way through a 500 line JSON response is no fun at all. </p>
+<p>I’d much rather have a CLI tool where I can pipe the results into <a href="https://stedolan.github.io/jq/" rel="nofollow">jq</a> and explore to my hearts content in a more focused way. For a while I tried just using <code>curl</code>, but that had a different set of problems. Editing requests in Postman feels like iterating on code. I have a static document representing the request that can be saved between sessions, pull secrets from the environment (sort of), and have meaningful structure related to what I’m building. Iterating on a curl request just feels bad, especially when I need to send a request with a body.</p>
+<p>I spent a while complaining to my coworkers that curl wouldn’t run HTTP requests from a file, and after I got all the whinging out of my system I realized that this should be a relatively easy thing to build. I wanted something that could</p>
+<ul><li>run as a CLI application</li>
+<li>read requests in a standard format from a static file</li>
+<li>be distributed as a static binary (none of this <a href="https://httpyac.github.io/" rel="nofollow">install from npm</a> nonsense)</li></ul>
+<p>So I wrote <a href="https://github.com/schicks/req/releases/tag/v1.0.0" rel="nofollow">req</a>. Req takes in a file containing a <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html" rel="nofollow">spec compliant</a> HTTP request, performs that request, and returns the response body to stdout. By default it <em>only</em> returns the body, making it simple to pipe into other tools, but on a flag it can return other metadata as well.</p>
+<p>I get that the world probably didn’t need another HTTP client, but it was fun to have a project to work in a language that I don’t get to work in every day that filled a real gap in the way I work. Often I struggle to stick with projects because the goal feels kind of abstract. It was very nice to have something that I am already using regularly to test and debug HTTP apps.</p></article>
+
+<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Req: Postman in the terminal" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
+
+
+</div>
+
+
+		<script type="module" data-sveltekit-hydrate="1j1nbby">
+			import { start } from "../_app/immutable/start-4f8d155b.js";
+
+			start({
+				env: {},
+				paths: {"base":"","assets":""},
+				target: document.querySelector('[data-sveltekit-hydrate="1j1nbby"]').parentNode,
+				version: "1753490205546",
+				hydrate: {
+					node_ids: [0, 4],
+					data: [null,null],
+					form: null
+				}
+			});
+		</script>
+	</div>
+  </body>
+</html>
