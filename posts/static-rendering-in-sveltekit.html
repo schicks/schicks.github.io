@@ -21,17 +21,17 @@
 		<link href="../_app/immutable/assets/blog-1f80565d.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/pi-by-hand-592e9f64.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/visualizing-voting-systems-0ed28d66.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/start-4f8d155b.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/index-58f43e7f.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-380e795b.js">
+		<link rel="modulepreload" href="../_app/immutable/start-f4150ad7.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index-f6fb100d.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-bf47ff06.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper-a4192956.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/control-f5b05b5f.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-4403f07f.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-33d7e375.js">
 		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-9cbb603b.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-da46b06b.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/posts/_slug_/_page.svelte-e8c51160.js">
-		<link rel="modulepreload" href="../_app/immutable/modules/pages/posts/_slug_/_page.ts-557ee4e4.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/_page-602a8250.js"><title>Static rendering in Sveltekit</title><!-- HEAD_svelte-1l490sv_START --><!-- HEAD_svelte-1l490sv_END -->
+		<link rel="modulepreload" href="../_app/immutable/components/pages/posts/_slug_/_page.svelte-be21b788.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/posts/_slug_/_page.ts-f0b04a65.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_page-776be019.js"><title>Static rendering in Sveltekit</title><!-- HEAD_svelte-1l490sv_START --><!-- HEAD_svelte-1l490sv_END -->
   </head>
 
   <body>
@@ -54,20 +54,20 @@
 <p>There are real costs to this approach from an ergonomics perspective however. Rather than being able to put the vega specifications inline where the chart will be rendered, they instead need to be specified in a <a href="https://github.com/schicks/schicks.github.io/blob/main/src/routes/posts/static-rendering-in-sveltekit.mdx" rel="nofollow">module level script</a>, and then pulled in as props in an instance level script. The inline part then becomes an <code>@html</code> directive, which still gives me scary <code>dangerouslySetInnerHTML</code> feelings.</p>
 <p>The <a href="https://github.com/schicks/schicks.github.io/blob/main/src/utilities.ts" rel="nofollow">utility</a> for fetching the rendered charts is also significantly harder to read than the original <a href="https://github.com/schicks/schicks.github.io/blob/main/src/components/VegaLite.svelte" rel="nofollow">Svelte component</a>. In a personal learning project, this complexity is something I’m willing to accept, but in a production space I’d want real evidence that javascript free pages were of value before implementing something like this.</p></article>
 
-<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Static rendering in Sveltekit" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
+<div></div>
 
 
 </div>
 
 
-		<script type="module" data-sveltekit-hydrate="ga1i08">
-			import { start } from "../_app/immutable/start-4f8d155b.js";
+		<script type="module" data-sveltekit-hydrate="1k48q5e">
+			import { start } from "../_app/immutable/start-f4150ad7.js";
 
 			start({
 				env: {},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="ga1i08"]').parentNode,
-				version: "1753490205546",
+				target: document.querySelector('[data-sveltekit-hydrate="1k48q5e"]').parentNode,
+				version: "1753490656815",
 				hydrate: {
 					node_ids: [0, 4],
 					data: [null,null],

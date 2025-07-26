@@ -21,17 +21,17 @@
 		<link href="../_app/immutable/assets/blog-1f80565d.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/pi-by-hand-592e9f64.css" rel="stylesheet">
 		<link href="../_app/immutable/assets/visualizing-voting-systems-0ed28d66.css" rel="stylesheet">
-		<link rel="modulepreload" href="../_app/immutable/start-4f8d155b.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/index-58f43e7f.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-380e795b.js">
+		<link rel="modulepreload" href="../_app/immutable/start-f4150ad7.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/index-f6fb100d.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/singletons-bf47ff06.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/preload-helper-a4192956.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/control-f5b05b5f.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-4403f07f.js">
+		<link rel="modulepreload" href="../_app/immutable/components/pages/_layout.svelte-33d7e375.js">
 		<link rel="modulepreload" href="../_app/immutable/modules/pages/_layout.ts-9cbb603b.js">
 		<link rel="modulepreload" href="../_app/immutable/chunks/_layout-da46b06b.js">
-		<link rel="modulepreload" href="../_app/immutable/components/pages/posts/_slug_/_page.svelte-e8c51160.js">
-		<link rel="modulepreload" href="../_app/immutable/modules/pages/posts/_slug_/_page.ts-557ee4e4.js">
-		<link rel="modulepreload" href="../_app/immutable/chunks/_page-602a8250.js"><title>Type Safe URL Wrangling in React</title><!-- HEAD_svelte-1l490sv_START --><!-- HEAD_svelte-1l490sv_END -->
+		<link rel="modulepreload" href="../_app/immutable/components/pages/posts/_slug_/_page.svelte-be21b788.js">
+		<link rel="modulepreload" href="../_app/immutable/modules/pages/posts/_slug_/_page.ts-f0b04a65.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/_page-776be019.js"><title>Type Safe URL Wrangling in React</title><!-- HEAD_svelte-1l490sv_START --><!-- HEAD_svelte-1l490sv_END -->
   </head>
 
   <body>
@@ -247,20 +247,20 @@ That is useful here because the last thing we do is index into the whole mapped 
 <p>That’s a little strange, since <code>never</code> is defined as a type which has no values. Then another way to interpret this function is that it is claiming that there are <em>no values</em> which satisfy <code>KeysByValue&lt;UrlState, null | undefined&gt;</code>. Since a key would satisfy that type if and only if it had been assigned to multiple brands, this will cause a type error if there is any key with multiple brands because the return type will be the union of such keys rather than <code>never</code>.</p>
 <p>That’s it! those are all of the tools we use to get our guarantees. We use a type level proof to show that no two components register the same keys, and we use branding to guarantee that each component only accesses the keys that it registered. Now that you’ve seen all of the fanciness, it’s worth going back through the code at the top and seeing if the complex signatures make more sense now. I’ve also set up a <a href="https://www.typescriptlang.org/play?ts=4.3.2#code/PTAEFUBcEsBtsgT1EgDgUwM4FgBQ6APVAewCdIVENQA1AQ1gFd0AeAIVLoDsATUQyOl6ZQmSKWhcA5gD5QAXlAAKMROmgAZKADeAfQBGnXgC5QHbjwC+ASlAAfUF0axY90I17oAZpPQ88eIQk5JTUAMqQdIIAYmQA0uiImCzgpLAJSfwEgsKi4pJSADRmRnwCQjwiqgVyitp4oKAA2gDWiaCSEGkZmAC6pvRMrOa8MniWDaABuCCgUtAAbuigALbLDK7EXigAFsttmVug3KDE+gBW6ADGFGjLAPKgAO470Fc7oDt0S6ALDMwiSBfCjlXiiYhrULLGiBIhkW5UZY9NiIQbMFiPUGVHSWYo0Wo6VrtToHI73fqge5ExC9LI5bE0UAAflAB1Api46CWpEs1LJvWms3mP0hQOWZ0uN1AXjIaz4R0wjHerMSOHwcJCd1AAAU3i0UWjWJjshURNpcbQCbqri0McVkaj-ka8TIxrhpngQFcISROVxIABBYB3TAAOkgathwQR1BGPADClAAHJvStfUJA0nplqegnFEmZcQk24k-o6KRiw5S3QAF5Z93q6NQrqwCJRdB50BtmLxVUsXPFOMBt2e4Cp9P+tjBxFhiPTILw5txtiJlM+4h+yBset4HOqlf5tiFyvJthlisls+1neNxda1KtyKCA9dp-oWKkHr9-eD0psEczGO66bgAwtOGCzpGt6aoiJQWCBq7jhuGYgTee5JAh+YgceJYgeeJ5Jnh17zhqMbLA+3boJhr7th+X49CBv7wQBHqAYwmDoA+2rlnQKxQfeaSUYmFFvgmWgie2K7iYJb4gdmsFxiIigSYIfLbCp6C0liZoGKUpiSF46CkHBvCWG4TguG4Hg8N4vh8Cycbso4XJGYKYBiqAqDlhQRweeAABKAAyeTtrsUSgPo6CwBuUiAsQ4KQoYFhRnesGUR+7ClHSpomZUVp6gaTopDJ7Z4kVcauqxswbrAyAHCIdCYJg0BSJyfCQPFKzODAqCwMsSW5E8cCuFijjOK4DjWbZbWhqAAAqrwiNADXNn1SyuKgpDEL5wK7EZ6ykMsXDxYqyr1aGeDelwYigLpFiYLoPAbpAujENysB0KgiZKJMjT1bojXNa1fi6B1uhdbAPV9XdwimA6hrFY+pVjZZk2eD4bUyMUeDWByLnGfIcj-YDLVtaDxDg910C9egMOVCRTZXTd7GcWk3GcHxiaZRY2W5IpMhKLjzTpWQ3OjMUSgZhIWCmOzMAMCwIukGLPCurYhO-MQ0A8LSGv1LgjQgAtyzQGmfVrP6UTQBupzbB5OzbS0HQiMdty7ZIgiHWIBTFDzACSoBPVwSYUC0x1PJ8xARx1gfxYddBSkCBRLVwxyeR9iBSFt1kXQboCHZAjCkKnFmuI1xxcIg4x4EAA" rel="nofollow">playground</a> where you can play around with a minimal version of the complete product, to see where type errors would appear if you break those guarantees and to see if you can get this to be any less eldritch nonsense than my version.</p></article>
 
-<script src="https://utteranc.es/client.js" repo="schicks/schicks.github.io" issue-term="Type Safe URL Wrangling in React" label="blog-comments" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
+<div></div>
 
 
 </div>
 
 
-		<script type="module" data-sveltekit-hydrate="1c346sd">
-			import { start } from "../_app/immutable/start-4f8d155b.js";
+		<script type="module" data-sveltekit-hydrate="1lupm0c">
+			import { start } from "../_app/immutable/start-f4150ad7.js";
 
 			start({
 				env: {},
 				paths: {"base":"","assets":""},
-				target: document.querySelector('[data-sveltekit-hydrate="1c346sd"]').parentNode,
-				version: "1753490205546",
+				target: document.querySelector('[data-sveltekit-hydrate="1lupm0c"]').parentNode,
+				version: "1753490656815",
 				hydrate: {
 					node_ids: [0, 4],
 					data: [null,null],
