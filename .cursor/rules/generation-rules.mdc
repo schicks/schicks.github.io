@@ -1,0 +1,19 @@
+---
+alwaysApply: true
+---
+
+Don't summarize the steps that you've taken when you've accomplished a goal. Just say "Done!".
+
+Check if there is a running dev server at port 5173 before opening another one.
+
+Avoid navigating between directories. Run commands from the root of the repo and rely on nx to run the right things.
+
+Whenever the website has been changed, after you are done with the rest of your work confirm that it is working using playwright and `npm run dev`. 
+
+When interacting with the terminal, remember that you are using @PowerShell.
+
+Avoid `any` types. You can usually identify a more specific type that will work.
+
+New source files should be `.ts` or `.svelte`, not `.js`.
+
+Rather than using comments to annotate a type, add a `lang='ts'` statement or change the extension to `.ts`.

@@ -1,7 +1,7 @@
 import getPosts from '$lib/getPosts';
-import type { PageLoad } from './$types';
+import type { Load } from '@sveltejs/kit';
 
-export const load: PageLoad = async () => {
+export const load: Load = async () => {
   const posts = await getPosts();
   return {
     posts

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { PageData } from './$types';
-  
-  export let data: PageData;
-  $: ({ posts } = data);
+  import type { Post } from '$lib/getPosts';
+
+  export let data: { posts: Post[] }
+  $: ({ posts } = data)
 </script>
 
 <ul>

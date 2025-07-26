@@ -6,6 +6,7 @@
   /** @type string */
   export let title
   
+  /** @type {HTMLDivElement | undefined} */
   let commentsContainer
   
   const commentProps = {

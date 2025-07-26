@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { Load } from '@sveltejs/kit';
 
-export const load: PageLoad = async ({ params }) => {
+export const load: Load = async ({ params }: { params: { slug: string } }) => {
   try {
     const post = await import(`../${params.slug}.mdx`);
 

@@ -6,16 +6,28 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=website",
-    "build": "npm run build --workspace=website",
-    "preview": "npm run preview --workspace=website",
-    "check": "npm run check --workspace=website",
-    "check:watch": "npm run check:watch --workspace=website",
-    "lint": "npm run lint --workspace=website",
-    "format": "npm run format --workspace=website",
-    "deploy": "npm run deploy --workspace=website"
+    "dev": "nx dev website",
+    "build": "nx build website",
+    "build:lazymesh": "nx build lazymesh",
+    "preview": "nx preview website",
+    "check": "nx check website",
+    "check:watch": "nx run website:check:watch",
+    "lint": "nx run-many --target=lint --all",
+    "lint:lazymesh": "nx lint lazymesh",
+    "lint:website": "nx lint website",
+    "format": "nx run-many --target=format --all",
+    "test": "nx run-many --target=test --all",
+    "test:lazymesh": "nx test lazymesh",
+    "deploy": "nx run website:deploy",
+    "graph": "nx graph",
+    "affected:build": "nx affected --target=build",
+    "affected:test": "nx affected --target=test",
+    "affected:lint": "nx affected --target=lint",
+    "clean": "nx reset",
+    "deps": "nx graph --file=dependency-graph.html"
   },
   "devDependencies": {
+    "@playwright/mcp": "^0.0.32",
     "gh-pages": "^3.2.3",
     "nx": "21.3.7"
   }

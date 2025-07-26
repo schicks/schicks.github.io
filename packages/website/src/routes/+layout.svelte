@@ -9,6 +9,7 @@
   <a href="/" class="big"><h1>Simon would have said</h1></a>
   <div class="links">
     <span class="big"><a href="/resume">Resume</a></span>
+    <span class="big"><a href="/demos">Demos</a></span>
     <span class="big"><a href="/whos-simon"> Who's Simon? </a></span>
     <span class="small">
       <a href="/">
@@ -41,6 +42,14 @@
     margin: 0;
   }
   header {
+    border-bottom: 8px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.45rem;
+    min-height: 70px;
+    margin-bottom: 1.45rem;
+    
     @media (max-width: 800px) {
       .big {
         display: none;
@@ -49,13 +58,6 @@
         display: inline !important;
       }
     }
-    border-bottom: 8px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 1.45rem;
-    min-height: 70px;
-    margin-bottom: 1.45rem;
     a {
       text-decoration: none;
     }
