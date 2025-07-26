@@ -14,7 +14,7 @@
 </script>
 
 <figure>
-  <div bind:this={element} aria-hidden>
+  <div bind:this={element} aria-hidden="false">
     <div class="warning">Vega graph failed to render. Do you have javascript disabled?</div>
   </div>
   <figcaption>{spec.description}</figcaption>

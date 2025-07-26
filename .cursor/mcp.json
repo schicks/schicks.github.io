@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "nx-mcp": {
+      "url": "http://localhost:9368/mcp"
+    },
+    "playwright": {
+      "command": "node",
+      "args": [
+        "./node_modules/@playwright/mcp/cli.js"
+      ]
+    }
+  }
+}

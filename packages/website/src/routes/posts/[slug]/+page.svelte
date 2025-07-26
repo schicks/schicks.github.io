@@ -1,16 +1,24 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+  // PageData type removed since it's not needed
 
-	export let data: PageData;
+  interface PostData {
+    content: any; // Svelte component
+    meta: {
+      title?: string;
+      description?: string;
+    };
+  }
+
+  export let data: PostData
 </script>
 
 <svelte:component this={data.content} />
 
 <svelte:head>
-	{#if data.meta.title}
-		<title>{data.meta.title}</title>
-	{/if}
-	{#if data.meta.description}
-		<meta name="description" content={data.meta.description} />
-	{/if}
-</svelte:head> 
+  {#if data.meta.title}
+    <title>{data.meta.title}</title>
+  {/if}
+  {#if data.meta.description}
+    <meta name="description" content={data.meta.description} />
+  {/if}
+</svelte:head>

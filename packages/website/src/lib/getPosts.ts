@@ -4,7 +4,8 @@ export type Post = {
   title: string
   slug: string
   blurb: string
-  date: Date
+  date: number
+  status?: string
 }
 
 export default async (): Promise<Post[]> => {
@@ -14,7 +15,19 @@ export default async (): Promise<Post[]> => {
       Object.entries(markdownFiles)
         .filter(([path]) => !(getFilename(path)?.startsWith('_') ?? true))
         .map(async ([path, page]) => {
-          const { metadata, default: body } = await page()
+          const result = await page() as {
+                        metadata: { 
+              title: string; 
+              date: string; 
+              blurb?: string;
+              status?: string;
+              [key: string]: unknown 
+            };
+            default: {
+              render(): { html: string }
+            }
+          }
+          const { metadata, default: body } = result
           const blurb =
             metadata.blurb ||
             body

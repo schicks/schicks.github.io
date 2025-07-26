@@ -1,0 +1,10 @@
+---
+globs: *.svelte
+alwaysApply: false
+---
+
+Always use `lang='ts'` to enable typescript.
+
+Read the @svelte docs for best practices
+
+When components are longer than 500 lines, that's a sign they need to be refactored. Look for parts of the file that could be split into helper `.ts` files or into their own component files.
