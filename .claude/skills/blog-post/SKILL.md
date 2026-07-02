@@ -26,13 +26,14 @@ where is the moment a reader needs to *see* something rather than be told
 it? If you can't name that moment, you don't have a post yet, you have a
 topic.
 
-**2. Write an outline, not a draft.** Headers plus one line per section
-describing what it argues or shows, and which section(s) need a
-visualization. No full paragraphs at this stage — if you catch yourself
-writing a real paragraph during outlining, stop and go build instead. Keep
-the outline in the post file itself (frontmatter `status: draft`), or
-sketch it in the scratchpad first if you want to iterate before touching
-the repo.
+**2. Write an outline, not a draft.** Headers and, once it exists, the
+visualization's own caption — nothing else. No prose, and no explanatory
+one-liners under the headers either: if a header seems to need a sentence
+to make sense before its visualization exists, that's a sign to go build
+the visualization, not to write a placeholder sentence to tide it over. The
+header names the beat; the caption explains it once there's something to
+caption. If you catch yourself writing a real sentence of connective prose
+during outlining, stop — that sentence belongs in step 6, not here.
 
 **3. For each outline beat, ask what a reader could manipulate, not what
 chart would depict it.** "What parameter, if the reader dragged or toggled
@@ -53,27 +54,44 @@ If a beat in the outline has no visualization and needs more than a
 paragraph or two of prose to land, that's usually a sign it wants a diagram
 instead of more words — reconsider before writing your way through it.
 
-**4. Build the visualization before writing the prose around it.** Create
-the component(s) under `packages/website/src/lib/<topic>/`, scoped tightly
-to what this post needs (2-4 small components, not a generic charting
-library). Wire it into the draft `.mdx` immediately so you can see it in
-the browser rather than judging it as code:
+**4. Prototype the outline in an Artifact before touching Svelte.** Build a
+single self-contained HTML file — headers, a working reimplementation of
+each visualization (inline JS/SVG/Canvas; the Artifact CSP blocks CDNs and
+external requests, so port the actual logic in rather than linking d3 or
+similar), and captions, matching the outline exactly and nothing more.
+Publish it with the Artifact tool, and redeploy to the *same* URL
+(`url:` param) on every subsequent round so it stays one stable link to
+iterate against. Also send the file directly (`SendUserFile`) alongside it
+— the hosted artifact viewer isn't always reachable, and the raw HTML
+opens in any browser as a fallback. This loop is much cheaper than editing
+real Svelte components and running a dev server for every small change,
+and it's a shared surface: the user can react to structure and interaction
+choices before any of it is real. Keep outlining and reshaping the
+visualizations here until both are settled — this is where disagreements
+about the idea itself should surface and get resolved, before step 5 makes
+them expensive to change.
+
+**5. Port the settled prototype into the real components.** Once the
+outline and the interactions in the artifact are agreed, build the actual
+component(s) under `packages/website/src/lib/<topic>/`, scoped tightly to
+what this post needs (2-4 small components, not a generic charting
+library), and wire them into the draft `.mdx`. Verify in a real browser
+against a real dev server, not just by reading the code:
 
 ```bash
 npm run dev   # or: nx dev website
 ```
 
-then visit `/posts/<slug>`. Iterate on the visualization itself — the
-interaction, the parameters, what's draggable or clickable — until it
-actually carries the idea from step 1. This is where most of the effort in
-a post should go.
+then visit `/posts/<slug>`, and drive the interaction (drag, click,
+slider) the way the artifact prototype did, confirming it behaves the same
+way now that it's real.
 
-**5. Only after the visualization works, fill in the minimal prose.** Each
+**6. Only after the visualization works, fill in the minimal prose.** Each
 paragraph's job is to set up context before a visualization or interpret
 what the reader just did after one. If a paragraph could be deleted without
 losing the argument, delete it.
 
-**6. Lazy-load anything expensive.** Wrap heavier interactive components in
+**7. Lazy-load anything expensive.** Wrap heavier interactive components in
 `<IntersectionObserver initialHeight={N}>` (see
 `static-rendering-in-sveltekit.mdx`-era posts or `visualizing-voting-systems.mdx`
 for the pattern) so they don't run until scrolled into view.
@@ -104,6 +122,12 @@ for the pattern) so they don't run until scrolled into view.
 ## Anti-patterns
 
 - Writing a full draft before any visualization exists.
+- Writing outline one-liners or connective sentences "just to hold the
+  place" — the outline stage is headers and captions, full stop; anything
+  more is step 6 arriving early.
+- Jumping straight into editing Svelte components (and a dev server
+  restart per tweak) for a visualization idea that hasn't been settled yet
+  — prototype it in an Artifact first, where iteration is nearly free.
 - A visualization that only restates a sentence already in the prose above
   it, instead of showing something the prose can't.
 - Building a reusable/generic charting abstraction when the post only needs
