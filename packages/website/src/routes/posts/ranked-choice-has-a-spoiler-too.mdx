@@ -11,16 +11,14 @@ blurb: Ranked-choice voting is the standard fix for the spoiler effect that hand
   import { debounce } from '$lib/utilities'
 
   const candidates = [
-    [50, 30],
-    [50, 70],
-    [30, 15]
-  ]
-
-  const squeezeCandidates = [
-    [25, 50],
+    [35, 50],
     [50, 50],
-    [75, 50]
+    [65, 50]
   ]
+  const noPortraits = [undefined, undefined, undefined]
+  const seed = 4
+  const nVoters = 600
+  const approvalRadius = 28
 
   let polarization = 0
   const updatePolarization = debounce((e) => {
@@ -28,22 +26,12 @@ blurb: Ranked-choice voting is the standard fix for the spoiler effect that hand
   }, 100)
 </script>
 
-## Does instant runoff fix the spoiler effect?
-
-<IntersectionObserver initialHeight={600}>
-  <YeeDiagram
-    candidates={candidates}
-    method="irv"
-    label="The same 2000 candidates, counted by instant runoff instead of plurality. Compare this to the plurality diagram in the last post."
-  />
-</IntersectionObserver>
-
 ## Center squeeze
 
 <input
   type="range"
   min="0"
-  max="30"
+  max="18"
   value={polarization}
   on:input={updatePolarization}
   style="width: 100%; max-width: 600px; display: block; margin: 0 auto;"
@@ -51,11 +39,28 @@ blurb: Ranked-choice voting is the standard fix for the spoiler effect that hand
 
 <IntersectionObserver initialHeight={600}>
   <YeeDiagram
-    candidates={squeezeCandidates}
+    candidates={candidates}
     method="irv"
+    seed={seed}
+    nVoters={nVoters}
     polarization={polarization}
-    portraits={[undefined, undefined, undefined]}
-    label="Blue and yellow flank red at the center. As polarization rises, voters cluster around the two poles, red runs short of first-choice votes, and gets eliminated before its second-choice support ever counts."
+    portraits={noPortraits}
+    label="Three candidates in a line, all packed into the middle third. At rest, the moderate wins a perfectly reasonable central band. Drag the slider — as the electorate splits toward the two flanks, that band collapses, even though the moderate is still the closest candidate to the average voter right up until it loses."
+  />
+</IntersectionObserver>
+
+## The same electorate, under approval voting
+
+<IntersectionObserver initialHeight={600}>
+  <YeeDiagram
+    candidates={candidates}
+    method="approval"
+    r={approvalRadius}
+    seed={seed}
+    nVoters={nVoters}
+    polarization={polarization}
+    portraits={noPortraits}
+    label="Identical candidates, identical voters, same polarization slider as above — only the counting method changed. Watch the moderate's band as you drag: under approval voting it holds."
   />
 </IntersectionObserver>
 
