@@ -2,10 +2,11 @@
   import { Voronoi, randomLcg } from 'd3'
   import type { Selection } from 'd3'
   import type { Point, NamedPoint } from './types'
-  import { plurality, approval } from './elections'
+  import { plurality, approval, irv } from './elections'
   const methods = {
     plurality,
-    approval
+    approval,
+    irv
   }
   let created = 0
 </script>
@@ -24,6 +25,13 @@
   export let fidelity = 30
   export let seed = 1158
   export let method: keyof typeof methods = 'plurality'
+  // Per-candidate portrait images, keyed by candidate index. Omit an entry
+  // (or the whole prop) to fall back to the historical Bush/Gore/Nader
+  // portraits, or pass undefined entries to render plain colored dots.
+  export let portraits: (string | undefined)[] | undefined = undefined
+  // Splits the voter cloud into two equal poles, offset left/right of the
+  // sampled point by this amount, to model a polarized electorate.
+  export let polarization = 0
 
   let namedCandidates = candidates.map(([x, y], i) => ({ x, y, i }))
   let colors = scaleOrdinal(
@@ -32,13 +40,16 @@
   ).unknown('#000000')
   let pictures = scaleOrdinal(
     namedCandidates.map(({ i }) => i),
-    [gore, bush, nader]
+    portraits ?? [gore, bush, nader]
   )
 
   const voterDistribution = randomNormal.source(randomLcg(seed))(0, 20)
-  const voters: Point[] = new Array(nVoters)
+  const baseVoters: Point[] = new Array(nVoters)
     .fill(null)
     .map(() => [voterDistribution(), voterDistribution()])
+  $: voters = baseVoters.map(
+    ([x, y], idx): Point => [x + (idx % 2 === 0 ? -1 : 1) * polarization, y]
+  )
   const elect = methods[method]
   const winners: [Point, NamedPoint][] = new Array(fidelity ** 2)
   const imgSize = 10
@@ -112,13 +123,14 @@
       .attr('fill', ({ i }) => colors(i))
 
     candidateSelection
+      .filter(({ i }) => Boolean(pictures(i)))
       .append('image')
       .attr('width', imgSize)
       .attr('height', imgSize)
       .attr('x', -imgSize / 2)
       .attr('y', -imgSize / 2)
       .attr('clip-path', 'url(#imgClip)')
-      .attr('href', ({ i }) => pictures(i))
+      .attr('href', ({ i }) => pictures(i) as string)
   })
 </script>
 
