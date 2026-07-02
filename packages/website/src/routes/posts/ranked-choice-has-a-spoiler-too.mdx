@@ -28,7 +28,7 @@ blurb: Ranked-choice voting is the standard fix for the spoiler effect that hand
   }, 100)
 </script>
 
-[Last time](/posts/visualizing-voting-systems) we watched Nader spoil the 2000 election for Gore under plurality voting, and saw approval voting fix it. Approval voting is a hard sell politically though; the reform that's actually spreading city by city, state by state, is [ranked-choice voting](https://fairvote.org/our-reforms/ranked-choice-voting/) — voters rank candidates instead of just picking one, and the count runs an instant runoff: repeatedly eliminate whoever has the fewest first-choice votes, transferring their ballots to whichever surviving candidate each of those voters ranked next, until someone has a majority. Does it fix the spoiler effect too?
+## Does instant runoff fix the spoiler effect?
 
 <IntersectionObserver initialHeight={600}>
   <YeeDiagram
@@ -38,9 +38,7 @@ blurb: Ranked-choice voting is the standard fix for the spoiler effect that hand
   />
 </IntersectionObserver>
 
-Mostly, yes. Nader's region shrinks to almost nothing, because a Nader voter's second choice is a factor now: once Nader is eliminated for having the fewest first-choice votes, his voters transfer to Gore, and Gore wins the runoff the same way he would have if Nader had never run. This is the headline case for ranked-choice voting, and it's real.
-
-But notice the mechanism: Nader had to be eliminated *first* for those voters to ever reach Gore. If a compromise candidate has too few first-choice votes, they get eliminated before their broad second-choice support ever counts for anything. This failure mode has a name: [center squeeze](https://electionscience.org/library/center-squeeze/). Drag the polarization slider below and watch the red candidate — sitting exactly between the other two, closer to more of the electorate than anyone else — lose ground even in cells where it's the nearest candidate to the average voter.
+## Center squeeze
 
 <input
   type="range"
@@ -61,6 +59,4 @@ But notice the mechanism: Nader had to be eliminated *first* for those voters to
   />
 </IntersectionObserver>
 
-At low polarization, red owns the middle band, same as you'd expect. Push the slider up and the electorate splits into two camps, one nearer blue and one nearer yellow, with hardly anyone left near red as a first choice. Red gets eliminated in the first round, and the runoff becomes a contest between blue and yellow — the two candidates furthest from the average voter — decided by whichever camp happens to be slightly larger. The candidate closest to the middle of the electorate, the one nearly everybody would have been fine with, never gets to compete in the round that matters.
-
-This is why voting theorists don't treat ranked-choice as a solved problem, just a different set of tradeoffs. It fixes the specific pathology plurality has, and introduces its own: it rewards being someone's first choice over being nobody's last choice, which is a different bet on what an election should be measuring in the first place.
+## The tradeoff
