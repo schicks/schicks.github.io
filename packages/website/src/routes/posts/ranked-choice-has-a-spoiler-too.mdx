@@ -1,0 +1,67 @@
+---
+title: 'Ranked Choice Voting Has a Spoiler Effect Too'
+date: 2026-07-02 12:00:00
+status: draft
+blurb: Ranked-choice voting is the standard fix for the spoiler effect that handed Bush the 2000 election, and it works. But it trades that failure for a subtler one, where the candidate almost everyone can live with loses just for not being anyone's favorite.
+---
+
+<script>
+  import YeeDiagram from '$lib/voting/YeeDiagram.svelte'
+  import IntersectionObserver from '$lib/IntersectionObserver.svelte'
+  import { debounce } from '$lib/utilities'
+
+  const candidates = [
+    [35, 50],
+    [50, 50],
+    [65, 50]
+  ]
+  const noPortraits = [undefined, undefined, undefined]
+  const seed = 4
+  const nVoters = 600
+  const approvalRadius = 28
+
+  let polarization = 0
+  const updatePolarization = debounce((e) => {
+    polarization = Number(e.target.value)
+  }, 100)
+</script>
+
+## Center squeeze
+
+<input
+  type="range"
+  min="0"
+  max="18"
+  value={polarization}
+  on:input={updatePolarization}
+  style="width: 100%; max-width: 600px; display: block; margin: 0 auto;"
+/>
+
+<IntersectionObserver initialHeight={600}>
+  <YeeDiagram
+    candidates={candidates}
+    method="irv"
+    seed={seed}
+    nVoters={nVoters}
+    polarization={polarization}
+    portraits={noPortraits}
+    label="Three candidates in a line, all packed into the middle third. At rest, the moderate wins a perfectly reasonable central band. Drag the slider — as the electorate splits toward the two flanks, that band collapses, even though the moderate is still the closest candidate to the average voter right up until it loses."
+  />
+</IntersectionObserver>
+
+## The same electorate, under approval voting
+
+<IntersectionObserver initialHeight={600}>
+  <YeeDiagram
+    candidates={candidates}
+    method="approval"
+    r={approvalRadius}
+    seed={seed}
+    nVoters={nVoters}
+    polarization={polarization}
+    portraits={noPortraits}
+    label="Identical candidates, identical voters, same polarization slider as above — only the counting method changed. Watch the moderate's band as you drag: under approval voting it holds."
+  />
+</IntersectionObserver>
+
+## The tradeoff
