@@ -1,0 +1,1 @@
+import"../chunks/Bzak7iHL.js";import"../chunks/BsbbE8GD.js";import{j as s,k as e,r as i,t as m}from"../chunks/C2H-2avp.js";import{s as p}from"../chunks/C3akxVjK.js";var d=s('<div class="body svelte-1gry92p"><!></div>');function c(r,t){var o=d(),a=i(o);p(a,t,"default",{}),m(o),e(r,o)}export{c as component};
